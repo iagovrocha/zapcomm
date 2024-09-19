@@ -1,0 +1,12 @@
+{
+    "type": "postgres",
+    "url": "postgres://docker:docker@postgres:5432/polls",
+    "synchronize": false,
+    "logging": true,
+    "entities": ["dist/**/*.entity.js"],
+    "migrations": ["dist/migration/**/*.js"],
+    "cli": {
+      "migrationsDir": "src/migration"
+    }
+}
+  

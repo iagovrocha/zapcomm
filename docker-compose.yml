@@ -1,0 +1,72 @@
+services:
+  postgres:
+    image: postgres:16
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=polls
+    volumes:
+      - polls_pg_data:/alpine/postgresql
+    networks:
+      - app-network
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes 
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'polls_redis_data:/alpine/redis/data'
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - ./backend/.env
+
+    networks:
+      - app-network
+
+    command: >
+      sh -c "
+      npm run dev:server"
+
+    
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_API_URL=http://localhost:8080
+      - REACT_APP_HOURS_CLOSE_TICKETS_AUTO=24
+      - NODE_OPTIONS=--openssl-legacy-provider
+    stdin_open: true
+    tty: true  
+
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+volumes:
+  polls_pg_data:
+  polls_redis_data:
+
+networks:
+  app-network:
+    driver: bridge
