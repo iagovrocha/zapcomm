@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "0 8px",
+    padding: "0 1px",
     minHeight: "48px",
     [theme.breakpoints.down("sm")]: {
       height: "48px"
@@ -154,12 +154,12 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
     flexDirection: "column"
   },
-  containerWithScroll: {
-    flex: 1,
-    padding: theme.spacing(1),
-    overflowY: "scroll",
-    ...theme.scrollbarStyles,
-  },
+  // containerWithScroll: {
+  //   flex: 1,
+  //   padding: theme.spacing(1), barrinha lateral e tamnho da imagem
+  //   overflowY: "scroll",
+  //   ...theme.scrollbarStyles,
+  // },
   NotificationsPopOver: {
     // color: theme.barraSuperior.secondary.main,
   },
