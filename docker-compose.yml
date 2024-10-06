@@ -52,11 +52,16 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+
+    volumes:
+      - ./frontend:/app
+
     environment:
       - NODE_ENV=development
       - REACT_APP_API_URL=http://localhost:8080
       - REACT_APP_HOURS_CLOSE_TICKETS_AUTO=24
       - NODE_OPTIONS=--openssl-legacy-provider
+      - CHOKIDAR_USEPOLLING=true
     stdin_open: true
     tty: true  
 
