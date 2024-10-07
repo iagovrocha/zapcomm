@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
   },
   customBadge: {
-    backgroundColor: "#f44336",
+    backgroundColor: "#FFFFFF",
     color: "#fff",
   },
 }));
