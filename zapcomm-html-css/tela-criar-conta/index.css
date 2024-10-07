@@ -1,0 +1,153 @@
+.logo-zapcomm-icon {
+    position: absolute;
+    top: 71px;
+    left: 178px;
+    width: 448px;
+    height: 138px;
+    object-fit: cover;
+}
+.tela-criar-conta-child {
+    position: absolute;
+    top: 878px;
+    left: 121px;
+    border-radius: 10px;
+    background-color: #1b7358;
+    width: 563px;
+    height: 88px;
+}
+.tela-criar-conta-item {
+    position: absolute;
+    top: 347px;
+    left: 121px;
+    border-radius: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    width: 563px;
+    height: 88px;
+}
+.tela-criar-conta-inner {
+    position: absolute;
+    top: 227px;
+    left: 121px;
+    border-radius: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    width: 563px;
+    height: 88px;
+}
+.email {
+    position: absolute;
+    top: 377px;
+    left: 138px;
+}
+.nome-da-empresa {
+    position: absolute;
+    top: 257px;
+    left: 138px;
+}
+.rectangle-div {
+    position: absolute;
+    top: 587px;
+    left: 121px;
+    border-radius: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    width: 563px;
+    height: 88px;
+}
+.tela-criar-conta-child1 {
+    position: absolute;
+    top: 467px;
+    left: 121px;
+    border-radius: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    width: 563px;
+    height: 88px;
+}
+.senha {
+    position: absolute;
+    top: 617px;
+    left: 138px;
+}
+.tela-criar-conta-child2 {
+    position: absolute;
+    top: 705px;
+    left: 121px;
+    border-radius: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    width: 563px;
+    height: 88px;
+}
+.plano {
+    position: absolute;
+    top: 735px;
+    left: 173px;
+}
+.telefone-com-ddd {
+    position: absolute;
+    top: 497px;
+    left: 138px;
+}
+.j-possui-uma {
+    text-decoration: underline;
+}
+.retorne-ao-login {
+    color: #0c2454;
+}
+.j-possui-uma-container {
+    position: absolute;
+    top: 986px;
+    left: 238px;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.65);
+}
+.ao-criar-uma-container {
+    position: absolute;
+    top: 833px;
+    left: 139px;
+    font-size: 18px;
+    text-decoration: underline;
+    color: rgba(0, 0, 0, 0.65);
+}
+.iniciar-sesso {
+    position: absolute;
+    top: 905px;
+    left: 305px;
+    font-size: 25px;
+    color: #fff;
+}
+.back-icon {
+    position: absolute;
+    top: 733px;
+    left: 131px;
+    width: 33px;
+    height: 33px;
+    object-fit: contain;
+}
+.fotoempresa-1-icon {
+    position: absolute;
+    top: 0px;
+    left: 819px;
+    width: 1101px;
+    height: 1080px;
+    object-fit: cover;
+}
+.tela-criar-conta {
+    width: 100%;
+    position: relative;
+    background-color: #fff;
+    height: 1080px;
+    overflow: hidden;
+    text-align: left;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.5);
+    font-family: Inter;
+}
+

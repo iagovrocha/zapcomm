@@ -1,0 +1,87 @@
+.logo-zapcomm-icon {
+    position: absolute;
+    top: 224px;
+    left: 158px;
+    width: 448px;
+    height: 138px;
+    object-fit: cover;
+}
+.tela-esqueci-a-senha-child {
+    position: absolute;
+    top: 728px;
+    left: 100px;
+    border-radius: 10px;
+    background-color: #1b7358;
+    width: 563px;
+    height: 88px;
+    cursor: pointer;
+}
+.tela-esqueci-a-senha-item {
+    position: absolute;
+    top: 586px;
+    left: 102px;
+    border-radius: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    width: 563px;
+    height: 88px;
+}
+.digite-o-email {
+    position: absolute;
+    top: 616px;
+    left: 119px;
+    font-size: 20px;
+}
+.digite-o-endereo {
+    position: absolute;
+    top: 525px;
+    left: 177px;
+    color: rgba(0, 0, 0, 0.7);
+}
+.login {
+    text-decoration: underline;
+    color: #0c2454;
+}
+.retornar-a-login-container {
+    position: absolute;
+    top: 836px;
+    left: 313px;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.65);
+}
+.enviar-email {
+    position: absolute;
+    top: 755px;
+    left: 293px;
+    font-size: 25px;
+    color: #fff;
+}
+.e-mail-de-senha-1-1 {
+    position: absolute;
+    top: 407px;
+    left: 346px;
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+}
+.fotoempresa-1-icon {
+    position: absolute;
+    top: 0px;
+    left: 819px;
+    width: 1101px;
+    height: 1080px;
+    object-fit: cover;
+}
+.tela-esqueci-a-senha {
+    width: 100%;
+    position: relative;
+    background-color: #fff;
+    height: 1080px;
+    overflow: hidden;
+    text-align: left;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.5);
+    font-family: Inter;
+}
+

@@ -3,7 +3,6 @@ Todos os direitos reservados a https://baasic.com.br
 # No Backend
 1. > Entrar na pasta:
 2. > cd backend
-3. > cp .env.example .env
 3. > npm install
 4. > npm run build
 
@@ -14,8 +13,7 @@ Todos os direitos reservados a https://baasic.com.br
 # No Frontend
 1. > Entrar na pasta:
 2. > cd frontend
-3. > cp .env.exemple .env
-
+3. > npm install
 
 # Voltar para  o diretorio zapcomm
 1. > cd ..
@@ -38,4 +36,4 @@ Todos os direitos reservados a https://baasic.com.br
 
 
 3. Para rodar o docker-composer novamente digite o novo comando abixo
-> docker-compose up --no-build
+> docker-compose up

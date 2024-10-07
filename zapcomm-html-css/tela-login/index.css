@@ -1,0 +1,97 @@
+.logo-zapcomm-icon {
+    position: absolute;
+    top: 237px;
+    left: 158px;
+    width: 448px;
+    height: 138px;
+    object-fit: cover;
+}
+.tela-de-login-child {
+    position: absolute;
+    top: 428px;
+    left: 101px;
+    border-radius: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    width: 563px;
+    height: 88px;
+}
+.tela-de-login-item {
+    position: absolute;
+    top: 713px;
+    left: 101px;
+    border-radius: 10px;
+    background-color: #1b7358;
+    width: 563px;
+    height: 88px;
+    cursor: pointer;
+}
+.tela-de-login-inner {
+    position: absolute;
+    top: 548px;
+    left: 101px;
+    border-radius: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    width: 563px;
+    height: 88px;
+}
+.senha {
+    position: absolute;
+    top: 578px;
+    left: 118px;
+}
+.endereo-de-email {
+    position: absolute;
+    top: 458px;
+    left: 118px;
+}
+.registre-se {
+    color: #0c2454;
+}
+.no-possui-uma-container {
+    position: absolute;
+    top: 821px;
+    left: 233px;
+    font-size: 18px;
+    text-decoration: underline;
+    color: rgba(0, 0, 0, 0.65);
+}
+.esqueceu-a-senha {
+    position: absolute;
+    top: 668px;
+    left: 303px;
+    font-size: 18px;
+    text-decoration: underline;
+    color: #0c2454;
+    cursor: pointer;
+}
+.iniciar-sesso {
+    position: absolute;
+    top: 740px;
+    left: 285px;
+    font-size: 25px;
+    color: #fff;
+}
+.fotoempresa-1-icon {
+    position: absolute;
+    top: 0px;
+    left: 819px;
+    width: 1101px;
+    height: 1080px;
+    object-fit: cover;
+}
+.tela-de-login {
+    width: 100%;
+    position: relative;
+    background-color: #fff;
+    height: 1080px;
+    overflow: hidden;
+    text-align: left;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.5);
+    font-family: Inter;
+}
+
