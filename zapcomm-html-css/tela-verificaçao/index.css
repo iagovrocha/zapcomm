@@ -1,0 +1,114 @@
+.logo-zapcomm-icon {
+    position: absolute;
+    top: 216px;
+    left: 158px;
+    width: 448px;
+    height: 138px;
+    object-fit: cover;
+}
+.tela-codigo-de-verificao-child {
+    position: absolute;
+    top: 770px;
+    left: 98px;
+    border-radius: 10px;
+    background-color: #1b7358;
+    width: 563px;
+    height: 88px;
+    cursor: pointer;
+}
+.j-possui-uma {
+    text-decoration: underline;
+}
+.retorne-ao-login {
+    color: #0c2454;
+}
+.j-possui-uma-container {
+    position: absolute;
+    top: 878px;
+    left: 215px;
+    cursor: pointer;
+}
+.digite-o-cdigo {
+    position: absolute;
+    top: 548px;
+    left: 79px;
+}
+.verificar {
+    position: absolute;
+    top: 797px;
+    left: 316px;
+    font-size: 25px;
+    color: #fff;
+}
+.tela-codigo-de-verificao-item {
+    position: absolute;
+    top: 615px;
+    left: 546px;
+    border-radius: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    width: 114px;
+    height: 88px;
+}
+.tela-codigo-de-verificao-inner {
+    position: absolute;
+    top: 615px;
+    left: 406px;
+    border-radius: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    width: 114px;
+    height: 88px;
+}
+.rectangle-div {
+    position: absolute;
+    top: 615px;
+    left: 266px;
+    border-radius: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    width: 114px;
+    height: 88px;
+}
+.tela-codigo-de-verificao-child1 {
+    position: absolute;
+    top: 615px;
+    left: 126px;
+    border-radius: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    width: 114px;
+    height: 88px;
+}
+.senha-do-smartphone-1-icon {
+    position: absolute;
+    top: 410px;
+    left: 355px;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+.fotoempresa-1-icon {
+    position: absolute;
+    top: 0px;
+    left: 819px;
+    width: 1101px;
+    height: 1080px;
+    object-fit: cover;
+}
+.tela-codigo-de-verificao {
+    width: 100%;
+    position: relative;
+    background-color: #fff;
+    height: 1080px;
+    overflow: hidden;
+    text-align: left;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.65);
+    font-family: Inter;
+}
+
