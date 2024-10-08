@@ -512,10 +512,10 @@ const MainListItems = (props) => {
                 <img style={{ width: "100%", padding: "10px" }} src={logo} alt="image" />            
               </Hidden> 
               */}
-              <Typography style={{ fontSize: "12px", padding: "10px", textAlign: "right", fontWeight: "bold" }}>
+              {/* <Typography style={{ fontSize: "12px", padding: "10px", textAlign: "right", fontWeight: "bold" }}>
                 {`6.0.0`}
 
-              </Typography>
+              </Typography> */}
             </React.Fragment>
             }
 
