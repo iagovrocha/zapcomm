@@ -86,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    borderBottom: "1px solid #0C2C54",
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -399,9 +400,9 @@ const LoggedInLayout = ({ children, themeToggle }) => {
           </Typography>
 
 
-          <IconButton edge="start" onClick={toggleColorMode}>
+          {/* <IconButton edge="start" onClick={toggleColorMode}>
             {theme.mode === 'dark' ? <Brightness7Icon style={{ color: "black" }} /> : <Brightness4Icon style={{ color: "black" }} />}
-          </IconButton>
+          </IconButton> */}
 
           {/* <NotificationsVolume
             setVolume={setVolume}

@@ -52,8 +52,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "-15px",
     marginBottom: "-10px",
   },
+  background: {
+    backgroundColor: '#34D3A3', // Cor de fundo aplicada aqui
+  }
 }));
-
 
 function ListItemLink(props) {
   const { icon, primary, to, className } = props;
@@ -67,7 +69,7 @@ function ListItemLink(props) {
   );
 
   return (
-    <li>
+    <li >
       <ListItem button dense component={renderLink} className={className}>
         {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
         <ListItemText primary={primary} />
@@ -133,7 +135,7 @@ const reducer = (state, action) => {
 };
 
 const MainListItems = (props) => {
-  const classes = useStyles();
+  const classes = useStyles(); // Aplicação dos estilos
   const { drawerClose, collapsed } = props;
   const { whatsApps } = useContext(WhatsAppsContext);
   const { user, handleLogout } = useContext(AuthContext);
@@ -142,7 +144,8 @@ const MainListItems = (props) => {
   const [showCampaigns, setShowCampaigns] = useState(false);
   const [showKanban, setShowKanban] = useState(false);
   const [showOpenAi, setShowOpenAi] = useState(false);
-  const [showIntegrations, setShowIntegrations] = useState(false); const history = useHistory();
+  const [showIntegrations, setShowIntegrations] = useState(false);
+  const history = useHistory();
   const [showSchedules, setShowSchedules] = useState(false);
   const [showInternalChat, setShowInternalChat] = useState(false);
   const [showExternalApi, setShowExternalApi] = useState(false);
@@ -153,10 +156,10 @@ const MainListItems = (props) => {
   const [searchParam] = useState("");
   const [chats, dispatch] = useReducer(reducer, []);
   const { getPlanCompany } = usePlans();
-  
+
   const [version, setVersion] = useState(false);
-  
-  
+
+
   const { getVersion } = useVersion();
 
   const socketManager = useContext(SocketContext);
@@ -169,7 +172,7 @@ const MainListItems = (props) => {
     fetchVersion();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
- 
+
 
   useEffect(() => {
     dispatch({ type: "RESET" });
@@ -283,7 +286,7 @@ const MainListItems = (props) => {
   };
 
   return (
-    <div onClick={drawerClose}>
+    <div onClick={drawerClose} className={classes.background}>
       <Can
         role={user.profile}
         perform="dashboard:view"
@@ -296,52 +299,56 @@ const MainListItems = (props) => {
         )}
       />
 
-      <ListItemLink
+      {/* <div onClick={drawerClose} className={classes.background}>
+        {Conteúdo do componente continua inalterado}
+      </div> */}
+
+      <ListItemLink className={classes.background}
         to="/tickets"
         primary={i18n.t("mainDrawer.listItems.tickets")}
         icon={<WhatsAppIcon />}
       />
-	  
-	{showKanban && (  
-	  <ListItemLink
-        to="/kanban"
-        primary={i18n.t("Kanban")}
-        icon={<TableChartIcon />}
-      />
-	  )}
+
+      {showKanban && (
+        <ListItemLink className={classes.background}
+          to="/kanban"
+          primary={i18n.t("Kanban")}
+          icon={<TableChartIcon />}
+        />
+      )}
 
 
-      <ListItemLink
+      <ListItemLink className={classes.background}
         to="/quick-messages"
         primary={i18n.t("mainDrawer.listItems.quickMessages")}
         icon={<FlashOnIcon />}
       />
-	  
-	  <ListItemLink
+
+      <ListItemLink className={classes.background}
         to="/todolist"
         primary={i18n.t("Tarefas")}
         icon={<BorderColorIcon />}
       />
 
-      <ListItemLink
+      <ListItemLink className={classes.background}
         to="/contacts"
         primary={i18n.t("mainDrawer.listItems.contacts")}
         icon={<ContactPhoneOutlinedIcon />}
       />
 
-      <ListItemLink
+      <ListItemLink className={classes.background}
         to="/schedules"
         primary={i18n.t("mainDrawer.listItems.schedules")}
         icon={<EventIcon />}
       />
 
-      <ListItemLink
+      <ListItemLink className={classes.background}
         to="/tags"
         primary={i18n.t("mainDrawer.listItems.tags")}
         icon={<LocalOfferIcon />}
       />
 
-      <ListItemLink
+      <ListItemLink className={classes.background}
         to="/chats"
         primary={i18n.t("mainDrawer.listItems.chats")}
         icon={
@@ -351,19 +358,19 @@ const MainListItems = (props) => {
         }
       />
 
-      <ListItemLink
+      <ListItemLink className={classes.background}
         to="/helps"
         primary={i18n.t("mainDrawer.listItems.helps")}
         icon={<HelpOutlineIcon />}
       />
 
-      <Can
+      <Can className={classes.background}
         role={user.profile}
         perform="drawer-admin-items:view"
         yes={() => (
           <>
-            <Divider />
-            <ListSubheader
+            <Divider  className={classes.background} />
+            <ListSubheader className={classes.background}
               hidden={collapsed}
               style={{
                 position: "relative",
@@ -375,34 +382,34 @@ const MainListItems = (props) => {
               color="inherit">
               {i18n.t("mainDrawer.listItems.administration")}
             </ListSubheader>
-			
+
             {showCampaigns && (
               <>
-                <ListItem
+                <ListItem className={classes.background}
                   button
                   onClick={() => setOpenCampaignSubmenu((prev) => !prev)}
                 >
-                  <ListItemIcon>
+                  <ListItemIcon >
                     <EventAvailableIcon />
                   </ListItemIcon>
                   <ListItemText
                     primary={i18n.t("mainDrawer.listItems.campaigns")}
                   />
-                  {openCampaignSubmenu ? (
-                    <ExpandLessIcon />
+                  {openCampaignSubmenu  ? (
+                    <ExpandLessIcon className={classes.background} />
                   ) : (
                     <ExpandMoreIcon />
                   )}
                 </ListItem>
-                <Collapse
+                <Collapse className={classes.background}
                   style={{ paddingLeft: 15 }}
                   in={openCampaignSubmenu}
                   timeout="auto"
                   unmountOnExit
                 >
-                  <List component="div" disablePadding>
-                    <ListItem onClick={() => history.push("/campaigns")} button>
-                      <ListItemIcon>
+                  <List  className={classes.background} component="div" disablePadding>
+                    <ListItem className={classes.background} onClick={() => history.push("/campaigns")} button>
+                      <ListItemIcon className={classes.background}>
                         <ListIcon />
                       </ListItemIcon>
                       <ListItemText primary="Listagem" />
@@ -416,7 +423,7 @@ const MainListItems = (props) => {
                       </ListItemIcon>
                       <ListItemText primary="Listas de Contatos" />
                     </ListItem>
-                    <ListItem
+                    <ListItem className={classes.background}
                       onClick={() => history.push("/campaigns-config")}
                       button
                     >
@@ -430,14 +437,14 @@ const MainListItems = (props) => {
               </>
             )}
             {user.super && (
-              <ListItemLink
+              <ListItemLink className={classes.background}
                 to="/announcements"
                 primary={i18n.t("mainDrawer.listItems.annoucements")}
                 icon={<AnnouncementIcon />}
               />
             )}
             {showOpenAi && (
-              <ListItemLink
+              <ListItemLink className={classes.background}
                 to="/prompts"
                 primary={i18n.t("mainDrawer.listItems.prompts")}
                 icon={<AllInclusive />}
@@ -445,13 +452,13 @@ const MainListItems = (props) => {
             )}
 
             {showIntegrations && (
-              <ListItemLink
+              <ListItemLink className={classes.background}
                 to="/queue-integration"
                 primary={i18n.t("mainDrawer.listItems.queueIntegration")}
                 icon={<DeviceHubOutlined />}
               />
             )}
-            <ListItemLink
+            <ListItemLink className={classes.background}
               to="/connections"
               primary={i18n.t("mainDrawer.listItems.connections")}
               icon={
@@ -460,43 +467,43 @@ const MainListItems = (props) => {
                 </Badge>
               }
             />
-            <ListItemLink
+            <ListItemLink className={classes.background}
               to="/files"
               primary={i18n.t("mainDrawer.listItems.files")}
               icon={<AttachFile />}
             />
-            <ListItemLink
+            <ListItemLink className={classes.background}
               to="/queues"
               primary={i18n.t("mainDrawer.listItems.queues")}
               icon={<AccountTreeOutlinedIcon />}
             />
-            <ListItemLink
+            <ListItemLink className={classes.background}
               to="/users"
               primary={i18n.t("mainDrawer.listItems.users")}
               icon={<PeopleAltOutlinedIcon />}
             />
             {showExternalApi && (
               <>
-                <ListItemLink
+                <ListItemLink className={classes.background}
                   to="/messages-api"
                   primary={i18n.t("mainDrawer.listItems.messagesAPI")}
                   icon={<CodeRoundedIcon />}
                 />
               </>
             )}
-            <ListItemLink
+            <ListItemLink className={classes.background}
               to="/financeiro"
               primary={i18n.t("mainDrawer.listItems.financeiro")}
               icon={<LocalAtmIcon />}
             />
 
-            <ListItemLink
+            <ListItemLink className={classes.background}
               to="/settings"
               primary={i18n.t("mainDrawer.listItems.settings")}
               icon={<SettingsOutlinedIcon />}
             />
-			
-			
+
+
             {!collapsed && <React.Fragment>
               <Divider />
               {/* 
@@ -511,7 +518,7 @@ const MainListItems = (props) => {
               </Typography>
             </React.Fragment>
             }
-			
+
           </>
         )}
       />
