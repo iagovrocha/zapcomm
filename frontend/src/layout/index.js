@@ -54,8 +54,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.fancyBackground,
     '& .MuiButton-outlinedPrimary': {
       color: theme.mode === 'light' ? '#FFF' : '#FFF',
-	  //backgroundColor: theme.mode === 'light' ? '#682ee2' : '#682ee2',
-	backgroundColor: theme.mode === 'light' ? theme.palette.primary.main : '#1c1c1c',
+      //backgroundColor: theme.mode === 'light' ? '#682ee2' : '#682ee2',
+      backgroundColor: theme.mode === 'light' ? theme.palette.primary.main : '#1c1c1c',
       //border: theme.mode === 'light' ? '1px solid rgba(0 124 102)' : '1px solid rgba(255, 255, 255, 0.5)',
     },
     '& .MuiTab-textColorPrimary.Mui-selected': {
@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "0 8px",
+    padding: "0 1px",
     minHeight: "48px",
     [theme.breakpoints.down("sm")]: {
       height: "48px"
@@ -86,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    borderBottom: "1px solid #0C2C54",
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -154,12 +155,12 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
     flexDirection: "column"
   },
-  containerWithScroll: {
-    flex: 1,
-    padding: theme.spacing(1),
-    overflowY: "scroll",
-    ...theme.scrollbarStyles,
-  },
+  // containerWithScroll: {
+  //   flex: 1,
+  //   padding: theme.spacing(1), barrinha lateral e tamnho da imagem
+  //   overflowY: "scroll",
+  //   ...theme.scrollbarStyles,
+  // },
   NotificationsPopOver: {
     // color: theme.barraSuperior.secondary.main,
   },
@@ -350,11 +351,10 @@ const LoggedInLayout = ({ children, themeToggle }) => {
             <ChevronLeftIcon />
           </IconButton>
         </div>
-        <Divider />
         <List className={classes.containerWithScroll}>
           <MainListItems drawerClose={drawerClose} collapsed={!drawerOpen} />
         </List>
-        <Divider />
+        
       </Drawer>
       <UserModal
         open={userModalOpen}
@@ -383,44 +383,44 @@ const LoggedInLayout = ({ children, themeToggle }) => {
           <Typography
             component="h2"
             variant="h6"
-            color="inherit"
             noWrap
             className={classes.title}
+            style={{ color: "black" }} // Aplicando cor preta
           >
-            {/* {greaterThenSm && user?.profile === "admin" && getDateAndDifDays(user?.company?.dueDate).difData < 7 ? ( */}
             {greaterThenSm && user?.profile === "admin" && user?.company?.dueDate ? (
               <>
-                Olá <b>{user.name}</b>, Bem vindo a <b>{user?.company?.name}</b>! (Ativo até {dateToClient(user?.company?.dueDate)})
+                Olá <b>{user.name}</b>, Bem vindo a Zapcomm <b>{user?.company?.name}</b>!
               </>
             ) : (
               <>
-                Olá  <b>{user.name}</b>, Bem vindo a <b>{user?.company?.name}</b>!
+                Olá  <b>{user.name}</b>, Bem vindo a Zapcomm <b>{user?.company?.name}</b>!
               </>
             )}
           </Typography>
 
-          <IconButton edge="start" onClick={toggleColorMode}>
-            {theme.mode === 'dark' ? <Brightness7Icon style={{ color: "white" }} /> : <Brightness4Icon style={{ color: "white" }} />}
-          </IconButton>
 
-          <NotificationsVolume
+          {/* <IconButton edge="start" onClick={toggleColorMode}>
+            {theme.mode === 'dark' ? <Brightness7Icon style={{ color: "black" }} /> : <Brightness4Icon style={{ color: "black" }} />}
+          </IconButton> */}
+
+          {/* <NotificationsVolume
             setVolume={setVolume}
             volume={volume}
-          />
+          /> */}
 
-          <IconButton
+          {/* <IconButton
             onClick={handleRefreshPage}
             aria-label={i18n.t("mainDrawer.appBar.refresh")}
             color="inherit"
           >
-            <CachedIcon style={{ color: "white" }} />
-          </IconButton>
+            <CachedIcon style={{ color: "black" }} />
+          </IconButton> */}
 
-          {user.id && <NotificationsPopOver volume={volume} />}
+          {/* {user.id && <NotificationsPopOver volume={volume} />} */}
 
-          <AnnouncementsPopover />
+          {/* <AnnouncementsPopover />
 
-          <ChatPopover />
+          <ChatPopover /> */}
 
           <div>
             <IconButton
@@ -429,7 +429,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
               aria-haspopup="true"
               onClick={handleMenu}
               variant="contained"
-              style={{ color: "white" }}
+              style={{ color: "black" }}
             >
               <AccountCircle />
             </IconButton>
