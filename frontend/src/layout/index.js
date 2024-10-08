@@ -351,11 +351,10 @@ const LoggedInLayout = ({ children, themeToggle }) => {
             <ChevronLeftIcon />
           </IconButton>
         </div>
-        <Divider />
         <List className={classes.containerWithScroll}>
           <MainListItems drawerClose={drawerClose} collapsed={!drawerOpen} />
         </List>
-        <Divider />
+        
       </Drawer>
       <UserModal
         open={userModalOpen}
