@@ -69,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: 24, // keep right padding when drawer closed
     color: theme.palette.dark.main,
     background: theme.palette.barraSuperior,
+    borderBottom: "1px solid #0C2C54", 
   },
   toolbarIcon: {
     display: "flex",
@@ -86,10 +87,11 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    borderBottom: "1px solid #0C2C54", 
   },
   appBarShift: {
     marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    width: "100%",//`calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -110,6 +112,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
   },
   drawerPaper: {
+    backgroundColor: "#34D3A3",   //Cor do Background do MainListItems
     position: "relative",
     whiteSpace: "nowrap",
     width: drawerWidth,
@@ -149,7 +152,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(4),
   },
   paper: {
-    padding: theme.spacing(2),
+    // padding: theme.spacing(2),
     display: "flex",
     overflow: "auto",
     flexDirection: "column"
@@ -308,24 +311,24 @@ const LoggedInLayout = ({ children, themeToggle }) => {
 
   const drawerClose = () => {
     if (document.body.offsetWidth < 600) {
-      setDrawerOpen(false);
+      setDrawerOpen(true);
     }
   };
 
-  const handleRefreshPage = () => {
-    window.location.reload(false);
-  }
+  // const handleRefreshPage = () => {
+  //   window.location.reload(false);
+  // }
 
-  const handleMenuItemClick = () => {
-    const { innerWidth: width } = window;
-    if (width <= 600) {
-      setDrawerOpen(false);
-    }
-  };
+  // const handleMenuItemClick = () => {
+  //   const { innerWidth: width } = window;
+  //   if (width <= 600) {
+  //     setDrawerOpen(false);
+  //   }
+  // };
 
-  const toggleColorMode = () => {
-    colorMode.toggleColorMode();
-  }
+  // const toggleColorMode = () => {
+  //   colorMode.toggleColorMode();
+  // }
 
   if (loading) {
     return <BackdropLoading />;
@@ -345,10 +348,10 @@ const LoggedInLayout = ({ children, themeToggle }) => {
         open={drawerOpen}
       >
         <div className={classes.toolbarIcon}>
-          <img src={logo} className={classes.logo} alt="logo" />
-          <IconButton onClick={() => setDrawerOpen(!drawerOpen)}>
+          {/* <img src={logo} className={classes.logo} alt="logo" />
+           <IconButton onClick={() => setDrawerOpen(!drawerOpen)}>
             <ChevronLeftIcon />
-          </IconButton>
+          </IconButton> */}
         </div>
         <Divider />
         <List className={classes.containerWithScroll}>
@@ -374,34 +377,36 @@ const LoggedInLayout = ({ children, themeToggle }) => {
             onClick={() => setDrawerOpen(!drawerOpen)}
             className={clsx(
               classes.menuButton,
-              drawerOpen && classes.menuButtonHidden
+              // drawerOpen && classes.menuButtonHidden
             )}
           >
             <MenuIcon />
           </IconButton>
-
+          <img src={logo} className={classes.logo} alt="logo" style={{ marginRight: 16 }} />
           <Typography
             component="h2"
             variant="h6"
+            color="inherit"
             noWrap
             className={classes.title}
-            style={{ color: "black" }} // Aplicando cor preta
+            style={{ textAlign: "right", color: "black"}} // Adicione esta linha para alinhar o texto à direita
           >
+            {/* {greaterThenSm && user?.profile === "admin" && getDateAndDifDays(user?.company?.dueDate).difData < 7 ? ( */}
             {greaterThenSm && user?.profile === "admin" && user?.company?.dueDate ? (
               <>
-                Olá <b>{user.name}</b>, Bem vindo a Zapcomm <b>{user?.company?.name}</b>!
+                Olá <b>{user.name}</b>, Bem vindo ao Zapcomm <b>{user?.company?.name}</b>!
               </>
             ) : (
               <>
-                Olá  <b>{user.name}</b>, Bem vindo a Zapcomm <b>{user?.company?.name}</b>!
+                Olá <b>{user.name}</b>, Bem vindo ao Zapcomm <b>{user?.company?.name}</b>!
               </>
             )}
           </Typography>
 
 
-          <IconButton edge="start" onClick={toggleColorMode}>
+          {/* <IconButton edge="start" onClick={toggleColorMode}>
             {theme.mode === 'dark' ? <Brightness7Icon style={{ color: "black" }} /> : <Brightness4Icon style={{ color: "black" }} />}
-          </IconButton>
+          </IconButton> */}
 
           {/* <NotificationsVolume
             setVolume={setVolume}
