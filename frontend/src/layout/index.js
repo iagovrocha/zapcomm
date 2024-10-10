@@ -112,6 +112,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
   },
   drawerPaper: {
+    backgroundColor: "#34D3A3",   //Cor do Background do MainListItems
     position: "relative",
     whiteSpace: "nowrap",
     width: drawerWidth,

@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "-10px",
   },
   background: {
-    backgroundColor: '#34D3A3', // Cor de fundo aplicada aqui
+    //backgroundColor: '#34D3A3', // Cor de fundo aplicada aqui
   },
 }));
 
@@ -504,8 +504,7 @@ const MainListItems = (props) => {
             />
 
 
-            {!collapsed && <React.Fragment>
-              <Divider />
+              {/* <Divider /> */}
               {/* 
               // IMAGEM NO MENU
               <Hidden only={['sm', 'xs']}>
@@ -516,8 +515,7 @@ const MainListItems = (props) => {
                 {`6.0.0`}
 
               </Typography> */}
-            </React.Fragment>
-            }
+
 
           </>
         )}
