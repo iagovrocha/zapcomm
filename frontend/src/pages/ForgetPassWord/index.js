@@ -25,20 +25,21 @@ import { toast } from 'react-toastify';
 import toastError from '../../errors/toastError';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import LoginImg from "../../assets/FotoLogin.png"
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100vw",
     height: "100vh",
-    background: "black", //Cor de fundo
+    backgroundColor: "#FFFFFF",
     backgroundRepeat: "no-repeat",
-    backgroundSize: "100% 100%",
-    backgroundPosition: "center",
+    backgroundSize: "50% 50%",
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
+    position: "relative", // Isso permitirá o posicionamento da imagem
   },
   paper: {
     backgroundColor: "white",
@@ -62,6 +63,19 @@ const useStyles = makeStyles((theme) => ({
   powered: {
     color: "white",
   },
+  imageLogin: {
+    position: "right", // Para posicionar a imagem no lado direito
+    right: "0", // Alinha a imagem à direita
+    bottom: "0",
+    height: "100%", // Ajusta a altura para que ocupe toda a tela
+    display: "block", // Exibe a imagem em telas maiores
+    '@media (max-width: 1070px)': { // Esconde a imagem em dispositivos móveis (largura menor que 768px)
+        display: "none",
+    },
+    '@media (max-width: 1150px)': {
+			width: "600px",
+		},
+},
 }));
 
 const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
@@ -311,6 +325,7 @@ const handleSendEmail = async (values) => {
                     fullWidth
                     variant="contained"
                     color="primary"
+                    style={{ backgroundColor: "#1B7358" }}
                     className={classes.submit}
                   >
                     Redefinir Senha
@@ -321,6 +336,7 @@ const handleSendEmail = async (values) => {
                     fullWidth
                     variant="contained"
                     color="primary"
+                    style={{ backgroundColor: "#1B7358" }}
                     className={classes.submit}
                   >
                     Enviar Email
@@ -349,6 +365,7 @@ const handleSendEmail = async (values) => {
         </div>
         <Box mt={5} />
       </Container>
+      <img className={classes.imageLogin} src={LoginImg} alt="Foto de Login" />
     </div>
   );
 };
