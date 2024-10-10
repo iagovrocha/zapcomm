@@ -28,6 +28,8 @@ import SendIcon from '@material-ui/icons/Send';
 import MessageIcon from '@material-ui/icons/Message';
 import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
 import TimerIcon from '@material-ui/icons/Timer';
+import HeadsetMicOutlinedIcon from '@material-ui/icons/HeadsetMicOutlined';
+import LibraryAddCheckOutlinedIcon from '@material-ui/icons/LibraryAddCheckOutlined';
 
 import { makeStyles } from "@material-ui/core/styles";
 import { grey, blue } from "@material-ui/core/colors";
@@ -403,7 +405,7 @@ const Dashboard = () => {
                     component="h3"
                     variant="h6"
                     paragraph
-                    style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
+                    style={{ fontFamily: 'Inter Tight, sans-serif', fontSize: "18px", color: 'black' }} // Aplicando a nova fonte
                   >
                     Chamados Pendentes
                   </Typography>
@@ -424,10 +426,10 @@ const Dashboard = () => {
                   </Grid>
                 </Grid>
                 <Grid item xs={2}>
-                  <CallIcon
+                  <HeadsetMicOutlinedIcon
                     style={{
                       fontSize: 100,
-                      color: "#000000",
+                      color: "#0C2454",
                     }}
                   />
                 </Grid>
@@ -450,9 +452,9 @@ const Dashboard = () => {
                     variant="h6"
                     paragraph
                     className={classes.customFont}  // Aplicando a classe customizada
-                    style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
+                    style={{ fontFamily: 'Inter Tight, sans-serif', fontSize: "18px", color: 'black' }} // Aplicando a nova fonte
                   >
-                    Andamento
+                    Chamados em Andamento
                   </Typography>
                   <Grid item>
                   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
@@ -474,7 +476,7 @@ const Dashboard = () => {
                   <HourglassEmptyIcon
                     style={{
                       fontSize: 100,
-                      color: "#000000",
+                      color: "#0C2454",
                     }}
                   />
                 </Grid>
@@ -538,7 +540,7 @@ const Dashboard = () => {
                     variant="h6"
                     paragraph
                     className={classes.customFont}  // Aplicando a classe customizada
-                    style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
+                    style={{ fontFamily: 'Inter Tight, sans-serif', fontSize: "18px", color: 'black' }} // Aplicando a nova fonte
                   >
                     Chamados Finalizados
                   </Typography>
@@ -559,10 +561,10 @@ const Dashboard = () => {
                   </Grid>
                 </Grid>
                 <Grid item xs={4}>
-                  <CheckCircleIcon
+                  <LibraryAddCheckOutlinedIcon
                     style={{
                       fontSize: 100,
-                      color: "#000000",
+                      color: "#0C2454",
                     }}
                   />
                 </Grid>
@@ -584,7 +586,7 @@ const Dashboard = () => {
                     variant="h6"
                     paragraph
                     className={classes.customFont}  // Aplicando a classe customizada
-                    style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
+                    style={{ fontFamily: 'Inter Tight, sans-serif', fontSize: '18px', color: 'black' }} // Aplicando a nova fonte
                   >
                     Novos Chamados
                   </Typography>
@@ -605,10 +607,10 @@ const Dashboard = () => {
                   </Grid>
                 </Grid>
                 <Grid item xs={4}>
-                  <GroupAddIcon
+                  <GroupIcon
                     style={{
                       fontSize: 100,
-                      color: "#000000",
+                      color: "#0C2454",
                     }}
                   />
                 </Grid>
@@ -631,7 +633,7 @@ const Dashboard = () => {
                     variant="h6"
                     paragraph
                     className={classes.customFont}  // Aplicando a classe customizada
-                    style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
+                    style={{ fontFamily: 'Inter Tight, sans-serif', fontSize: "18px", color: 'black' }} // Aplicando a nova fonte
                   >
                     T.M. de Atendimento
                   </Typography>
@@ -655,7 +657,7 @@ const Dashboard = () => {
                   <AccessAlarmIcon
                     style={{
                       fontSize: 100,
-                      color: "#000000",
+                      color: "#0C2454",
                     }}
                   />
                 </Grid>
@@ -677,7 +679,7 @@ const Dashboard = () => {
                     variant="h6"
                     paragraph
                     className={classes.customFont}  // Aplicando a classe customizada
-                    style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
+                    style={{ fontFamily: 'Inter Tight, sans-serif', fontSize: "18px", color: 'black' }} // Aplicando a nova fonte
                   >
                     T.M. de Espera
                   </Typography>
@@ -701,7 +703,7 @@ const Dashboard = () => {
                   <TimerIcon
                     style={{
                       fontSize: 100,
-                      color: "#000000",
+                      color: "#0C2454",
                     }}
                   />
                 </Grid>
