@@ -206,8 +206,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
 }));
-
-
 const Dashboard = () => {
   const classes = useStyles();
   const [counters, setCounters] = useState({});
@@ -405,18 +403,24 @@ const Dashboard = () => {
                     component="h3"
                     variant="h6"
                     paragraph
-                    style={{ fontFamily: 'Inter Tight, sans-serif', color:'black' }} // Aplicando a nova fonte
+                    style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
                   >
                     Chamados Pendentes
                   </Typography>
                   <Grid item>
-                    <Typography
-                      component="h1"
-                      variant="h4"
-                      style={{ fontFamily: 'Inter Tight, sans-serif', color:'black' }} // Aplicando a nova fonte
-                    >
-                      {counters.supportHappening}
-                    </Typography>
+                    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
+                      {/* Outros componentes do conteúdo aqui */}
+
+                      <div style={{ marginTop: 'auto' }}> {/* Isso empurra o Typography para o fundo */}
+                        <Typography
+                          component="h1"
+                          variant="body2" // Escolha uma variante menor
+                          style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
+                        >
+                          {`${counters.supportHappening} Chamados Pendentes`}
+                        </Typography>
+                      </div>
+                    </div>
                   </Grid>
                 </Grid>
                 <Grid item xs={2}>
@@ -446,20 +450,24 @@ const Dashboard = () => {
                     variant="h6"
                     paragraph
                     className={classes.customFont}  // Aplicando a classe customizada
-                    style={{ fontFamily: 'Inter Tight, sans-serif', color:'black' }} // Aplicando a nova fonte
+                    style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
                   >
-                    Chamados em 
                     Andamento
                   </Typography>
                   <Grid item>
-                    <Typography
-                      component="h1"
-                      variant="h4"
-                      className={classes.customFont}  // Aplicando a classe customizada
-                      style={{ fontFamily: 'Inter Tight, sans-serif', color:'black' }} // Aplicando a nova fonte
-                    >
-                      {counters.supportPending}
-                    </Typography>
+                  <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
+                      {/* Outros componentes do conteúdo aqui */}
+
+                      <div style={{ marginTop: 'auto' }}> {/* Isso empurra o Typography para o fundo */}
+                        <Typography
+                          component="h1"
+                          variant="body2" // Escolha uma variante menor
+                          style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
+                        >
+                          {`${counters.supportPending} Chamados em Andamento`}
+                        </Typography>
+                      </div>
+                    </div>
                   </Grid>
                 </Grid>
                 <Grid item xs={4}>
@@ -525,24 +533,29 @@ const Dashboard = () => {
             >
               <Grid container spacing={3}>
                 <Grid item xs={8}>
-                <Typography
+                  <Typography
                     component="h3"
                     variant="h6"
                     paragraph
                     className={classes.customFont}  // Aplicando a classe customizada
-                    style={{ fontFamily: 'Inter Tight, sans-serif', color:'black' }} // Aplicando a nova fonte
+                    style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
                   >
                     Chamados Finalizados
                   </Typography>
                   <Grid item>
-                    <Typography
-                      component="h1"
-                      variant="h4"
-                      className={classes.customFont}  // Aplicando a classe customizada
-                      style={{ fontFamily: 'Inter Tight, sans-serif', color:'black' }} // Aplicando a nova fonte
-                    >
-                      {counters.supportFinished}
-                    </Typography>
+                  <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
+                      {/* Outros componentes do conteúdo aqui */}
+
+                      <div style={{ marginTop: 'auto' }}> {/* Isso empurra o Typography para o fundo */}
+                        <Typography
+                          component="h1"
+                          variant="body2" // Escolha uma variante menor
+                          style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
+                        >
+                          {`${counters.supportFinished} Chamados Finalizados`}
+                        </Typography>
+                      </div>
+                    </div>
                   </Grid>
                 </Grid>
                 <Grid item xs={4}>
@@ -566,24 +579,29 @@ const Dashboard = () => {
             >
               <Grid container spacing={3}>
                 <Grid item xs={8}>
-                <Typography
+                  <Typography
                     component="h3"
                     variant="h6"
                     paragraph
                     className={classes.customFont}  // Aplicando a classe customizada
-                    style={{ fontFamily: 'Inter Tight, sans-serif', color:'black' }} // Aplicando a nova fonte
+                    style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
                   >
                     Novos Chamados
                   </Typography>
                   <Grid item>
-                    <Typography
-                      component="h1"
-                      variant="h4"
-                      className={classes.customFont}  // Aplicando a classe customizada
-                      style={{ fontFamily: 'Inter Tight, sans-serif', color:'black' }} // Aplicando a nova fonte
-                    >
-                      {GetContacts(true)}
-                    </Typography>
+                  <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
+                      {/* Outros componentes do conteúdo aqui */}
+
+                      <div style={{ marginTop: 'auto' }}> {/* Isso empurra o Typography para o fundo */}
+                        <Typography
+                          component="h1"
+                          variant="body2" // Escolha uma variante menor
+                          style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
+                        >
+                          {`${GetContacts(true)} Novos Chamados`}
+                        </Typography>
+                      </div>
+                    </div>
                   </Grid>
                 </Grid>
                 <Grid item xs={4}>
@@ -608,24 +626,29 @@ const Dashboard = () => {
             >
               <Grid container spacing={3}>
                 <Grid item xs={8}>
-                <Typography
+                  <Typography
                     component="h3"
                     variant="h6"
                     paragraph
                     className={classes.customFont}  // Aplicando a classe customizada
-                    style={{ fontFamily: 'Inter Tight, sans-serif', color:'black' }} // Aplicando a nova fonte
+                    style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
                   >
                     T.M. de Atendimento
                   </Typography>
                   <Grid item>
-                    <Typography
-                      component="h1"
-                      variant="h4"
-                      className={classes.customFont}  // Aplicando a classe customizada
-                      style={{ fontFamily: 'Inter Tight, sans-serif', color:'black' }} // Aplicando a nova fonte
-                    >
-                      {formatTime(counters.avgSupportTime)}
-                    </Typography>
+                  <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
+                      {/* Outros componentes do conteúdo aqui */}
+
+                      <div style={{ marginTop: 'auto' }}> {/* Isso empurra o Typography para o fundo */}
+                        <Typography
+                          component="h1"
+                          variant="body2" // Escolha uma variante menor
+                          style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
+                        >
+                          {`${formatTime(counters.avgSupportTime)} `}
+                        </Typography>
+                      </div>
+                    </div>
                   </Grid>
                 </Grid>
                 <Grid item xs={4}>
@@ -649,24 +672,29 @@ const Dashboard = () => {
             >
               <Grid container spacing={3}>
                 <Grid item xs={8}>
-                <Typography
+                  <Typography
                     component="h3"
                     variant="h6"
                     paragraph
                     className={classes.customFont}  // Aplicando a classe customizada
-                    style={{ fontFamily: 'Inter Tight, sans-serif', color:'black' }} // Aplicando a nova fonte
+                    style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
                   >
-                  T.M. de Espera
+                    T.M. de Espera
                   </Typography>
                   <Grid item>
-                    <Typography
-                      component="h1"
-                      variant="h4"
-                      className={classes.customFont}  // Aplicando a classe customizada
-                      style={{ fontFamily: 'Inter Tight, sans-serif', color:'black' }} // Aplicando a nova fonte
-                    >
-                      {formatTime(counters.avgWaitTime)}
-                    </Typography>
+                  <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
+                      {/* Outros componentes do conteúdo aqui */}
+
+                      <div style={{ marginTop: 'auto' }}> {/* Isso empurra o Typography para o fundo */}
+                        <Typography
+                          component="h1"
+                          variant="body2" // Escolha uma variante menor
+                          style={{ fontFamily: 'Inter Tight, sans-serif', color: 'black' }} // Aplicando a nova fonte
+                        >
+                          {`${formatTime(counters.avgWaitTime)} `}
+                        </Typography>
+                      </div>
+                    </div>
                   </Grid>
                 </Grid>
                 <Grid item xs={4}>

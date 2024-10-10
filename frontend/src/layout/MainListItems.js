@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
   background: {
     backgroundColor: '#34D3A3', // Cor de fundo aplicada aqui
-  }
+  },
 }));
 
 function ListItemLink(props) {
