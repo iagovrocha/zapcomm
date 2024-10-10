@@ -352,10 +352,11 @@ const LoggedInLayout = ({ children, themeToggle }) => {
             <ChevronLeftIcon />
           </IconButton> */}
         </div>
+        <Divider />
         <List className={classes.containerWithScroll}>
           <MainListItems drawerClose={drawerClose} collapsed={!drawerOpen} />
         </List>
-        
+        <Divider />
       </Drawer>
       <UserModal
         open={userModalOpen}
@@ -392,7 +393,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
             {/* {greaterThenSm && user?.profile === "admin" && getDateAndDifDays(user?.company?.dueDate).difData < 7 ? ( */}
             {greaterThenSm && user?.profile === "admin" && user?.company?.dueDate ? (
               <>
-                Olá <b>{user.name}</b>, Bem vindo ao Zapcomm <b>{user?.company?.name}</b>! (Ativo até {dateToClient(user?.company?.dueDate)})
+                Olá <b>{user.name}</b>, Bem vindo ao Zapcomm <b>{user?.company?.name}</b>!
               </>
             ) : (
               <>

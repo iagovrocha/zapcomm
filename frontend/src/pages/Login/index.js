@@ -21,8 +21,8 @@ const Copyright = () => {
 	return (
 		<Typography variant="body2" color="#000000" align="center">
 			{"Copyright "}
-			<Link color="primary" href="#">
-				{nomeEmpresa} - v {versionSystem}
+			<Link color="primary" href="https://baasic.com.br/" target="_blank">
+				{"Baasic"} - v {versionSystem}
 			</Link>{" "}
 			{new Date().getFullYear()}
 			{"."}
@@ -69,8 +69,11 @@ const useStyles = makeStyles(theme => ({
 		bottom: "0",
 		height: "100%", // Ajusta a altura para que ocupe toda a tela
 		display: "block", // Exibe a imagem em telas maiores
-		'@media (max-width: 768px)': { // Esconde a imagem em dispositivos móveis (largura menor que 768px)
+		'@media (max-width: 1070px)': { // Esconde a imagem em dispositivos móveis (largura menor que 768px)
 			display: "none",
+		},
+		'@media (max-width: 1150px)': {
+			width: "600px",
 		},
 	},
 }));
