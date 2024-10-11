@@ -46,7 +46,7 @@ const App = () => {
                     width: "8px",
                 },
                 "&::-webkit-scrollbar-thumb": {
-                    backgroundColor: mode === "light" ? "#F3F3F3" : "#333333",
+                    backgroundColor: mode === "light" ? "#6aac98" : "#333333",
                 },
             },
             palette: {
