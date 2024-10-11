@@ -26,6 +26,8 @@ import { Button } from "@material-ui/core";
 import { TagsFilter } from "../TagsFilter";
 import { UsersFilter } from "../UsersFilter";
 
+import Typography from "@material-ui/core/Typography";
+
 const useStyles = makeStyles(theme => ({
 	ticketsWrapper: {
 		position: "relative",
@@ -55,8 +57,8 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	tab: {
-		minWidth: 120,
-		width: 120,
+		minWidth: 200, //120
+		width: 200,    //120
 	},
 
 	internalTab: {
@@ -78,8 +80,8 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	serachInputWrapper: {
+    border: "solid 1px #828282",
 		flex: 1,
-		background: theme.palette.total,
 		display: "flex",
 		borderRadius: 40,
 		padding: 4,
@@ -136,7 +138,23 @@ const useStyles = makeStyles(theme => ({
 		'& .MuiInputLabel-outlined': {
 			marginTop: "-6px"
 		}
-	}
+	},
+  AgrupamentoDoPesquisarENovo: {
+    paddingTop: "10px",
+    paddingBottom: "12px",
+    display: "inline-flex",
+    width: "70%"
+  },
+  BotaoAdicionar: {
+    borderRadius: "40px",
+    padding: "10px 32px",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--logo-bg, #001C27)"
+  },
+  MenuAbaixoPesquisar: {
+    display: "inline-flex",
+  },
 }));
 
 const TicketsManagerTabs = () => {
@@ -223,6 +241,87 @@ const TicketsManagerTabs = () => {
   };
 
   return (
+    <div>
+      <h1 style={{margin: "0"}}>Chamados</h1>
+      <Typography
+        component="subtitle1"
+        variant="body1" 
+        style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+        >
+          {"Analise seus chamados com base nas categorias: aberto atendendo, aberto aguardando e resolvido."}
+      </Typography>
+      <div className={classes.AgrupamentoDoPesquisarENovo}>
+      <div className={classes.serachInputWrapper}>
+            <SearchIcon className={classes.searchIcon} />
+            <InputBase
+              className={classes.searchInput}
+              //style={{width: "50%", paddingRight: "10px"}}
+              inputRef={searchInputRef}
+              placeholder={i18n.t("Buscar chamado")}
+              type="search"
+              onChange={handleSearch}
+              />
+      </div>
+      <div
+        style={{width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px"}}
+      >
+      </div>
+      <Button
+        variant="outlined"
+        color="primary"
+        className={classes.BotaoAdicionar}
+        onClick={() => setNewTicketModalOpen(true)}
+        >
+        {i18n.t("+ Novo")}
+      </Button>
+      </div>
+      <div className={classes.MenuAbaixoPesquisar}>
+      <Tabs
+        value={tab}
+        onChange={handleChangeTab}
+        >
+          <Tab
+            value={"open"}
+            label={i18n.t("Chamados Abertos")}
+            classes={{ root: classes.tab }}
+          />
+          <Tab
+            value={"closed"}
+            label={i18n.t("Chamados Resolvidos")}
+            classes={{ root: classes.tab }}
+          />
+      </Tabs>
+  
+          <Can
+              role={user.profile}
+              //style={{marginLeft: "250px"}}
+              perform="tickets-manager:showall"
+              yes={() => (
+                <FormControlLabel
+                  label={i18n.t("tickets.buttons.showAll")}
+                  labelPlacement="start"
+                  control={
+                    <Switch
+                      size="small"
+                      checked={showAllTickets}
+                      onChange={() =>
+                        setShowAllTickets((prevState) => !prevState)
+                      }
+                      name="showAllTickets"
+                      color="primary"
+                    />
+                  }
+                />
+              )}
+            />
+        <TicketsQueueSelect
+          style={{ marginLeft: 6 }}
+          selectedQueueIds={selectedQueueIds}
+          userQueues={user?.queues}
+          onChange={(values) => setSelectedQueueIds(values)}
+        />
+      </div>
+      {/* ANTIGO SITE */}
     <Paper elevation={0} variant="outlined" className={classes.ticketsWrapper}>
       <NewTicketModal
         modalOpen={newTicketModalOpen}
@@ -381,6 +480,7 @@ const TicketsManagerTabs = () => {
         />
       </TabPanel>
     </Paper>
+    </div>
   );
 };
 
