@@ -154,6 +154,7 @@ const useStyles = makeStyles(theme => ({
   },
   MenuAbaixoPesquisar: {
     display: "inline-flex",
+    gap: "235px",
   },
 }));
 
@@ -291,7 +292,13 @@ const TicketsManagerTabs = () => {
             classes={{ root: classes.tab }}
           />
       </Tabs>
-  
+        <div style={{display: "inline-flex", gap: "20px"}}>
+          <TicketsQueueSelect
+            style={{ marginLeft: 6,}} //border: "1px solid rgba(0, 0, 0, 0.30)", borderRadius: "10px", with: "150px", height: "40px" }}
+            selectedQueueIds={selectedQueueIds}
+            userQueues={user?.queues}
+            onChange={(values) => setSelectedQueueIds(values)}
+          />
           <Can
               role={user.profile}
               //style={{marginLeft: "250px"}}
@@ -312,14 +319,9 @@ const TicketsManagerTabs = () => {
                     />
                   }
                 />
-              )}
+              )}  
             />
-        <TicketsQueueSelect
-          style={{ marginLeft: 6 }}
-          selectedQueueIds={selectedQueueIds}
-          userQueues={user?.queues}
-          onChange={(values) => setSelectedQueueIds(values)}
-        />
+          </div>
       </div>
       {/* ANTIGO SITE */}
     <Paper elevation={0} variant="outlined" className={classes.ticketsWrapper}>
