@@ -65,13 +65,6 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px 20px",
     textTransform: "none",
   },
-  separator: {
-    width: "1px",
-    height: "43px",
-    background: "#BDBDBD",
-    marginLeft: "20px",
-    marginRight: "20px",
-  },
 }));
 
 const reducer = (state, action) => {
@@ -255,7 +248,9 @@ const QuickMessages = () => {
         <Grid container spacing={2}>
           {/* Título e Descrição */}
           <Grid item xs={12}>
-            <Title>{i18n.t("quickMessages.title")}</Title>
+            <Title>
+              <strong>{i18n.t("quickMessages.title")}</strong>
+            </Title>
             <Typography
               component="subtitle1"
               variant="body1"
@@ -285,11 +280,10 @@ const QuickMessages = () => {
                 variant="outlined"
               />
             </Grid>
-            {/* barra lateral entre itens  */}
+            {/* barra lateral entre itens */}
             <div
               style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
-            >
-            </div>
+            ></div>
 
             {/* Botão Adicionar */}
             <Grid item xs={2}>
@@ -305,44 +299,59 @@ const QuickMessages = () => {
           </Grid>
         </Grid>
       </MainHeader>
-
-
-      <Grid container spacing={2}>
-        <Paper className={classes.mainPaper} onScroll={handleScroll}>
-          {loading && <TableRowSkeleton />}
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>{i18n.t("quickMessages.table.shortcode")}</TableCell>
-                <TableCell>{i18n.t("quickMessages.table.message")}</TableCell>
-                <TableCell>{i18n.t("quickMessages.table.actions")}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {quickmessages.map((quickmessage) => (
+      <Paper className={classes.mainPaper} onScroll={handleScroll}>
+        <Table stickyHeader>
+          <TableHead>
+            <TableRow>
+              <TableCell>{i18n.t("Título")}</TableCell>
+              <TableCell>{i18n.t("Mensagem")}</TableCell>
+              <TableCell align="center">{i18n.t("Ações")}</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {loading &&
+              Array.from({ length: 5 }).map((_, index) => (
+                <TableRowSkeleton key={index} />
+              ))}
+            {quickmessages.length > 0 ? (
+              quickmessages.map((quickmessage) => (
                 <TableRow key={quickmessage.id}>
                   <TableCell>{quickmessage.shortcode}</TableCell>
                   <TableCell>{quickmessage.message}</TableCell>
-                  <TableCell>
-                    <Button
-                      className={classes.editButton}
-                      onClick={() => handleEditQuickmessage(quickmessage)}
-                    >
-                      Editar
-                    </Button>
-                    <Button
-                      className={classes.deleteButton}
-                      onClick={() => handleConfirmDelete(quickmessage)}
-                    >
-                      Deletar
-                    </Button>
+                  <TableCell align="center">
+                    <Grid container justifyContent="center">
+                      <Grid item>
+                        <Button
+                          className={classes.editButton}
+                          onClick={() => handleEditQuickmessage(quickmessage)}
+                        >
+                          Editar
+                        </Button>
+                      </Grid>
+                      <Grid item>
+                        <Button
+                          className={classes.deleteButton}
+                          onClick={() => handleConfirmDelete(quickmessage)}
+                        >
+                          Deletar
+                        </Button>
+                      </Grid>
+                    </Grid>
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Paper>
-      </Grid>
+              ))
+            ) : (
+              !loading && (
+                <TableRow>
+                  <TableCell colSpan={3} align="center">
+                    {i18n.t("quickMessages.noRecords")}
+                  </TableCell>
+                </TableRow>
+              )
+            )}
+          </TableBody>
+        </Table>
+      </Paper>
     </MainContainer>
   );
 };
