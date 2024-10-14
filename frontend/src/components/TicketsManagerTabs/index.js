@@ -391,7 +391,35 @@ const TicketsManagerTabs = () => {
             value={"pending"}
             disabled={tab === "closed"}
         />
+        {/* Area ATENDENDO E AGUARDANDO */}
         </Tabs>
+        <TabPanel value={tab} name="open" className={classes.ticketsWrapper}>
+        <Paper className={classes.ticketsWrapper}>
+          {/* ATENDENDO */}
+          <TicketsList
+            status="open"
+            showAll={showAllTickets}
+            selectedQueueIds={selectedQueueIds}
+            updateCount={(val) => setOpenCount(val)}
+            style={applyPanelStyle("open")}
+          />
+          {/* AGUARDANDO */}
+          <TicketsList
+            status="pending"
+            selectedQueueIds={selectedQueueIds}
+            updateCount={(val) => setPendingCount(val)}
+            style={applyPanelStyle("pending")}
+          />
+        </Paper>
+        </TabPanel>
+        <TabPanel value={tab} name="closed" className={classes.ticketsWrapper}>
+        <TicketsList
+          status="closed"
+          showAll={true}
+          selectedQueueIds={selectedQueueIds}
+        />
+        </TabPanel>
+
       {/* ANTIGO SITE */}
     <Paper elevation={0} variant="outlined" className={classes.ticketsWrapper}>
       <NewTicketModal
@@ -481,6 +509,7 @@ const TicketsManagerTabs = () => {
           onChange={(values) => setSelectedQueueIds(values)}
         />
       </Paper>
+      {/* BOTÃO ATENDENDO E AGUARDANDO */}
       <TabPanel value={tab} name="open" className={classes.ticketsWrapper}>
         <Tabs
           value={tabOpen}
@@ -514,7 +543,7 @@ const TicketsManagerTabs = () => {
             value={"pending"}
           />
         </Tabs>
-        {/* ÁREA DE APARECER CHAMADOS ABERTOS */}
+        {/* ÁREA DE APARECER CHAMADOS ABERTOS (ATENDENDO E AGUARDANDO)*/}
         <Paper className={classes.ticketsWrapper}>
           <TicketsList
             status="open"
@@ -531,6 +560,7 @@ const TicketsManagerTabs = () => {
           />
         </Paper>
       </TabPanel>
+      {/* AREA DE CHAMADOS RESOLVIDOS */}
       <TabPanel value={tab} name="closed" className={classes.ticketsWrapper}>
         <TicketsList
           status="closed"
@@ -538,6 +568,7 @@ const TicketsManagerTabs = () => {
           selectedQueueIds={selectedQueueIds}
         />
       </TabPanel>
+      {/* AREA DE PESQUISA */}
       <TabPanel value={tab} name="search" className={classes.ticketsWrapper}>
         <TagsFilter onFiltered={handleSelectedTags} />
         {profile === "admin" && (
