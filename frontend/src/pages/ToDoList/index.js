@@ -9,6 +9,8 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import Grid from '@material-ui/core/Grid'; // Importando o Grid
+
 
 const useStyles = makeStyles({
   root: {
@@ -20,22 +22,51 @@ const useStyles = makeStyles({
   inputContainer: {
     display: 'flex',
     width: '100%',
-    marginBottom: '1rem'
+    marginBottom: '1rem',
   },
-  input: {
+  input: { // Área de inserir texto
     flexGrow: 1,
-    marginRight: '1rem'
+    marginRight: '1rem',
+    borderRadius: '40px', 
+    border: '1px solid #000' //linha em volta do caixa de texto
+  },
+  button: { //botão de adicionar ou salvar
+    borderRadius: '40px',
+    border: '1px',
+    
   },
   listContainer: {
     width: '100%',
     height: '100%',
     marginTop: '1rem',
-    backgroundColor: '#f5f5f5',
-    borderRadius: '5px',
   },
-  list: {
-    marginBottom: '5px'
-  }
+  list: { //resultados
+    marginBottom: '10px',
+    border: '1px solid black',
+    borderLeft: '1px #ffffff', //remove as barras laterais esquerdas
+    borderRight: '1px #ffffff', // remove as barras laterais direitas
+    borderBottom: '1px #ffffff', //remove as barras laterais inferiores
+  },
+  title: { //Titulo Tarefas
+    fontSize: '1.5rem',
+    textAlign: "left",
+    width: '100%',
+    marginBottom: '0rem'
+  },
+  info: { //Informações do titulo Tarefas
+    textAlign: 'left',
+    width: '100%',
+    marginTop: '0,5rem' // Distancia entre o titulo e as informações
+  },
+  editButton: { // Botão de editar
+    fontSize: '0.8rem',
+    borderRadius: '5px',
+    marginRight: '-8px' //Aproximação dos botôes de editar e deletar
+  },
+  deleteButton: {  // Botão de deletar
+    fontSize: '0.8rem',
+  },
+
 });
 
 const ToDoList = () => {
@@ -94,6 +125,8 @@ const ToDoList = () => {
 
   return (
     <div className={classes.root}>
+      <h2 className={classes.title}>Tarefas</h2> {/*Titulo tarefas*/}
+      <p className={classes.info}>Adicione sua tarefa</p> {/*Informações do titulo*/}
       <div className={classes.inputContainer}>
         <TextField
           className={classes.input}
@@ -101,8 +134,13 @@ const ToDoList = () => {
           value={task}
           onChange={handleTaskChange}
           variant="outlined"
+          inputProps={{
+            style: {
+              border: 'none',
+            }
+          }}
         />
-        <Button variant="contained" color="primary" onClick={handleAddTask}>
+        <Button className={classes.button} variant="contained" color="primary" onClick={handleAddTask}>
           {editIndex >= 0 ? 'Salvar' : 'Adicionar'}
         </Button>
       </div>
@@ -110,13 +148,15 @@ const ToDoList = () => {
         <List>
           {tasks.map((task, index) => (
             <ListItem key={index} className={classes.list}>
-              <ListItemText primary={task.text} secondary={task.updatedAt.toLocaleString()} />
+              <ListItemText primary={task.text}/> {/*Nome da tarefa*/}
+              {/*Essa parte foi separada, para que os itens possam ficar lado a lado e o cabeçalho dos resultados possa ser criado*/}
+              <ListItemText secondary={task.updatedAt.toLocaleString()} /> {/*Data da criação da tarefa e local da tarefa*/}
               <ListItemSecondaryAction>
-                <IconButton onClick={() => handleEditTask(index)}>
-                  <EditIcon />
+                <IconButton onClick={() => handleEditTask(index)} className={classes.editButton}> {/*Botão de editar*/}
+                  EDITAR
                 </IconButton>
-                <IconButton onClick={() => handleDeleteTask(index)}>
-                  <DeleteIcon />
+                <IconButton onClick={() => handleDeleteTask(index)} className={classes.deleteButton}> {/*Botão de deletar*/}
+                  DELETAR
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
