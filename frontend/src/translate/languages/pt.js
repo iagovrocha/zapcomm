@@ -172,14 +172,14 @@ const messages = {
           importMessage: "Deseja importar todos os contatos do telefone?",
         },
         buttons: {
-          import: "Importar Contatos",
+          import: "Importar Contato",
           add: "Adicionar Contato",
           export: "Exportar Contatos",
           delete: "Excluir Todos Contatos"
         },
         table: {
           name: "Nome",
-          whatsapp: "WhatsApp",
+          whatsapp: "Número do WhatsApp",
           email: "Email",
           actions: "Ações",
         },
