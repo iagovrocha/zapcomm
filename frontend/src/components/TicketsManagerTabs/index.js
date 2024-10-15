@@ -229,6 +229,9 @@ const TicketsManagerTabs = () => {
       setSearchParam(searchedTerm);
       setTab("open");
       return;
+    } else if (searchedTerm !== "") {
+      setTab("search");
+      
     }
 
     searchTimeout = setTimeout(() => {
@@ -268,7 +271,7 @@ const TicketsManagerTabs = () => {
   };
 
   return (
-    <div>
+    <div style={{backgroundColor: "#FFFFFF"}}>
       <h1 style={{ margin: "0" }}><b>Chamados</b></h1>
       <Typography
         component="subtitle1"
@@ -419,9 +422,21 @@ const TicketsManagerTabs = () => {
           selectedQueueIds={selectedQueueIds}
         />
         </TabPanel>
-
-      {/* ANTIGO SITE */}
-    <Paper elevation={0} variant="outlined" className={classes.ticketsWrapper}>
+        <TabPanel value={tab} name="search" className={classes.ticketsWrapper}>
+        {/* <TagsFilter onFiltered={handleSelectedTags} />
+        {profile === "admin" && (
+          <UsersFilter onFiltered={handleSelectedUsers} />
+        )} */}
+        <TicketsList
+          searchParam={searchParam}
+          showAll={true}
+          tags={selectedTags}
+          users={selectedUsers}
+          selectedQueueIds={selectedQueueIds}
+        />
+      </TabPanel>
+      {/* -- ANTIGO SITE -- */}
+    {/* <Paper elevation={0} variant="outlined" className={classes.ticketsWrapper}>
       <NewTicketModal
         modalOpen={newTicketModalOpen}
         onClose={(ticket) => {
@@ -509,7 +524,7 @@ const TicketsManagerTabs = () => {
           onChange={(values) => setSelectedQueueIds(values)}
         />
       </Paper>
-      {/* BOTÃO ATENDENDO E AGUARDANDO */}
+      {/* BOTÃO ATENDENDO E AGUARDANDO *
       <TabPanel value={tab} name="open" className={classes.ticketsWrapper}>
         <Tabs
           value={tabOpen}
@@ -543,7 +558,7 @@ const TicketsManagerTabs = () => {
             value={"pending"}
           />
         </Tabs>
-        {/* ÁREA DE APARECER CHAMADOS ABERTOS (ATENDENDO E AGUARDANDO)*/}
+        {/* ÁREA DE APARECER CHAMADOS ABERTOS (ATENDENDO E AGUARDANDO)
         <Paper className={classes.ticketsWrapper}>
           <TicketsList
             status="open"
@@ -560,7 +575,7 @@ const TicketsManagerTabs = () => {
           />
         </Paper>
       </TabPanel>
-      {/* AREA DE CHAMADOS RESOLVIDOS */}
+      {/* AREA DE CHAMADOS RESOLVIDOS 
       <TabPanel value={tab} name="closed" className={classes.ticketsWrapper}>
         <TicketsList
           status="closed"
@@ -568,7 +583,7 @@ const TicketsManagerTabs = () => {
           selectedQueueIds={selectedQueueIds}
         />
       </TabPanel>
-      {/* AREA DE PESQUISA */}
+      {/* AREA DE PESQUISA *
       <TabPanel value={tab} name="search" className={classes.ticketsWrapper}>
         <TagsFilter onFiltered={handleSelectedTags} />
         {profile === "admin" && (
@@ -582,7 +597,7 @@ const TicketsManagerTabs = () => {
           selectedQueueIds={selectedQueueIds}
         />
       </TabPanel>
-    </Paper>
+    </Paper> */}
     </div>
   );
 };
