@@ -143,7 +143,7 @@ const useStyles = makeStyles(theme => ({
     paddingTop: "10px",
     paddingBottom: "12px",
     display: "inline-flex",
-    width: "70%"
+    width: "95%"
   },
   BotaoAdicionar: {
     borderRadius: "40px",
@@ -154,7 +154,7 @@ const useStyles = makeStyles(theme => ({
   },
   MenuAbaixoPesquisar: {
     boxSizing: "border-box",
-    width: "70%",
+    width: "95%",
     display: "inline-flex",
     justifyContent: "space-between",
     //gap: "30%",

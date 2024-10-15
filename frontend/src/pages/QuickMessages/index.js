@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
   searchInput: {
     "& .MuiOutlinedInput-root": {
-      borderRadius: "20px",
+      borderRadius: "50px",
     },
   },
   addButton: {
