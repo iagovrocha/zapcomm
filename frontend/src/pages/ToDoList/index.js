@@ -58,6 +58,10 @@ const useStyles = makeStyles({
     width: '100%',
     marginTop: '0,5rem' // Distancia entre o titulo e as informações
   },
+  cabecalho: { //Cabeçalho dos resultados
+    backgroundColor: '', //alterar a cor do fundo do cabeçalho dos resultados
+    color: 'black'
+  },
   editButton: { // Botão de editar
     fontSize: '0.8rem',
     borderRadius: '5px',
@@ -145,6 +149,13 @@ const ToDoList = () => {
         </Button>
       </div>
       <div className={classes.listContainer}>
+        <list> {/*Começo do cabeçalho*/}
+          <ListItem className={classes.cabecalho}> 
+            <ListItemText primary={'Tarefas'} />
+            <ListItemText primary={'Data'} style={{textAlign: 'center'}}/>
+            <ListItemText primary={'Editar/deletar'} style={{textAlign: 'right', marginRight: '1.5rem'}}/>
+          </ListItem>
+        </list> {/*Fim do cabeçalho*/}
         <List>
           {tasks.map((task, index) => (
             <ListItem key={index} className={classes.list}>
