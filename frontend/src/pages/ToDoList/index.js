@@ -28,39 +28,21 @@ const useStyles = makeStyles({
     flexGrow: 1,
     marginRight: '1rem',
     borderRadius: '40px', 
-    border: '1px solid #000' //linha em volta do caixa de texto
+    border: '1px solid #000', // linha em volta do caixa de texto
   },
-  button: { //botão de adicionar ou salvar
+  button: { // botão de adicionar ou salvar
     borderRadius: '40px',
     border: '1px',
     
   },
-  listContainer: {
+  tableContainer: { // Tabela
     width: '100%',
-    height: '100%',
     marginTop: '1rem',
   },
-  list: { //resultados
-    marginBottom: '10px',
-    border: '1px solid black',
-    borderLeft: '1px #ffffff', //remove as barras laterais esquerdas
-    borderRight: '1px #ffffff', // remove as barras laterais direitas
-    borderBottom: '1px #ffffff', //remove as barras laterais inferiores
+  table: { // Tabela das tarefas que serão adicionadas
+    minWidth: 650,
   },
-  title: { //Titulo Tarefas
-    fontSize: '1.5rem',
-    textAlign: "left",
-    width: '100%',
-    marginBottom: '0rem'
-  },
-  info: { //Informações do titulo Tarefas
-    textAlign: 'left',
-    width: '100%',
-    marginTop: '0,5rem' // Distancia entre o titulo e as informações
-  },
-  cabecalho: { //Cabeçalho dos resultados
-    backgroundColor: '', //alterar a cor do fundo do cabeçalho dos resultados
-    color: 'black'
+  tableHeader: { // Cabeçalho da tabela
   },
   editButton: { // Botão de editar
     fontSize: '0.8rem',
@@ -79,6 +61,7 @@ const ToDoList = () => {
   const [task, setTask] = useState('');
   const [tasks, setTasks] = useState([]);
   const [editIndex, setEditIndex] = useState(-1);
+  const [error, setError] = useState(''); // Estado para armazenar a mensagem de erro
 
   useEffect(() => {
     const savedTasks = localStorage.getItem('tasks');
@@ -92,7 +75,14 @@ const ToDoList = () => {
   }, [tasks]);
 
   const handleTaskChange = (event) => {
-    setTask(event.target.value);
+    const inputValue = event.target.value;
+    if (inputValue.length > 50) {
+      setError('A tarefa não pode exceder 50 caracteres.');
+      return;
+    } else {
+      setError(''); // Limpa o erro se estiver dentro do limite
+    }
+    setTask(inputValue);
   };
 
   const handleAddTask = () => {
@@ -105,13 +95,13 @@ const ToDoList = () => {
     if (editIndex >= 0) {
       // Editar tarefa existente
       const newTasks = [...tasks];
-      newTasks[editIndex] = {text: task, updatedAt: now, createdAt: newTasks[editIndex].createdAt};
+      newTasks[editIndex] = { text: task, updatedAt: now, createdAt: newTasks[editIndex].createdAt };
       setTasks(newTasks);
       setTask('');
       setEditIndex(-1);
     } else {
       // Adicionar nova tarefa
-      setTasks([...tasks, {text: task, createdAt: now, updatedAt: now}]);
+      setTasks([...tasks, { text: task, createdAt: now, updatedAt: now }]);
       setTask('');
     }
   };
@@ -138,7 +128,8 @@ const ToDoList = () => {
           value={task}
           onChange={handleTaskChange}
           variant="outlined"
-          inputProps={{
+            error={!!error} // irá mostrar um erro se houver
+            helperText={error} // Mostra a nebsagem de erro abaixo do campo
             style: {
               border: 'none',
             }
@@ -148,35 +139,44 @@ const ToDoList = () => {
           {editIndex >= 0 ? 'Salvar' : 'Adicionar'}
         </Button>
       </div>
-      <div className={classes.listContainer}>
-        <list> {/*Começo do cabeçalho*/}
-          <ListItem className={classes.cabecalho}> 
-            <ListItemText primary={'Tarefas'} />
-            <ListItemText primary={'Data'} style={{textAlign: 'center'}}/>
-            <ListItemText primary={'Editar/deletar'} style={{textAlign: 'right', marginRight: '1.5rem'}}/>
-          </ListItem>
-        </list> {/*Fim do cabeçalho*/}
-        <List>
+        <TableContainer component={Paper} className={classes.tableContainer}> {/* Tabela começa aqui */}
+          <Table className={classes.table} aria-label="Lista de Tarefas">
+          {tasks.length > 0 && ( // Só mostra o cabeçalho se houver tarefas
+            <TableHead className={classes.tableHeader}>
+              <TableRow>
+                <TableCell><b>Tarefas</b></TableCell> {/* Nome da coluna de Tarefas */}
+                <TableCell align="center"><b>Data</b></TableCell> {/* Nome da coluna de Data */}
+                <TableCell align="right"><b>Editar/Deletar</b></TableCell> {/* Nome da coluna de Ações */}
+              </TableRow>
+            </TableHead>
+          )}
+            <TableBody>
           {tasks.map((task, index) => (
-            <ListItem key={index} className={classes.list}>
-              <ListItemText primary={task.text}/> {/*Nome da tarefa*/}
-              {/*Essa parte foi separada, para que os itens possam ficar lado a lado e o cabeçalho dos resultados possa ser criado*/}
-              <ListItemText secondary={task.updatedAt.toLocaleString()} /> {/*Data da criação da tarefa e local da tarefa*/}
-              <ListItemSecondaryAction>
-                <IconButton onClick={() => handleEditTask(index)} className={classes.editButton}> {/*Botão de editar*/}
+                <TableRow key={index}>
+                  <TableCell component="th" scope="row">
+                    <Tooltip title={task.text} arrow>
+                      <span className={classes.taskText}>{task.text}</span>
+                    </Tooltip> {/* Nome da tarefa */}
+                  </TableCell>
+                  <TableCell align="center" className={classes.dateText}>
+                    {task.updatedAt.toLocaleString()}
+                  </TableCell> {/* Data de criação e atualização da tarefa */}
+                  <TableCell align="right">
+                    <IconButton onClick={() => handleEditTask(index)} className={classes.editButton}>
                   EDITAR
-                </IconButton>
-                <IconButton onClick={() => handleDeleteTask(index)} className={classes.deleteButton}> {/*Botão de deletar*/}
+                    </IconButton> {/* Botão de editar */}
+                    <IconButton onClick={() => handleDeleteTask(index)} className={classes.deleteButton}>
                   DELETAR
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
+                    </IconButton> {/* Botão de deletar */}
+                  </TableCell>
+                </TableRow>
           ))}
-        </List>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
     </div>
   );
 };
-
 
 export default ToDoList;
