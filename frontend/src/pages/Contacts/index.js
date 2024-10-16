@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#FFFFFF",
   },
 
-  Botaos: {
+  Botoes: {
     borderRadius: "40px",
     padding: "10px 32px",
     justifyContent: "center",
@@ -344,7 +344,7 @@ const Contacts = () => {
             </div>
             <MainHeaderButtonsWrapper style={{}}>
             <Button 
-              className = {classes.Botaos}
+              className = {classes.Botoes}
               variant="contained"
               color="primary"
               onClick={(e) => setConfirmOpen(true)}
@@ -352,7 +352,7 @@ const Contacts = () => {
               {i18n.t("contacts.buttons.import")}
             </Button>
             <Button
-              className = {classes.Botaos}
+              className = {classes.Botoes}
               variant="contained"
               color="primary"
               onClick={handleOpenContactModal}
@@ -361,7 +361,7 @@ const Contacts = () => {
             </Button>
 
           <CSVLink style={{ textDecoration:'none'}} separator=";" filename={'contatos.csv'} data={contacts.map((contact) => ({ name: contact.name, number: contact.number, email: contact.email }))}>
-            <Button	variant="contained" color="primary" className = {classes.Botaos}> 
+            <Button	variant="contained" color="primary" className = {classes.Botoes}> 
             EXPORTAR CONTATOS 
             </Button>
             </CSVLink>		  
