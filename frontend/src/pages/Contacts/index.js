@@ -99,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "hidden",
   },
 
-  Botaos: {
+  Botoes: {
     borderRadius: "40px",
     padding: "10px 32px",
     justifyContent: "center",
@@ -313,7 +313,7 @@ const Contacts = () => {
               }}
             />
             <Button 
-              className = {classes.Botaos}
+              className = {classes.Botoes}
               variant="contained"
               color="primary"
               onClick={(e) => setConfirmOpen(true)}

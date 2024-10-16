@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "hidden",
   },
 
-  Botaos: {
+  Botoes: {
     borderRadius: "40px",
     padding: "10px 32px",
     justifyContent: "center",
@@ -317,7 +317,7 @@ const QuickMessages = () => {
               <Grid item xs={2}>
                 <Button
                   variant="contained"
-                  className={classes.Botaos}
+                  className={classes.Botoes}
                   color="primary"
                   onClick={handleOpenQuickMessageDialog}
                   fullWidth
