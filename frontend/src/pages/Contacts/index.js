@@ -121,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: 40,
 		padding: 4,
 		marginRight: theme.spacing(1),
-    width: '70%',
+    width: '20%',
     height: '48px',
 	},
 
@@ -333,6 +333,7 @@ const Contacts = () => {
               type="search"
               value={searchParam}
               onChange={handleSearch}
+              
               // InputProps={{
                 //   startAdornment: (
                   //     <InputAdornment position="start">
@@ -342,6 +343,11 @@ const Contacts = () => {
                   // }} Mudança de TextField para InputBase + Estilização em css + MainHeader comentado para alinhar os botões e a barra de pesquisa
                   />
             </div>
+
+            <div
+                style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+              ></div>
+              
             <MainHeaderButtonsWrapper style={{}}>
             <Button 
               className = {classes.Botoes}
