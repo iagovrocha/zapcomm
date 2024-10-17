@@ -426,7 +426,7 @@ const messages = {
         },
       },
       newTicketModal: {
-        title: "Criar Ticket",
+        title: "Adicionar Novo Chamado",
         fieldLabel: "Digite para pesquisar o contato",
         add: "Adicionar",
         buttons: {
