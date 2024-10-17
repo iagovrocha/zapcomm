@@ -33,6 +33,7 @@ import InputBase from "@material-ui/core/InputBase";
 
 const useStyles = makeStyles((theme) => ({
   mainPaper: {
+    backgroundColor: "#FFFFFF",
     flex: 1,
     padding: theme.spacing(1),
     overflowY: "scroll",
@@ -94,6 +95,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     height: `calc(100% - 48px)`,
     overflowY: "hidden",
+    background: "#FFFFFF"
   },
 
   Botoes: {
@@ -105,6 +107,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   Tabela: {
+    backgroundColor: "#FFFFFF",
     fontFamily: 'Inter Tight, sans-serif', 
     color: 'black'
   },
@@ -359,7 +362,7 @@ const QuickMessages = () => {
                 <TableCell className={classes.Tabela}>
                   <b>{i18n.t("Mensagem")}</b>
                 </TableCell>
-                <TableCell className={classes.Tabela}>
+                <TableCell className={classes.Tabela} style={{align: "right"}}>
                   <b>{i18n.t("Ações")}</b>
                 </TableCell>
               </TableRow>

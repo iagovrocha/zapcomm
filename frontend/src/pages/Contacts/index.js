@@ -325,7 +325,7 @@ const Contacts = () => {
         {/* <MainHeader> */} 
           <div style={{display: "inline-flex", alignItems: 'center'}}> 
           {/* <Title>{i18n.t("contacts.title")}</Title> */}
-            <div className={classes.serachInputWrapper}>
+          <div className={classes.serachInputWrapper}>
           <SearchIcon className={classes.searchIcon} />
             <InputBase
               className={classes.searchInput}
@@ -342,7 +342,7 @@ const Contacts = () => {
                   //   ),
                   // }} Mudança de TextField para InputBase + Estilização em css + MainHeader comentado para alinhar os botões e a barra de pesquisa
                   />
-            </div>
+          </div>
 
             <div
                 style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
