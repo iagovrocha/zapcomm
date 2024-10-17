@@ -16,6 +16,7 @@ import WhatsAppIcon from "@material-ui/icons/WhatsApp";
 import SearchIcon from "@material-ui/icons/Search";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import InputBase from "@material-ui/core/InputBase";
 
 import IconButton from "@material-ui/core/IconButton";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
@@ -97,6 +98,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     height: `calc(100% - 48px)`,
     overflowY: "hidden",
+    backgroundColor: "#FFFFFF",
   },
 
   Botoes: {
@@ -111,6 +113,30 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Inter Tight, sans-serif', 
     color: 'black'
   },
+
+  serachInputWrapper: {
+    border: "solid 1px #828282",
+		flex: 1,
+		display: "flex",
+		borderRadius: 40,
+		padding: 4,
+		marginRight: theme.spacing(1),
+    width: '70%',
+    height: '48px',
+	},
+
+	searchIcon: {
+		color: "grey",
+		marginLeft: 6,
+		marginRight: 6,
+		alignSelf: "center",
+	},
+
+	searchInput: {
+		flex: 1,
+		border: "none",
+		borderRadius: 30,
+	},
 }));
 
 const Contacts = () => {
@@ -296,22 +322,27 @@ const Contacts = () => {
             ? `${i18n.t("contacts.confirmationModal.deleteMessage")}`
             : `${i18n.t("contacts.confirmationModal.importMessage")}`}
         </ConfirmationModal>
-        <MainHeader>
+        {/* <MainHeader> */} 
+          <div style={{display: "inline-flex", alignItems: 'center'}}> 
           {/* <Title>{i18n.t("contacts.title")}</Title> */}
-          <MainHeaderButtonsWrapper>
-            <TextField
+            <div className={classes.serachInputWrapper}>
+          <SearchIcon className={classes.searchIcon} />
+            <InputBase
+              className={classes.searchInput}
               placeholder={i18n.t("contacts.searchPlaceholder")}
               type="search"
               value={searchParam}
               onChange={handleSearch}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon style={{ color: "gray" }} />
-                  </InputAdornment>
-                ),
-              }}
-            />
+              // InputProps={{
+                //   startAdornment: (
+                  //     <InputAdornment position="start">
+                  //       <SearchIcon style={{ color: "gray" }} />
+                  //     </InputAdornment>
+                  //   ),
+                  // }} Mudança de TextField para InputBase + Estilização em css + MainHeader comentado para alinhar os botões e a barra de pesquisa
+                  />
+            </div>
+            <MainHeaderButtonsWrapper style={{}}>
             <Button 
               className = {classes.Botoes}
               variant="contained"
@@ -336,7 +367,8 @@ const Contacts = () => {
             </CSVLink>		  
 
           </MainHeaderButtonsWrapper>
-        </MainHeader>
+          </div>
+        {/* </MainHeader> */}
         <Paper
           className={classes.mainPaper}
           variant="outlined"
