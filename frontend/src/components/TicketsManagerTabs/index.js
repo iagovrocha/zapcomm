@@ -143,7 +143,7 @@ const useStyles = makeStyles(theme => ({
     paddingTop: "10px",
     paddingBottom: "12px",
     display: "inline-flex",
-    width: "70%"
+    width: "95%"
   },
   BotaoAdicionar: {
     borderRadius: "40px",
@@ -154,7 +154,7 @@ const useStyles = makeStyles(theme => ({
   },
   MenuAbaixoPesquisar: {
     boxSizing: "border-box",
-    width: "70%",
+    width: "95%",
     display: "inline-flex",
     justifyContent: "space-between",
     //gap: "30%",
@@ -272,6 +272,13 @@ const TicketsManagerTabs = () => {
 
   return (
     <div style={{backgroundColor: "#FFFFFF"}}>
+      <NewTicketModal
+        modalOpen={newTicketModalOpen}
+        onClose={(ticket) => {
+          
+          handleCloseOrOpenTicket(ticket);
+        }}
+      />
       <h1 style={{ margin: "0" }}><b>Chamados</b></h1>
       <Typography
         component="subtitle1"
@@ -436,7 +443,7 @@ const TicketsManagerTabs = () => {
         />
       </TabPanel>
       {/* -- ANTIGO SITE -- */}
-    {/* <Paper elevation={0} variant="outlined" className={classes.ticketsWrapper}>
+      {/* <Paper elevation={0} variant="outlined" className={classes.ticketsWrapper}>
       <NewTicketModal
         modalOpen={newTicketModalOpen}
         onClose={(ticket) => {
@@ -523,9 +530,9 @@ const TicketsManagerTabs = () => {
           userQueues={user?.queues}
           onChange={(values) => setSelectedQueueIds(values)}
         />
-      </Paper>
-      {/* BOTÃO ATENDENDO E AGUARDANDO *
-      <TabPanel value={tab} name="open" className={classes.ticketsWrapper}>
+      </Paper> */}
+      {/* BOTÃO ATENDENDO E AGUARDANDO */}
+      {/* <TabPanel value={tab} name="open" className={classes.ticketsWrapper}>
         <Tabs
           value={tabOpen}
           onChange={handleChangeTabOpen}
@@ -557,9 +564,9 @@ const TicketsManagerTabs = () => {
             }
             value={"pending"}
           />
-        </Tabs>
-        {/* ÁREA DE APARECER CHAMADOS ABERTOS (ATENDENDO E AGUARDANDO)
-        <Paper className={classes.ticketsWrapper}>
+        </Tabs> */}
+        {/* ÁREA DE APARECER CHAMADOS ABERTOS (ATENDENDO E AGUARDANDO)*/}
+        {/* <Paper className={classes.ticketsWrapper}>
           <TicketsList
             status="open"
             showAll={showAllTickets}
@@ -574,17 +581,17 @@ const TicketsManagerTabs = () => {
             style={applyPanelStyle("pending")}
           />
         </Paper>
-      </TabPanel>
-      {/* AREA DE CHAMADOS RESOLVIDOS 
-      <TabPanel value={tab} name="closed" className={classes.ticketsWrapper}>
+      </TabPanel> */}
+      {/* AREA DE CHAMADOS RESOLVIDOS */}
+      {/* <TabPanel value={tab} name="closed" className={classes.ticketsWrapper}>
         <TicketsList
           status="closed"
           showAll={true}
           selectedQueueIds={selectedQueueIds}
         />
-      </TabPanel>
-      {/* AREA DE PESQUISA *
-      <TabPanel value={tab} name="search" className={classes.ticketsWrapper}>
+      </TabPanel> */}
+      {/* AREA DE PESQUISA */}
+      {/* <TabPanel value={tab} name="search" className={classes.ticketsWrapper}>
         <TagsFilter onFiltered={handleSelectedTags} />
         {profile === "admin" && (
           <UsersFilter onFiltered={handleSelectedUsers} />
