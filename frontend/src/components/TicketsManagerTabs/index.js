@@ -22,9 +22,11 @@ import { i18n } from "../../translate/i18n";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import { Can } from "../Can";
 import TicketsQueueSelect from "../TicketsQueueSelect";
-import { Button } from "@material-ui/core";
+import { Button, colors } from "@material-ui/core";
 import { TagsFilter } from "../TagsFilter";
 import { UsersFilter } from "../UsersFilter";
+
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(theme => ({
 	ticketsWrapper: {
@@ -55,8 +57,8 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	tab: {
-		minWidth: 120,
-		width: 120,
+		minWidth: 200, //120
+		width: 200,    //120
 	},
 
 	internalTab: {
@@ -78,8 +80,8 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	serachInputWrapper: {
+    border: "solid 1px #828282",
 		flex: 1,
-		background: theme.palette.total,
 		display: "flex",
 		borderRadius: 40,
 		padding: 4,
@@ -136,7 +138,50 @@ const useStyles = makeStyles(theme => ({
 		'& .MuiInputLabel-outlined': {
 			marginTop: "-6px"
 		}
-	}
+	},
+  AgrupamentoDoPesquisarENovo: {
+    paddingTop: "10px",
+    paddingBottom: "12px",
+    display: "inline-flex",
+    width: "95%"
+  },
+  BotaoAdicionar: {
+    borderRadius: "40px",
+    padding: "10px 32px",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--logo-bg, #001C27)"
+  },
+  MenuAbaixoPesquisar: {
+    boxSizing: "border-box",
+    width: "95%",
+    display: "inline-flex",
+    justifyContent: "space-between",
+    //gap: "30%",
+  },
+  AguardoEResolvido: {
+		minWidth: "200", //120
+		width: "200",    //120
+    borderRadius: "20px",
+    border: "2px solid",
+    background: "rgba(217, 217, 217, 0.00)",
+    flexShrink: "0",
+
+    transition: "border-color 0.3s, background-color 0.3s",
+    height: "32px !important",  // Força a altura de 32px
+    minHeight: "32px !important", // Força a altura mínima
+    maxHeight: "32px !important", // Força a altura máxima
+
+    "&.Mui-selected": {
+      borderColor: "#0C2C54", // Cor da borda quando o tab está ativo
+    },
+    "&:not(.Mui-selected)": {
+      borderColor: "gray", // Cor da borda quando o tab está inativo
+    },
+	},
+  AguardoEResolvidoGray: {
+    borderColor: "gray !important", // Cor da borda cinza quando a aba "CHAMADOS RESOLVIDOS" é clicada
+  },
 }));
 
 const TicketsManagerTabs = () => {
@@ -223,6 +268,159 @@ const TicketsManagerTabs = () => {
   };
 
   return (
+    <div>
+      <h1 style={{ margin: "0" }}><b>Chamados</b></h1>
+      <Typography
+        component="subtitle1"
+        variant="body1"
+        style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+      >
+        {"Analise seus chamados com base nas categorias: aberto atendendo, aberto aguardando e resolvido."}
+      </Typography>
+      <div className={classes.AgrupamentoDoPesquisarENovo}>
+        <div className={classes.serachInputWrapper}>
+          <SearchIcon className={classes.searchIcon} />
+          <InputBase
+            className={classes.searchInput}
+            //style={{width: "50%", paddingRight: "10px"}}
+            inputRef={searchInputRef}
+            placeholder={i18n.t("Buscar chamado")}
+            type="search"
+            onChange={handleSearch}
+          />
+        </div>
+        <div
+          style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+        >
+        </div>
+        <Button
+          variant="outlined"
+          color="primary"
+          className={classes.BotaoAdicionar}
+          onClick={() => setNewTicketModalOpen(true)}
+        >
+          {i18n.t("+ Novo")}
+        </Button>
+      </div>
+      <div className={classes.MenuAbaixoPesquisar}>
+        <div>
+        <Tabs
+          indicatorColor= "rgba(0, 0, 0, 0.00)"
+          value={tab}
+          onChange={handleChangeTab}
+          >
+          <Tab
+            value={"open"}
+            label={<b>{i18n.t("Chamados Abertos")}</b>}
+            classes={{ root: classes.tab }}
+            />
+          <div
+            style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+          >
+          </div>
+          <Tab
+            value={"closed"}
+            label={<b>{i18n.t("Chamados Resolvidos")}</b>}
+            classes={{ root: classes.tab }}
+            />
+        </Tabs>
+        </div>
+        
+        <div style={{ display: "inline-flex", gap: "1.25rem", marginRight: "1rem"}}>
+          <TicketsQueueSelect
+            style={{ marginLeft: 6, }} //border: "1px solid rgba(0, 0, 0, 0.30)", borderRadius: "10px", with: "150px", height: "40px" }}
+            selectedQueueIds={selectedQueueIds}
+            userQueues={user?.queues}
+            onChange={(values) => setSelectedQueueIds(values)}
+          />
+          <Can
+            role={user.profile}
+            //style={{marginLeft: "250px"}}
+            perform="tickets-manager:showall"
+            yes={() => (
+              <FormControlLabel
+                label={i18n.t("tickets.buttons.showAll")}
+                labelPlacement="start"
+                control={
+                  <Switch
+                    size="normal"
+                    checked={showAllTickets}
+                    onChange={() =>
+                      setShowAllTickets((prevState) => !prevState)
+                    }
+                    name="showAllTickets"
+                    color="primary"
+                  />
+                }
+              />
+            )}
+          />
+        </div>
+      </div>
+      <Tabs
+          style={{marginTop: "5px"}}
+          value={tabOpen}
+          onChange={handleChangeTabOpen}
+          indicatorColor= "rgba(0, 0, 0, 0.00)"
+          textColor="primary"
+      >
+        <Tab
+          className={`${classes.AguardoEResolvido} ${tab === "closed" ? classes.AguardoEResolvidoGray : ""}`}
+          label={
+            <Badge
+              badgeContent={openCount}
+              color="primary"
+              >
+              {i18n.t("ticketsList.assignedHeader")}
+            </Badge>
+            }
+            value={"open"}
+            disabled={tab === "closed"}
+          />
+          <div style={{marginRight: "10px"}}></div>
+        <Tab
+          className={`${classes.AguardoEResolvido} ${tab === "closed" ? classes.AguardoEResolvidoGray : ""}`}
+          label={
+            <Badge
+              badgeContent={pendingCount}
+              color="secondary"
+            >
+              {i18n.t("ticketsList.pendingHeader")}
+            </Badge>
+            }
+            value={"pending"}
+            disabled={tab === "closed"}
+        />
+        {/* Area ATENDENDO E AGUARDANDO */}
+        </Tabs>
+        <TabPanel value={tab} name="open" className={classes.ticketsWrapper}>
+        <Paper className={classes.ticketsWrapper}>
+          {/* ATENDENDO */}
+          <TicketsList
+            status="open"
+            showAll={showAllTickets}
+            selectedQueueIds={selectedQueueIds}
+            updateCount={(val) => setOpenCount(val)}
+            style={applyPanelStyle("open")}
+          />
+          {/* AGUARDANDO */}
+          <TicketsList
+            status="pending"
+            selectedQueueIds={selectedQueueIds}
+            updateCount={(val) => setPendingCount(val)}
+            style={applyPanelStyle("pending")}
+          />
+        </Paper>
+        </TabPanel>
+        <TabPanel value={tab} name="closed" className={classes.ticketsWrapper}>
+        <TicketsList
+          status="closed"
+          showAll={true}
+          selectedQueueIds={selectedQueueIds}
+        />
+        </TabPanel>
+
+      {/* ANTIGO SITE */}
     <Paper elevation={0} variant="outlined" className={classes.ticketsWrapper}>
       <NewTicketModal
         modalOpen={newTicketModalOpen}
@@ -311,6 +509,7 @@ const TicketsManagerTabs = () => {
           onChange={(values) => setSelectedQueueIds(values)}
         />
       </Paper>
+      {/* BOTÃO ATENDENDO E AGUARDANDO */}
       <TabPanel value={tab} name="open" className={classes.ticketsWrapper}>
         <Tabs
           value={tabOpen}
@@ -344,6 +543,7 @@ const TicketsManagerTabs = () => {
             value={"pending"}
           />
         </Tabs>
+        {/* ÁREA DE APARECER CHAMADOS ABERTOS (ATENDENDO E AGUARDANDO)*/}
         <Paper className={classes.ticketsWrapper}>
           <TicketsList
             status="open"
@@ -360,6 +560,7 @@ const TicketsManagerTabs = () => {
           />
         </Paper>
       </TabPanel>
+      {/* AREA DE CHAMADOS RESOLVIDOS */}
       <TabPanel value={tab} name="closed" className={classes.ticketsWrapper}>
         <TicketsList
           status="closed"
@@ -367,6 +568,7 @@ const TicketsManagerTabs = () => {
           selectedQueueIds={selectedQueueIds}
         />
       </TabPanel>
+      {/* AREA DE PESQUISA */}
       <TabPanel value={tab} name="search" className={classes.ticketsWrapper}>
         <TagsFilter onFiltered={handleSelectedTags} />
         {profile === "admin" && (
@@ -381,6 +583,7 @@ const TicketsManagerTabs = () => {
         />
       </TabPanel>
     </Paper>
+    </div>
   );
 };
 

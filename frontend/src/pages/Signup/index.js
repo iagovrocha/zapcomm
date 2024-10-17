@@ -178,7 +178,7 @@ const SignUp = () => {
 										variant="outlined"
 										fullWidth
 										id="name"
-										label="Nome da Empresa"
+										label="Nome"
 									/>
 								</Grid>
 
@@ -236,7 +236,7 @@ const SignUp = () => {
 										required
 									/>
 								</Grid>
-								<Grid item xs={12}>
+								{/* <Grid item xs={12}>
 									<InputLabel htmlFor="plan-selection">Plano</InputLabel>
 									<Field
 										as={Select}
@@ -253,7 +253,7 @@ const SignUp = () => {
 											</MenuItem>
 										))}
 									</Field>
-								</Grid>
+								</Grid> */}
 							</Grid>
 							<Button
 								type="submit"

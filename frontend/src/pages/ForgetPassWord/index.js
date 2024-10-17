@@ -188,7 +188,7 @@ const handleSendEmail = async (values) => {
               alt="Whats"
             />
           </div>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" style={{ fontFamily: 'Inter Tight, sans-serif', fontSize: "16px", color: '#0C2C54' }}>
             {i18n.t("Redefinir senha")}
           </Typography>
           <Formik
