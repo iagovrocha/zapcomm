@@ -2,22 +2,39 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import Grid from '@material-ui/core/Grid'; // Importando o Grid
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from "@material-ui/core/Typography";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import InputAdornment from '@material-ui/core/InputAdornment'; // Importar InputAdornment
+import SearchIcon from '@material-ui/icons/Search'; // Importar o ícone de pesquisa
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    margin: '2rem'
+   // margin: '2rem'
+  },
+  divBody: {
+    flex: '1',
+    padding: theme.spacing(1),
+    height: 'calc(100% - 98px)',
+    overflow: 'hidden',  
+  },
+  titleContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start', // Alinha os itens à esquerda
+    marginBottom: '1rem', // Espaçamento abaixo do contêiner
   },
   inputContainer: {
     display: 'flex',
@@ -29,10 +46,12 @@ const useStyles = makeStyles({
     marginRight: '1rem',
     borderRadius: '40px', 
     border: '1px solid #000', // linha em volta do caixa de texto
+    height: '56px'
   },
   button: { // botão de adicionar ou salvar
     borderRadius: '40px',
     border: '1px',
+    height: '50px'
     
   },
   tableContainer: { // Tabela
@@ -43,15 +62,32 @@ const useStyles = makeStyles({
     minWidth: 650,
   },
   tableHeader: { // Cabeçalho da tabela
+    backgroundColor: '', // alterar a cor do fundo do cabeçalho dos resultados
+    color: 'black',
   },
   editButton: { // Botão de editar
     fontSize: '0.8rem',
+    marginRight: '3px', // Aproximação dos botôes de editar e deletar
+    backgroundColor: '#0C2C54',
+    color: 'white',
     borderRadius: '5px',
-    marginRight: '-8px' //Aproximação dos botôes de editar e deletar
+    marginTop: '10px',
   },
   deleteButton: {  // Botão de deletar
     fontSize: '0.8rem',
+    backgroundColor: '#0C2C54',
+    color: 'white',
+    borderRadius: '5px',
+    marginTop: '10px',
   },
+  //taskText: { // Texto da tarefa
+    //maxWidth: '300px',
+    //overflow: 'hidden',
+    //textOverflow: 'ellipsis',
+  //},
+  //dateText: { // Data de criação e atualização da tarefa
+    //textAlign: 'center',
+  //},
 
 });
 
@@ -119,19 +155,36 @@ const ToDoList = () => {
 
   return (
     <div className={classes.root}>
-      <h2 className={classes.title}>Tarefas</h2> {/*Titulo tarefas*/}
-      <p className={classes.info}>Adicione sua tarefa</p> {/*Informações do titulo*/}
+      <div className={classes.divBody}>
+        <div className={classes.titleContainer}>
+          <h1 style={{margin: '0'}}>Tarefas</h1> {/*Titulo tarefas*/}
+          <Typography
+            className={classes.info}
+            component="subtitle1"
+            variant="body1"
+            style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}
+            >
+              {'Adicione suas tarefas'}
+          </Typography>
+        </div>
       <div className={classes.inputContainer}>
+          
         <TextField
           className={classes.input}
-          label="Nova tarefa"
+            placeholder="Nova tarefa (Máx: 50 caracteres)"
           value={task}
           onChange={handleTaskChange}
           variant="outlined"
             error={!!error} // irá mostrar um erro se houver
             helperText={error} // Mostra a nebsagem de erro abaixo do campo
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon style={{ color: "gray" }} />
+                </InputAdornment>
+              ),
             style: {
-              border: 'none',
+                borderRadius: '40px',
             }
           }}
         />
@@ -146,7 +199,7 @@ const ToDoList = () => {
               <TableRow>
                 <TableCell><b>Tarefas</b></TableCell> {/* Nome da coluna de Tarefas */}
                 <TableCell align="center"><b>Data</b></TableCell> {/* Nome da coluna de Data */}
-                <TableCell align="right"><b>Editar/Deletar</b></TableCell> {/* Nome da coluna de Ações */}
+                <TableCell align="right"><b>Editar</b></TableCell> {/* Nome da coluna de Ações */}
               </TableRow>
             </TableHead>
           )}
