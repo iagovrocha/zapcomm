@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
     //textAlign: 'center',
   //},
 
-});
+}));
 
 const ToDoList = () => {
   const classes = useStyles();
@@ -188,6 +188,9 @@ const ToDoList = () => {
             }
           }}
         />
+          <div 
+            style={{width: '1px', height: "43px", background: '#BDBDBD', marginLeft: '50px', marginRight: '50px'}}>
+          </div>
         <Button className={classes.button} variant="contained" color="primary" onClick={handleAddTask}>
           {editIndex >= 0 ? 'Salvar' : 'Adicionar'}
         </Button>
