@@ -16,7 +16,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import InputAdornment from '@material-ui/core/InputAdornment'; // Importar InputAdornment
 import SearchIcon from '@material-ui/icons/Search'; // Importar o ícone de pesquisa
-
+import InputBase from "@material-ui/core/InputBase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     height: 'calc(100% - 98px)',
     overflow: 'hidden',  
+    background: "#FFFFFF"
   },
   titleContainer: {
     display: 'flex',
@@ -37,22 +38,28 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '1rem', // Espaçamento abaixo do contêiner
   },
   inputContainer: {
-    display: 'flex',
-    width: '100%',
-    marginBottom: '1rem',
+    border: "solid 1px #828282",
+		flex: 1,
+		display: "flex",
+		borderRadius: 40,
+		padding: 4,
+		marginRight: theme.spacing(1),
   },
   input: { // Área de inserir texto
-    flexGrow: 1,
-    marginRight: '1rem',
-    borderRadius: '40px', 
-    border: '1px solid #000', // linha em volta do caixa de texto
-    height: '56px'
+		flex: 1,
+		border: "none",
+		borderRadius: 30,
   },
+  searchIcon: {
+		color: "grey",
+		marginLeft: 6,
+		marginRight: 6,
+		alignSelf: "center",
+	},
   button: { // botão de adicionar ou salvar
     borderRadius: '40px',
     border: '1px',
-    height: '50px'
-    
+    height: '48px',
   },
   tableContainer: { // Tabela
     width: '100%',
@@ -167,34 +174,37 @@ const ToDoList = () => {
               {'Adicione suas tarefas'}
           </Typography>
         </div>
-      <div className={classes.inputContainer}>
-          
-        <TextField
-          className={classes.input}
-            placeholder="Nova tarefa (Máx: 50 caracteres)"
-          value={task}
-          onChange={handleTaskChange}
-          variant="outlined"
-            error={!!error} // irá mostrar um erro se houver
-            helperText={error} // Mostra a nebsagem de erro abaixo do campo
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon style={{ color: "gray" }} />
-                </InputAdornment>
-              ),
-            style: {
-                borderRadius: '40px',
-            }
-          }}
-        />
+
+        <div style={{display: "inline-flex", width: "100%"}}> 
+          <div className={classes.inputContainer}>
+            <SearchIcon className={classes.searchIcon} />
+            <InputBase
+              className={classes.input}
+              placeholder="Nova tarefa (Máx: 50 caracteres)"
+              value={task}
+              onChange={handleTaskChange}
+              variant="outlined"
+                error={!!error} // irá mostrar um erro se houver
+                helperText={error} // Mostra a nebsagem de erro abaixo do campo
+              //   InputProps={{
+              //     startAdornment: (
+              //       <InputAdornment position="start">
+              //         <SearchIcon style={{ color: "gray" }} />
+              //       </InputAdornment>
+              //     ),
+              //   style: {
+              //       borderRadius: '40px',
+              //   }
+              // }}
+            />
+          </div>
           <div 
             style={{width: '1px', height: "43px", background: '#BDBDBD', marginLeft: '50px', marginRight: '50px'}}>
           </div>
-        <Button className={classes.button} variant="contained" color="primary" onClick={handleAddTask}>
-          {editIndex >= 0 ? 'Salvar' : 'Adicionar'}
-        </Button>
-      </div>
+          <Button className={classes.button} variant="contained" color="primary" onClick={handleAddTask}>
+            {editIndex >= 0 ? 'Salvar' : 'Adicionar'}
+          </Button>
+        </div>
         <TableContainer component={Paper} className={classes.tableContainer}> {/* Tabela começa aqui */}
           <Table className={classes.table} aria-label="Lista de Tarefas">
           {tasks.length > 0 && ( // Só mostra o cabeçalho se houver tarefas
