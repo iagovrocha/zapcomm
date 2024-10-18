@@ -40,16 +40,20 @@ const useStyles = makeStyles((theme) => ({
     ...theme.scrollbarStyles,
   },
   editButton: {
-    backgroundColor: "#00C853",
+    backgroundColor: "#0C2C54",
     color: "white",
     "&:hover": {
-      backgroundColor: "#00E676",
+      backgroundColor: "#3c5676",
     },
     width: "30px", // Reduzido para o tamanho desejado
     height: "30px",
   },
   deleteButton: {
-    color: "red",
+    backgroundColor: "#0C2C54",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#f6685e",
+    },
     width: "30px", // Reduzido para o tamanho desejado
     height: "30px",
   },
@@ -378,7 +382,8 @@ const QuickMessages = () => {
                     <TableCell>{quickmessage.shortcode}</TableCell>
                     <TableCell>{quickmessage.message}</TableCell>
                     <TableCell align="center">
-                      <Grid container justifyContent="center">
+                      <Grid container>
+                        <div style={{gap:"5px", display:"flex"}}>
                         <Grid item>
                           <Button
                             className={classes.editButton}
@@ -395,6 +400,7 @@ const QuickMessages = () => {
                             Deletar
                           </Button>
                         </Grid>
+                        </div>
                       </Grid>
                     </TableCell>
                   </TableRow>
