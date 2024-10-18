@@ -38,6 +38,9 @@ import { Tooltip } from "@material-ui/core";
 import { SocketContext } from "../../context/Socket/SocketContext";
 import { AuthContext } from "../../context/Auth/AuthContext";
 
+import Typography from "@material-ui/core/Typography";
+import InputBase from "@material-ui/core/InputBase";
+
 const reducer = (state, action) => {
   if (action.type === "LOAD_TAGS") {
     const tags = action.payload;
@@ -88,6 +91,40 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     overflowY: "scroll",
     ...theme.scrollbarStyles,
+  },
+  serachInputWrapper: {
+    border: "solid 1px #828282",
+		flex: 1,
+		display: "flex",
+		borderRadius: 40,
+		padding: 4,
+		marginRight: theme.spacing(1),
+	},
+
+	searchIcon: {
+		color: "grey",
+		marginLeft: 6,
+		marginRight: 6,
+		alignSelf: "center",
+	},
+
+	searchInput: {
+		flex: 1,
+		border: "none",
+		borderRadius: 30,
+	},
+  AgrupamentoDoPesquisarENovo: {
+    paddingTop: "10px",
+    paddingBottom: "12px",
+    display: "inline-flex",
+    width: "95%"
+  },
+  BotaoAdicionar: {
+    borderRadius: "40px",
+    padding: "10px 32px",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--logo-bg, #001C27)"
   },
 }));
 
@@ -200,7 +237,8 @@ const Tags = () => {
   };
 
 return (
-    <MainContainer>
+    <MainContainer style={{backgroundColor: "#FFFFFF"}}>
+      {/* Componete do Botão de Deletar */}
       <ConfirmationModal
         title={deletingTag && `${i18n.t("tags.confirmationModal.deleteTitle")}`}
         open={confirmModalOpen}
@@ -209,6 +247,7 @@ return (
       >
         {i18n.t("tags.confirmationModal.deleteMessage")}
       </ConfirmationModal>
+      {/* Componete do Botão de Nova Tag */}
       <TagModal
         open={tagModalOpen}
         onClose={handleCloseTagModal}
@@ -216,31 +255,50 @@ return (
         aria-labelledby="form-dialog-title"
         tagId={selectedTag && selectedTag.id}
       />
-      <MainHeader>
-        <Title>{i18n.t("tags.title")}</Title>
-        <MainHeaderButtonsWrapper>
-          <TextField
-            placeholder={i18n.t("contacts.searchPlaceholder")}
-            type="search"
-            value={searchParam}
-            onChange={handleSearch}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon style={{ color: "gray" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
+      <div>
+        {/* Titulo */}
+        <h1><strong>{i18n.t("tags.title")}</strong></h1>
+        {/* Subtitulo */}
+        <Typography
+          component="subtitle1"
+          variant="body1"
+          style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+        >
+        {"Adicione e edite as tags utilizadas."}
+        </Typography>
+        {/* Pesquisar */}
+        <div className={classes.AgrupamentoDoPesquisarENovo}>
+          <div className={classes.serachInputWrapper}>
+            <SearchIcon className={classes.searchIcon} />
+            <InputBase
+              className={classes.searchInput}
+              placeholder={i18n.t("contacts.searchPlaceholder")}
+              type="search"
+              value={searchParam}
+              onChange={handleSearch}
+              // InputProps={{
+              //   startAdornment: (
+              //     <InputAdornment position="start">
+              //       <SearchIcon style={{ color: "gray" }} />
+              //     </InputAdornment>
+              //   ),
+              // }}
+            />
+          </div>
+          <div
+          style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+          >
+          </div>
           <Button
+            className={classes.BotaoAdicionar}
             variant="contained"
             color="primary"
             onClick={handleOpenTagModal}
           >
             {i18n.t("tags.buttons.add")}
-          </Button>		  
-        </MainHeaderButtonsWrapper>
-      </MainHeader>
+          </Button>	  
+        </div>
+      </div>  
       <Paper
         className={classes.mainPaper}
         variant="outlined"

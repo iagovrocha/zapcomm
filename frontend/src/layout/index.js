@@ -335,7 +335,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
   }
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{backgroundColor: "#FFFFFF"}}>
       <Drawer
         variant={drawerVariant}
         className={drawerOpen ? classes.drawerPaper : classes.drawerPaperClose}
