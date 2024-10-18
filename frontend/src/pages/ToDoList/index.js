@@ -77,6 +77,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: '3px', // Aproximação dos botôes de editar e deletar
     backgroundColor: '#0C2C54',
     color: 'white',
+    "&:hover": {
+      backgroundColor: "#3c5676",
+    },
     borderRadius: '5px',
     marginTop: '10px',
   },
@@ -84,6 +87,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '0.8rem',
     backgroundColor: '#0C2C54',
     color: 'white',
+    "&:hover": {
+      backgroundColor: "#3c5676",
+    },
     borderRadius: '5px',
     marginTop: '10px',
   },
@@ -211,8 +217,8 @@ const ToDoList = () => {
             <TableHead className={classes.tableHeader}>
               <TableRow>
                 <TableCell><b>Tarefas</b></TableCell> {/* Nome da coluna de Tarefas */}
-                <TableCell align="center"><b>Data</b></TableCell> {/* Nome da coluna de Data */}
-                <TableCell align="right"><b>Editar</b></TableCell> {/* Nome da coluna de Ações */}
+                <TableCell><b>Data</b></TableCell> {/* Nome da coluna de Data */}
+                <TableCell><b>Editar</b></TableCell> {/* Nome da coluna de Ações */}
               </TableRow>
             </TableHead>
           )}
@@ -224,16 +230,16 @@ const ToDoList = () => {
                       <span className={classes.taskText}>{task.text}</span>
                     </Tooltip> {/* Nome da tarefa */}
                   </TableCell>
-                  <TableCell align="center" className={classes.dateText}>
+                  <TableCell className={classes.dateText}>
                     {task.updatedAt.toLocaleString()}
                   </TableCell> {/* Data de criação e atualização da tarefa */}
-                  <TableCell align="right">
-                    <IconButton onClick={() => handleEditTask(index)} className={classes.editButton}>
+                  <TableCell>
+                    <Button onClick={() => handleEditTask(index)} className={classes.editButton}>
                   EDITAR
-                    </IconButton> {/* Botão de editar */}
-                    <IconButton onClick={() => handleDeleteTask(index)} className={classes.deleteButton}>
+                    </Button> {/* Botão de editar */}
+                    <Button onClick={() => handleDeleteTask(index)} className={classes.deleteButton}>
                   DELETAR
-                    </IconButton> {/* Botão de deletar */}
+                    </Button> {/* Botão de deletar */}
                   </TableCell>
                 </TableRow>
           ))}
