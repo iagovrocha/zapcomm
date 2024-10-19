@@ -414,6 +414,8 @@ const Contacts = () => {
                 </TableCell>
               </TableRow>
             </TableHead>
+            {contacts.length > 0 ? (
+              <>
             <TableBody>
               <>
                 {contacts.map((contact) => (
@@ -464,6 +466,16 @@ const Contacts = () => {
                 {loading && <TableRowSkeleton avatar columns={3} />}
               </>
             </TableBody>
+            </>
+            ) : (
+              <TableBody>
+                <TableRow>
+                  <TableCell colSpan="4" align="center">
+                    Nenhum contato a ser carregada no momento
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+              )}
           </Table>
         </Paper>
       </MainContainer>

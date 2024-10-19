@@ -17,6 +17,7 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import Typography from "@material-ui/core/Typography";
 
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from "@material-ui/icons/Edit";
@@ -35,10 +36,11 @@ import TableRowSkeleton from "../../components/TableRowSkeleton";
 import CampaignModal from "../../components/CampaignModal";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import toastError from "../../errors/toastError";
-import { Grid } from "@material-ui/core";
+import { Grid, InputBase } from "@material-ui/core";
 import { isArray } from "lodash";
 import { useDate } from "../../hooks/useDate";
 import { SocketContext } from "../../context/Socket/SocketContext";
+import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
 
 const reducer = (state, action) => {
   if (action.type === "LOAD_CAMPAIGNS") {
@@ -92,6 +94,72 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     overflowY: "scroll",
     ...theme.scrollbarStyles,
+  },
+  acoesButtons: {
+    color: "#0C2C54",
+    "&:hover": {
+      color: "#3c5676",
+    },
+    width: "35px", 
+    height: "30px",
+  },
+  searchInput: {
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "50px",
+    },
+  },
+  serachInputWrapper: {
+    border: "solid 1px #828282",
+		flex: 1,
+		display: "flex",
+		borderRadius: 40,
+		padding: 4,
+		marginRight: theme.spacing(1),
+    width: '70%',
+    height: '48px',
+	},
+	searchIcon: {
+		color: "grey",
+		marginLeft: 6,
+		marginRight: 6,
+		alignSelf: "center",
+	},
+	searchInput: {
+		flex: 1,
+		border: "none",
+		borderRadius: 30,
+	},
+  addButton: {
+    backgroundColor: "#0C2C54",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#0C2C54",
+    },
+    borderRadius: "20px",
+    padding: "10px 20px",
+    textTransform: "none",
+  },
+
+  divBody: {
+    flex: 1,
+    padding: theme.spacing(1),
+    height: `calc(100% - 48px)`,
+    overflowY: "hidden",
+    background: "#FFFFFF"
+  },
+
+  Botoes: {
+    borderRadius: "40px",
+    padding: "10px 32px",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--logo-bg, #0C2C54)",
+  },
+
+  Tabela: {
+    backgroundColor: "#FFFFFF",
+    fontFamily: 'Inter Tight, sans-serif', 
+    color: 'black'
   },
 }));
 
@@ -241,184 +309,201 @@ const Campaigns = () => {
   };
 
   return (
-    <MainContainer>
-      <ConfirmationModal
-        title={
-          deletingCampaign &&
-          `${i18n.t("campaigns.confirmationModal.deleteTitle")} ${
-            deletingCampaign.name
-          }?`
-        }
-        open={confirmModalOpen}
-        onClose={setConfirmModalOpen}
-        onConfirm={() => handleDeleteCampaign(deletingCampaign.id)}
+    <div className={classes.divBody}>
+      <h1 style={{ margin: "0" }}><b>Campanhas</b></h1>
+      <Typography
+        component="subtitle1"
+        variant="body1"
+        style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
       >
-        {i18n.t("campaigns.confirmationModal.deleteMessage")}
-      </ConfirmationModal>
-      <CampaignModal
-        resetPagination={() => {
-          setPageNumber(1);
-          fetchCampaigns();
-        }}
-        open={campaignModalOpen}
-        onClose={handleCloseCampaignModal}
-        aria-labelledby="form-dialog-title"
-        campaignId={selectedCampaign && selectedCampaign.id}
-      />
-      <MainHeader>
-        <Grid style={{ width: "99.6%" }} container>
-          <Grid xs={12} sm={8} item>
-            <Title>{i18n.t("campaigns.title")}</Title>
-          </Grid>
-          <Grid xs={12} sm={4} item>
-            <Grid spacing={2} container>
-              <Grid xs={6} sm={6} item>
-                <TextField
-                  fullWidth
-                  placeholder={i18n.t("campaigns.searchPlaceholder")}
-                  type="search"
-                  value={searchParam}
-                  onChange={handleSearch}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon style={{ color: "gray" }} />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-              <Grid xs={6} sm={6} item>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  onClick={handleOpenCampaignModal}
-                  color="primary"
-                >
-                  {i18n.t("campaigns.buttons.add")}
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </MainHeader>
-      <Paper
-        className={classes.mainPaper}
-        variant="outlined"
-        onScroll={handleScroll}
-      >
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">
-                {i18n.t("campaigns.table.name")}
-              </TableCell>
-              <TableCell align="center">
-                {i18n.t("campaigns.table.status")}
-              </TableCell>
-              <TableCell align="center">
-                {i18n.t("campaigns.table.contactList")}
-              </TableCell>
-              <TableCell align="center">
-                {i18n.t("campaigns.table.whatsapp")}
-              </TableCell>
-              <TableCell align="center">
-                {i18n.t("campaigns.table.scheduledAt")}
-              </TableCell>
-              <TableCell align="center">
-                {i18n.t("campaigns.table.completedAt")}
-              </TableCell>
-              <TableCell align="center">
-                {i18n.t("campaigns.table.confirmation")}
-              </TableCell>
-              <TableCell align="center">
-                {i18n.t("campaigns.table.actions")}
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <>
-              {campaigns.map((campaign) => (
-                <TableRow key={campaign.id}>
-                  <TableCell align="center">{campaign.name}</TableCell>
-                  <TableCell align="center">
-                    {formatStatus(campaign.status)}
-                  </TableCell>
-                  <TableCell align="center">
-                    {campaign.contactListId
-                      ? campaign.contactList.name
-                      : "Não definida"}
-                  </TableCell>
-                  <TableCell align="center">
-                    {campaign.whatsappId
-                      ? campaign.whatsapp.name
-                      : "Não definido"}
-                  </TableCell>
-                  <TableCell align="center">
-                    {campaign.scheduledAt
-                      ? datetimeToClient(campaign.scheduledAt)
-                      : "Sem agendamento"}
-                  </TableCell>
-                  <TableCell align="center">
-                    {campaign.completedAt
-                      ? datetimeToClient(campaign.completedAt)
-                      : "Não concluída"}
-                  </TableCell>
-                  <TableCell align="center">
-                    {campaign.confirmation ? "Habilitada" : "Desabilitada"}
-                  </TableCell>
-                  <TableCell align="center">
-                    {campaign.status === "EM_ANDAMENTO" && (
-                      <IconButton
-                        onClick={() => cancelCampaign(campaign)}
-                        title="Parar Campanha"
-                        size="small"
-                      >
-                        <PauseCircleOutlineIcon />
-                      </IconButton>
-                    )}
-                    {campaign.status === "CANCELADA" && (
-                      <IconButton
-                        onClick={() => restartCampaign(campaign)}
-                        title="Parar Campanha"
-                        size="small"
-                      >
-                        <PlayCircleOutlineIcon />
-                      </IconButton>
-                    )}
-                    <IconButton
-                      onClick={() =>
-                        history.push(`/campaign/${campaign.id}/report`)
-                      }
-                      size="small"
-                    >
-                      <DescriptionIcon />
-                    </IconButton>
-                    <IconButton
-                      size="small"
-                      onClick={() => handleEditCampaign(campaign)}
-                    >
-                      <EditIcon />
-                    </IconButton>
+        {"Adicione, edite e exclua suas campanhas."}
+      </Typography>
+      <MainContainer>
+        <ConfirmationModal
+          title={
+            deletingCampaign &&
+            `${i18n.t("campaigns.confirmationModal.deleteTitle")} ${
+              deletingCampaign.name
+            }?`
+          }
+          open={confirmModalOpen}
+          onClose={setConfirmModalOpen}
+          onConfirm={() => handleDeleteCampaign(deletingCampaign.id)}
+        >
+          {i18n.t("campaigns.confirmationModal.deleteMessage")}
+        </ConfirmationModal>
+        <CampaignModal
+          resetPagination={() => {
+            setPageNumber(1);
+            fetchCampaigns();
+          }}
+          open={campaignModalOpen}
+          onClose={handleCloseCampaignModal}
+          aria-labelledby="form-dialog-title"
+          campaignId={selectedCampaign && selectedCampaign.id}
+        />
+        {/* <MainHeader> */}
+        <div style={{display: "inline-flex", alignItems: 'center', width: "90%",}}> 
 
-                    <IconButton
-                      size="small"
-                      onClick={(e) => {
-                        setConfirmModalOpen(true);
-                        setDeletingCampaign(campaign);
-                      }}
-                    >
-                      <DeleteOutlineIcon />
-                    </IconButton>
+                <div className={classes.serachInputWrapper}>
+                  <SearchIcon className={classes.searchIcon} />
+                  <InputBase
+                    className={classes.searchInput}
+                    placeholder={i18n.t("campaigns.searchPlaceholder")}
+                    type="search"
+                    value={searchParam}
+                    onChange={handleSearch}
+                  />
+                </div>
+
+                <div
+                style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+              ></div>
+
+                <MainHeaderButtonsWrapper style={{}}>
+
+                  <Button
+                    className={classes.Botoes}
+                    variant="contained"
+                    onClick={handleOpenCampaignModal}
+                    color="primary"
+                    fullWidth
+                  >
+                    {i18n.t("campaigns.buttons.add")}
+                  </Button>
+
+                </MainHeaderButtonsWrapper>
+          </div>
+        {/* </MainHeader> */}
+        <Paper
+          className={classes.mainPaper}
+          onScroll={handleScroll}
+        >
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center" className={classes.Tabela}>
+                  <b>{i18n.t("campaigns.table.name")}</b>
+                </TableCell>
+                <TableCell align="center" className={classes.Tabela}>
+                  <b>{i18n.t("campaigns.table.status")}</b>
+                </TableCell>
+                <TableCell align="center" className={classes.Tabela}>
+                  <b>{i18n.t("campaigns.table.contactList")}</b>
+                </TableCell>
+                <TableCell align="center" className={classes.Tabela}>
+                  <b>{i18n.t("campaigns.table.whatsapp")}</b>
+                </TableCell>
+                <TableCell align="center" className={classes.Tabela}>
+                  <b>{i18n.t("campaigns.table.scheduledAt")}</b>
+                </TableCell>
+                <TableCell align="center" className={classes.Tabela}>
+                  <b>{i18n.t("campaigns.table.completedAt")}</b>
+                </TableCell>
+                <TableCell align="center" className={classes.Tabela}>
+                  <b>{i18n.t("campaigns.table.confirmation")}</b>
+                </TableCell>
+                <TableCell align="center" className={classes.Tabela}>
+                  <b>{i18n.t("campaigns.table.actions")}</b>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            {campaigns.length > 0 ? (
+              <>
+            <TableBody>
+              <>
+                {campaigns.map((campaign) => (
+                  <TableRow key={campaign.id}>
+                    <TableCell align="center">{campaign.name}</TableCell>
+                    <TableCell align="center">
+                      {formatStatus(campaign.status)}
+                    </TableCell>
+                    <TableCell align="center">
+                      {campaign.contactListId
+                        ? campaign.contactList.name
+                        : "Não definida"}
+                    </TableCell>
+                    <TableCell align="center">
+                      {campaign.whatsappId
+                        ? campaign.whatsapp.name
+                        : "Não definido"}
+                    </TableCell>
+                    <TableCell align="center">
+                      {campaign.scheduledAt
+                        ? datetimeToClient(campaign.scheduledAt)
+                        : "Sem agendamento"}
+                    </TableCell>
+                    <TableCell align="center">
+                      {campaign.completedAt
+                        ? datetimeToClient(campaign.completedAt)
+                        : "Não concluída"}
+                    </TableCell>
+                    <TableCell align="center">
+                      {campaign.confirmation ? "Habilitada" : "Desabilitada"}
+                    </TableCell>
+                    <TableCell align="center">
+                      {campaign.status === "EM_ANDAMENTO" && (
+                        <IconButton
+                          className={classes.acoesButtons}
+                          onClick={() => cancelCampaign(campaign)}
+                          title="Parar Campanha"
+                        >
+                          <PauseCircleOutlineIcon />
+                        </IconButton>
+                      )}
+                      {campaign.status === "CANCELADA" && (
+                        <IconButton
+                          className={classes.acoesButtons}
+                          onClick={() => restartCampaign(campaign)}
+                          title="Parar Campanha"
+                        >
+                          <PlayCircleOutlineIcon />
+                        </IconButton>
+                      )}
+                      <IconButton
+                        className={classes.acoesButtons}
+                        onClick={() =>
+                          history.push(`/campaign/${campaign.id}/report`)
+                        }
+                      >
+                        <DescriptionIcon />
+                      </IconButton>
+                      <IconButton
+                        className={classes.acoesButtons}
+                        onClick={() => handleEditCampaign(campaign)}
+                      >
+                        <EditIcon />
+                      </IconButton>
+
+                      <IconButton
+                        className={classes.acoesButtons}
+                        onClick={(e) => {
+                          setConfirmModalOpen(true);
+                          setDeletingCampaign(campaign);
+                        }}
+                      >
+                        <DeleteOutlineIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {loading && <TableRowSkeleton columns={8} />}
+              </>
+            </TableBody>
+            </>
+            ) : (
+              <TableBody>
+                <TableRow>
+                  <TableCell colSpan="8" align="center">
+                    Nenhuma campanha a ser carregada no momento
                   </TableCell>
                 </TableRow>
-              ))}
-              {loading && <TableRowSkeleton columns={8} />}
-            </>
-          </TableBody>
-        </Table>
-      </Paper>
-    </MainContainer>
+              </TableBody>
+              )}
+          </Table>
+        </Paper>
+      </MainContainer>
+    </div>
   );
 };
 

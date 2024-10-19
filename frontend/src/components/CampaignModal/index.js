@@ -44,7 +44,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   tabmsg: {
-    backgroundColor: theme.palette.campaigntab,
+    backgroundColor: "#0C2C54",
+    color: "white",
   },
 
   textField: {
@@ -345,7 +346,7 @@ const CampaignModal = ({
         maxWidth="md"
         scroll="paper"
       >
-        <DialogTitle id="form-dialog-title">
+        <DialogTitle id="form-dialog-title" style={{color: "#fff", backgroundColor: "#0C2C54"}}>
           {campaignEditable ? (
             <>
               {campaignId
@@ -565,9 +566,8 @@ const CampaignModal = ({
                   <Grid xs={12} item>
                     <Tabs
                       value={messageTab}
-                      indicatorColor="primary"
-                      textColor="primary"
                       className={classes.tabmsg}
+                      indicatorColor="white"
                       onChange={(e, v) => setMessageTab(v)}
                       variant="fullWidth"
                       centered

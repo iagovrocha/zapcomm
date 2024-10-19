@@ -303,20 +303,9 @@ const QuickMessages = () => {
         {/* <MainHeader> */}
         <div style={{display: "inline-flex", alignItems: 'center', width: "90%",}}> 
 
-              {/* <Title>
-                <strong>{i18n.t("quickMessages.title")}</strong>
-              </Title>
-              <Typography
-                component="subtitle1"
-                variant="body1"
-                style={{ fontFamily: "Inter Regular, sans-serif", color: "#828282" }}
-              >
-                {"Adicione, edite e exclua as respostas rápidas dos chamados."}
-              </Typography> */}
-
             {/* Campo de busca e botão Adicionar abaixo da mensagem */}
             <div className={classes.serachInputWrapper}>
-          <SearchIcon className={classes.searchIcon} />
+            <SearchIcon className={classes.searchIcon} />
             <InputBase
               className={classes.searchInput}
               placeholder={i18n.t("quickMessages.searchPlaceholder")}
@@ -324,12 +313,6 @@ const QuickMessages = () => {
               value={searchParam}
               onChange={handleSearch}
               
-              // InputProps={{
-                //   startAdornment: (
-                  //     <InputAdornment position="start">
-                  //       <SearchIcon style={{ color: "gray" }} />
-                  //     </InputAdornment>
-                  //   ),
                   // }} Mudança de TextField para InputBase + Estilização em css + MainHeader comentado para alinhar os botões e a barra de pesquisa
                   />
             </div>
