@@ -36,21 +36,22 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#FFFFFF",
     flex: 1,
     padding: theme.spacing(1),
-    overflowY: "scroll",
     ...theme.scrollbarStyles,
   },
   editButton: {
-    backgroundColor: "#00C853",
-    color: "white",
+    color: "#0C2C54",
     "&:hover": {
-      backgroundColor: "#00E676",
+      color: "#3c5676",
     },
-    width: "30px", // Reduzido para o tamanho desejado
+    width: "35px", // Reduzido para o tamanho desejado
     height: "30px",
   },
   deleteButton: {
-    color: "red",
-    width: "30px", // Reduzido para o tamanho desejado
+    color: "#0C2C54",
+    "&:hover": {
+      color: "#3c5676",
+    },
+    width: "35px", // Reduzido para o tamanho desejado
     height: "30px",
   },
   searchInput: {
@@ -351,18 +352,24 @@ const QuickMessages = () => {
 
             </MainHeaderButtonsWrapper>
         </div>
+
         {/* </MainHeader> */}
-        <Paper className={classes.mainPaper} onScroll={handleScroll}>
-          <Table stickyHeader>
+
+        <Paper 
+          className={classes.mainPaper} 
+          // variant="outlined"
+          onScroll={handleScroll}>
+
+          <Table size="small">
             <TableHead>
               <TableRow>
                 <TableCell className={classes.Tabela}>
                   <b>{i18n.t("Título")}</b>
                 </TableCell>
-                <TableCell className={classes.Tabela}>
+                <TableCell className={classes.Tabela} style={{align: "center"}}>
                   <b>{i18n.t("Mensagem")}</b>
                 </TableCell>
-                <TableCell className={classes.Tabela} style={{align: "right"}}>
+                <TableCell className={classes.Tabela} style={{align: "center"}}>
                   <b>{i18n.t("Ações")}</b>
                 </TableCell>
               </TableRow>
@@ -378,23 +385,25 @@ const QuickMessages = () => {
                     <TableCell>{quickmessage.shortcode}</TableCell>
                     <TableCell>{quickmessage.message}</TableCell>
                     <TableCell align="center">
-                      <Grid container justifyContent="center">
+                      <Grid container>
+                        <div style={{display:"flex", justifyContent:"center"}}>
                         <Grid item>
-                          <Button
+                          <IconButton
                             className={classes.editButton}
                             onClick={() => handleEditQuickmessage(quickmessage)}
                           >
-                            Editar
-                          </Button>
+                            <EditIcon />
+                          </IconButton>
                         </Grid>
                         <Grid item>
-                          <Button
+                          <IconButton
                             className={classes.deleteButton}
                             onClick={() => handleConfirmDelete(quickmessage)}
                           >
-                            Deletar
-                          </Button>
+                            <DeleteIcon />
+                          </IconButton>
                         </Grid>
+                        </div>
                       </Grid>
                     </TableCell>
                   </TableRow>

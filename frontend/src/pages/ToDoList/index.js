@@ -17,34 +17,47 @@ import Paper from '@material-ui/core/Paper';
 import InputAdornment from '@material-ui/core/InputAdornment'; // Importar InputAdornment
 import SearchIcon from '@material-ui/icons/Search'; // Importar o ícone de pesquisa
 import InputBase from "@material-ui/core/InputBase";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import MainContainer from "../../components/MainContainer";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-   // margin: '2rem'
+
+  // root: {
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //  // margin: '2rem'
+  // },
+  Tabela: {
+    backgroundColor: "#FFFFFF",
+    fontFamily: 'Inter Tight, sans-serif', 
+    color: 'black'
   },
+
   divBody: {
     flex: '1',
     padding: theme.spacing(1),
-    height: 'calc(100% - 98px)',
-    overflow: 'hidden',  
+    height: 'calc(100% - 98px)', 
     background: "#FFFFFF"
   },
   titleContainer: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start', // Alinha os itens à esquerda
-    marginBottom: '1rem', // Espaçamento abaixo do contêiner
+    marginBottom: '7px', // Espaçamento abaixo do contêiner
   },
-  inputContainer: {
+  serachInputWrapper: {
     border: "solid 1px #828282",
 		flex: 1,
 		display: "flex",
 		borderRadius: 40,
 		padding: 4,
 		marginRight: theme.spacing(1),
-  },
+    		width: '70%',
+    		height: '48px',
+	},
   input: { // Área de inserir texto
 		flex: 1,
 		border: "none",
@@ -57,35 +70,37 @@ const useStyles = makeStyles((theme) => ({
 		alignSelf: "center",
 	},
   button: { // botão de adicionar ou salvar
-    borderRadius: '40px',
-    border: '1px',
-    height: '48px',
+    borderRadius: "40px",
+    padding: "10px 32px",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--logo-bg, #001C27)"
   },
-  tableContainer: { // Tabela
-    width: '100%',
-    marginTop: '1rem',
-  },
+
   table: { // Tabela das tarefas que serão adicionadas
     minWidth: 650,
+    marginTop: "10px",
+
   },
   tableHeader: { // Cabeçalho da tabela
     backgroundColor: '', // alterar a cor do fundo do cabeçalho dos resultados
     color: 'black',
   },
-  editButton: { // Botão de editar
-    fontSize: '0.8rem',
-    marginRight: '3px', // Aproximação dos botôes de editar e deletar
-    backgroundColor: '#0C2C54',
-    color: 'white',
-    borderRadius: '5px',
-    marginTop: '10px',
+  editButton: {
+    color: "#0C2C54",
+    "&:hover": {
+      color: "#3c5676",
+    },
+    width: "35px", // Reduzido para o tamanho desejado
+    height: "30px",
   },
-  deleteButton: {  // Botão de deletar
-    fontSize: '0.8rem',
-    backgroundColor: '#0C2C54',
-    color: 'white',
-    borderRadius: '5px',
-    marginTop: '10px',
+  deleteButton: {
+    color: "#0C2C54",
+    "&:hover": {
+      color: "#3c5676",
+    },
+    width: "35px", // Reduzido para o tamanho desejado
+    height: "30px",
   },
   //taskText: { // Texto da tarefa
     //maxWidth: '300px',
@@ -105,6 +120,13 @@ const ToDoList = () => {
   const [tasks, setTasks] = useState([]);
   const [editIndex, setEditIndex] = useState(-1);
   const [error, setError] = useState(''); // Estado para armazenar a mensagem de erro
+  const [hasMore, setHasMore] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const loadMore = () => {
+    setPageNumber((prevState) => prevState + 1);
+  };
 
   useEffect(() => {
     const savedTasks = localStorage.getItem('tasks');
@@ -112,6 +134,14 @@ const ToDoList = () => {
       setTasks(JSON.parse(savedTasks));
     }
   }, []);
+
+  const handleScroll = (e) => {
+    if (!hasMore || loading) return;
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+    if (scrollHeight - (scrollTop + 100) < clientHeight) {
+      loadMore();
+    }
+  };
 
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -161,8 +191,8 @@ const ToDoList = () => {
   };
 
   return (
-    <div className={classes.root}>
-      <div className={classes.divBody}>
+    <div className={classes.divBody}>
+      {/* <div className={classes.root}> */}
         <div className={classes.titleContainer}>
           <h1 style={{margin: '0'}}>Tarefas</h1> {/*Titulo tarefas*/}
           <Typography
@@ -175,8 +205,10 @@ const ToDoList = () => {
           </Typography>
         </div>
 
-        <div style={{display: "inline-flex", width: "100%"}}> 
-          <div className={classes.inputContainer}>
+      <MainContainer className={classes.mainContainer}>
+
+        <div style={{display: "inline-flex", alignItems: 'center', width: "90%"}}> 
+          <div className={classes.serachInputWrapper}>
             <SearchIcon className={classes.searchIcon} />
             <InputBase
               className={classes.input}
@@ -198,24 +230,30 @@ const ToDoList = () => {
               // }}
             />
           </div>
+
           <div 
             style={{width: '1px', height: "43px", background: '#BDBDBD', marginLeft: '50px', marginRight: '50px'}}>
           </div>
+
           <Button className={classes.button} variant="contained" color="primary" onClick={handleAddTask}>
-            {editIndex >= 0 ? 'Salvar' : 'Adicionar'}
+            {editIndex >= 0 ? 'Salvar Alteração' : 'Adicionar Tarefa'}
           </Button>
+
         </div>
-        <TableContainer component={Paper} className={classes.tableContainer}> {/* Tabela começa aqui */}
-          <Table className={classes.table} aria-label="Lista de Tarefas">
-          {tasks.length > 0 && ( // Só mostra o cabeçalho se houver tarefas
+
+        <Paper 
+          className={classes.mainPaper} 
+          // variant="outlined"
+          onScroll={handleScroll}>
+
+          <Table className={classes.table} aria-label="Lista de Tarefas" size="small">
             <TableHead className={classes.tableHeader}>
               <TableRow>
                 <TableCell><b>Tarefas</b></TableCell> {/* Nome da coluna de Tarefas */}
                 <TableCell align="center"><b>Data</b></TableCell> {/* Nome da coluna de Data */}
-                <TableCell align="right"><b>Editar</b></TableCell> {/* Nome da coluna de Ações */}
+                <TableCell align="right"><b>Ações</b></TableCell> {/* Nome da coluna de Ações */}
               </TableRow>
             </TableHead>
-          )}
             <TableBody>
           {tasks.map((task, index) => (
                 <TableRow key={index}>
@@ -229,18 +267,18 @@ const ToDoList = () => {
                   </TableCell> {/* Data de criação e atualização da tarefa */}
                   <TableCell align="right">
                     <IconButton onClick={() => handleEditTask(index)} className={classes.editButton}>
-                  EDITAR
+                    <EditIcon />
                     </IconButton> {/* Botão de editar */}
                     <IconButton onClick={() => handleDeleteTask(index)} className={classes.deleteButton}>
-                  DELETAR
+                    <DeleteIcon />
                     </IconButton> {/* Botão de deletar */}
                   </TableCell>
                 </TableRow>
           ))}
             </TableBody>
           </Table>
-        </TableContainer>
-      </div>
+        </Paper>
+      </MainContainer>
     </div>
   );
 };

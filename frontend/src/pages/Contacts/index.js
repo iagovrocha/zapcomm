@@ -97,7 +97,6 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     padding: theme.spacing(1),
     height: `calc(100% - 48px)`,
-    overflowY: "hidden",
     backgroundColor: "#FFFFFF",
   },
 
@@ -137,6 +136,15 @@ const useStyles = makeStyles((theme) => ({
 		border: "none",
 		borderRadius: 30,
 	},
+
+  acoes: {
+    color: "#0C2C54",
+    "&:hover": {
+      color: "#3c5676",
+    },
+    width: "35px", // Reduzido para o tamanho desejado
+    height: "30px",
+  }
 }));
 
 const Contacts = () => {
@@ -377,7 +385,7 @@ const Contacts = () => {
         {/* </MainHeader> */}
         <Paper
           className={classes.mainPaper}
-          variant="outlined"
+          // variant="outlined"
           onScroll={handleScroll}
         >
           <Table size="small">
@@ -423,12 +431,14 @@ const Contacts = () => {
                           setContactTicket(contact);
                           setNewTicketModalOpen(true);
                         }}
+                        className={classes.acoes}
                       >
                         <WhatsAppIcon />
                       </IconButton>
                       <IconButton
                         size="small"
                         onClick={() => hadleEditContact(contact.id)}
+                        className={classes.acoes}
                       >
                         <EditIcon />
                       </IconButton>
@@ -442,6 +452,7 @@ const Contacts = () => {
                               setConfirmOpen(true);
                               setDeletingContact(contact);
                             }}
+                            className={classes.acoes}
                           >
                             <DeleteOutlineIcon />
                           </IconButton>
