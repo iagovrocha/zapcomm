@@ -25,6 +25,9 @@ import { has, isObject } from "lodash";
 
 import { AuthContext } from "../../context/Auth/AuthContext";
 import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
+import { i18n } from "../../translate/i18n";
+
+import IconButton from "@mui/material/IconButton";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -51,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   btnContainer: {
-    textAlign: "right",
+    textAlign: "rigth",
     padding: 10,
   },
 }));
@@ -114,7 +117,12 @@ export function ChatModal({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Conversa</DialogTitle>
+      <DialogTitle id="alert-dialog-title" style={{ backgroundColor: "#0c2c4c", color: "white"}}>
+        <div style={{display: 'flex', justifyContent: 'space-between', alignItems:'center' }}>
+        <span>Conversa</span>
+        <IconButton onClick={handleClose} style={{color: "white"}}>x</IconButton>
+        </div>
+      </DialogTitle>
       <DialogContent>
         <Grid spacing={2} container>
           <Grid xs={12} style={{ padding: 18 }} item>
@@ -126,21 +134,23 @@ export function ChatModal({
               variant="outlined"
               size="small"
               fullWidth
+              InputProps={{
+                style: { borderRadius: 10 }, // Ajuste o valor conforme necessário
+              }}
             />
           </Grid>
           <Grid xs={12} item>
+          <div style={{ borderRadius: '10px', overflow: 'hidden' }}>
             <UsersFilter
               onFiltered={(users) => setUsers(users)}
               initialUsers={users}
             />
+            </div>
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="primary">
-          Fechar
-        </Button>
-        <Button onClick={handleSave} color="primary" variant="contained">
+      <DialogActions style={{ justifyContent: 'center' }}> {/* Centralização do botão */}
+        <Button onClick={handleSave} style={{backgroundColor: "#34d3a3", color: "#0c2454"}}>
           Salvar
         </Button>
       </DialogActions>
@@ -344,7 +354,7 @@ function Chat(props) {
                 color="primary"
                 variant="contained"
               >
-                Nova
+                + Novo
               </Button>
             </div>
           
