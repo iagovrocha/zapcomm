@@ -149,7 +149,7 @@ const PromptModal = ({ open, onClose, promptId }) => {
                 scroll="paper"
                 fullWidth
             >
-                <DialogTitle id="form-dialog-title">
+                <DialogTitle id="form-dialog-title" style={{color: "#fff", backgroundColor: "#0C2C54"}}>
                     {promptId
                         ? `${i18n.t("promptModal.title.edit")}`
                         : `${i18n.t("promptModal.title.add")}`}

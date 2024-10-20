@@ -296,7 +296,7 @@ const Contacts = () => {
       >
         {"Adicione e gerencie seus contatos"}
       </Typography>
-      <MainContainer className={classes.mainContainer}>
+      <MainContainer>
         <NewTicketModal
           modalOpen={newTicketModalOpen}
           initialContact={contactTicket}
@@ -471,7 +471,7 @@ const Contacts = () => {
               <TableBody>
                 <TableRow>
                   <TableCell colSpan="4" align="center">
-                    Nenhum contato a ser carregada no momento
+                    Nenhum contato a ser carregado no momento
                   </TableCell>
                 </TableRow>
               </TableBody>
