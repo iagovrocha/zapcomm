@@ -31,8 +31,16 @@ import Checkbox from '@material-ui/core/Checkbox';
 const useStyles = makeStyles(theme => ({
 	root: {
 		display: "flex",
+		padding: "1rem",
 		flexWrap: "wrap",
 	},
+
+	head: {
+		display: "flex",
+		flexDirection: "row",
+		backgroundColor: "#0c2c54"
+	},
+
 	multFieldLine: {
 		display: "flex",
 		"& > *:not(:last-child)": {
@@ -40,13 +48,21 @@ const useStyles = makeStyles(theme => ({
 		},
 	},
 
+	titulo: {
+		color:"white",
+		backgroundColor:"#0c2c54",
+	},
+
 	btnWrapper: {
-		position: "relative",
+		borderRadius:"0.6rem",	
+		color:"#0c2c54",	
+		backgroundColor:"#34d3a3",
+		marginRight: "37.5%"
 	},
 
 	buttonProgress: {
 		color: green[500],
-		position: "absolute",
+
 		top: "50%",
 		left: "50%",
 		marginTop: -12,
@@ -135,9 +151,20 @@ const TagModal = ({ open, onClose, tagId, reload }) => {
 				fullWidth
 				scroll="paper"
 			>
-				<DialogTitle id="form-dialog-title">
-					{(tagId ? `${i18n.t("tagModal.title.edit")}` : `${i18n.t("tagModal.title.add")}`)}
-				</DialogTitle>
+				<div className={classes.head}>
+					<DialogTitle id="form-dialog-title" className={classes.titulo}>
+						{(tagId ? `${i18n.t("tagModal.title.edit")}` : `${i18n.t("tagModal.title.add")}`)}
+					</DialogTitle>
+					<DialogTitle>
+						<Button
+							onClick={handleClose}
+							color="secondary"
+							disabled={isSubmitting}
+						>
+							{i18n.t("tagModal.buttons.cancel")}
+						</Button>
+					</DialogTitle>
+				</div>
 				<Formik
 					initialValues={tag}
 					enableReinitialize={true}
@@ -232,14 +259,6 @@ const TagModal = ({ open, onClose, tagId, reload }) => {
 								)}
 							</DialogContent>
 							<DialogActions>
-								<Button
-									onClick={handleClose}
-									color="secondary"
-									disabled={isSubmitting}
-									variant="outlined"
-								>
-									{i18n.t("tagModal.buttons.cancel")}
-								</Button>
 								<Button
 									type="submit"
 									color="primary"
