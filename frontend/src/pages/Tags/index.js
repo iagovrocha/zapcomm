@@ -126,6 +126,12 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     border: "1px solid var(--logo-bg, #001C27)"
   },
+  divBody: {
+    flex: 1,
+    padding: theme.spacing(1),
+    height: `calc(100% - 48px)`,
+    backgroundColor: "#FFFFFF",
+  },
 }));
 
 const Tags = () => {
@@ -235,8 +241,29 @@ const Tags = () => {
       loadMore();
     }
   };
-
-return (
+  function hexToRgb(hex) {
+    // Remove o símbolo "#" se ele estiver presente
+    hex = hex.replace('#', '');
+  
+    // Converter os valores hexadecimais em valores RGB
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+  
+    return `${r}, ${g}, ${b}`;
+  };
+  return (
+  <div className={classes.divBody}>
+    {/* Titulo */}
+    <h1><strong>{i18n.t("tags.title")}</strong></h1>
+    {/* Subtitulo */}
+    <Typography
+      component="subtitle1"
+      variant="body1"
+      style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+    >
+    {"Adicione e edite as tags utilizadas."}
+    </Typography>
     <MainContainer style={{backgroundColor: "#FFFFFF"}}>
       {/* Componete do Botão de Deletar */}
       <ConfirmationModal
@@ -256,16 +283,6 @@ return (
         tagId={selectedTag && selectedTag.id}
       />
       <div>
-        {/* Titulo */}
-        <h1><strong>{i18n.t("tags.title")}</strong></h1>
-        {/* Subtitulo */}
-        <Typography
-          component="subtitle1"
-          variant="body1"
-          style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
-        >
-        {"Adicione e edite as tags utilizadas."}
-        </Typography>
         {/* Pesquisar */}
         <div className={classes.AgrupamentoDoPesquisarENovo}>
           <div className={classes.serachInputWrapper}>
@@ -301,18 +318,20 @@ return (
       </div>  
       <Paper
         className={classes.mainPaper}
-        variant="outlined"
+        // variant="outlined"
         onScroll={handleScroll}
       >
-        <Table size="small">
+        <Table size="small" style={{backgroundColor: "#FFFFFF"}}>
           <TableHead>
             <TableRow>
-              <TableCell align="center">{i18n.t("tags.table.name")}</TableCell>
-              <TableCell align="center">
-                {i18n.t("tags.table.tickets")}
+              <TableCell align="left">
+                <b>{i18n.t("tags.table.name")}</b>
               </TableCell>
               <TableCell align="center">
-                {i18n.t("tags.table.actions")}
+                <b>{i18n.t("tags.table.tickets")}</b>
+              </TableCell>
+              <TableCell align="center">
+                <b>{i18n.t("tags.table.actions")}</b>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -320,15 +339,20 @@ return (
             <>
               {tags.map((tag) => (
                 <TableRow key={tag.id}>
-                  <TableCell align="center">
+                  <TableCell align="left">
                     <Chip
-                      variant="outlined"
+                      // variant="outlined"
                       style={{
-                        backgroundColor: tag.color,
-                        textShadow: "1px 1px 1px #000",
-                        color: "white",
+                        borderRadius: "4px",
+                        backgroundColor: `rgba(${hexToRgb(tag.color)}, 0.2)`,
+                        color: tag.color,
+                        fontFamily: 'Inter Regular, sans-serif',
+                        fontSize: "14px",
+                        fontStyle: "normal",
+                        fontWeight: "500",
+                        lineHeight: "normal",
                       }}
-                      label={tag.name}
+                      label={<b>{tag.name}</b>}
                       size="small"
                     />
                   </TableCell>
@@ -356,6 +380,7 @@ return (
         </Table>
       </Paper>
     </MainContainer>
+    </div>
   );
 };
 
