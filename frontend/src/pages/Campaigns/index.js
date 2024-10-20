@@ -129,17 +129,6 @@ const useStyles = makeStyles((theme) => ({
 		border: "none",
 		borderRadius: 30,
 	},
-  addButton: {
-    backgroundColor: "#0C2C54",
-    color: "#fff",
-    "&:hover": {
-      backgroundColor: "#0C2C54",
-    },
-    borderRadius: "20px",
-    padding: "10px 20px",
-    textTransform: "none",
-  },
-
   divBody: {
     flex: 1,
     padding: theme.spacing(1),
@@ -147,7 +136,6 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "hidden",
     background: "#FFFFFF"
   },
-
   Botoes: {
     borderRadius: "40px",
     padding: "10px 32px",
@@ -155,7 +143,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     border: "1px solid var(--logo-bg, #0C2C54)",
   },
-
   Tabela: {
     backgroundColor: "#FFFFFF",
     fontFamily: 'Inter Tight, sans-serif', 
