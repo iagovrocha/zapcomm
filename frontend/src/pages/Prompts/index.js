@@ -224,7 +224,7 @@ const Prompts = () => {
       >
         {"Adicione, edite e exclua seus prompts com ChatGPT"}
       </Typography>
-      <MainContainer>
+      {/* <MainContainer> */}
         <ConfirmationModal
           title={
             selectedPrompt &&
@@ -244,7 +244,7 @@ const Prompts = () => {
         />
 
         {/* <MainHeader> */}
-        <div style={{display: "inline-flex", alignItems: 'center'}}> 
+        <div style={{display: "inline-flex", alignItems: 'right', width:"97%"}}> 
           <MainHeaderButtonsWrapper>
             <Button
               className = {classes.Botoes}
@@ -321,7 +321,7 @@ const Prompts = () => {
               )}
           </Table>
         </Paper>
-      </MainContainer>
+      {/* </MainContainer> */}
     </div>
   );
 };

@@ -278,7 +278,7 @@ const QuickMessages = () => {
       >
         {"Adicione, edite e exclua as respostas rápidas dos chamados."}
       </Typography>
-      <MainContainer>
+      {/* <MainContainer> */}
         <ConfirmationModal
           title={
             deletingQuickmessage &&
@@ -301,7 +301,7 @@ const QuickMessages = () => {
           quickmessageId={selectedQuickmessage && selectedQuickmessage.id}
         />
         {/* <MainHeader> */}
-        <div style={{display: "inline-flex", alignItems: 'center', width: "90%",}}> 
+        <div style={{display: "inline-flex", alignItems: 'center', width: "95%",}}> 
 
             {/* Campo de busca e botão Adicionar abaixo da mensagem */}
             <div className={classes.serachInputWrapper}>
@@ -403,7 +403,7 @@ const QuickMessages = () => {
             </TableBody>
           </Table>
         </Paper>
-      </MainContainer>
+      {/* </MainContainer> */}
     </div>
   );
 };

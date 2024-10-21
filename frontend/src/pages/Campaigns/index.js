@@ -305,7 +305,7 @@ const Campaigns = () => {
       >
         {"Adicione, edite e exclua suas campanhas."}
       </Typography>
-      <MainContainer>
+      {/* <MainContainer> */}
         <ConfirmationModal
           title={
             deletingCampaign &&
@@ -330,7 +330,7 @@ const Campaigns = () => {
           campaignId={selectedCampaign && selectedCampaign.id}
         />
         {/* <MainHeader> */}
-        <div style={{display: "inline-flex", alignItems: 'center', width: "90%",}}> 
+        <div style={{display: "inline-flex", alignItems: 'center', width: "95%",}}> 
 
                 <div className={classes.serachInputWrapper}>
                   <SearchIcon className={classes.searchIcon} />
@@ -489,7 +489,7 @@ const Campaigns = () => {
               )}
           </Table>
         </Paper>
-      </MainContainer>
+      {/* </MainContainer> */}
     </div>
   );
 };

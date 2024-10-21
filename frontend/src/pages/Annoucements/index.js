@@ -290,7 +290,7 @@ const Announcements = () => {
       >
         {"Adicione e edite informativos"}
       </Typography>
-      <MainContainer>
+      {/* <MainContainer> */}
       <ConfirmationModal
         title={
           deletingAnnouncement &&
@@ -314,7 +314,7 @@ const Announcements = () => {
         announcementId={selectedAnnouncement && selectedAnnouncement.id}
       />
       {/* <MainHeader> */}
-        <div style={{display: "inline-flex", alignItems: 'center', width: "90%",}}> 
+        <div style={{display: "inline-flex", alignItems: 'center', width: "95%",}}> 
 
           <div className={classes.serachInputWrapper}>
                 <SearchIcon className={classes.searchIcon} />
@@ -420,7 +420,7 @@ const Announcements = () => {
               )}
         </Table>
       </Paper>
-      </MainContainer>
+      {/* </MainContainer> */}
     </div>
   )
 };

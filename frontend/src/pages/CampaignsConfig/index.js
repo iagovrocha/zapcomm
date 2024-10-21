@@ -136,7 +136,7 @@ const CampaignsConfig = () => {
       >
         {"Defina intervalos para suas campanhas"}
       </Typography>
-    <MainContainer>
+    {/* <MainContainer> */}
       <ConfirmationModal
         title={i18n.t("campaigns.confirmationModal.deleteTitle")}
         open={confirmationOpen}
@@ -335,7 +335,7 @@ const CampaignsConfig = () => {
           </Grid>
         </Box>
       </Paper>
-    </MainContainer>
+    {/* </MainContainer> */}
     </div>
   );
 };
