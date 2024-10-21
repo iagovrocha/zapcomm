@@ -17,10 +17,6 @@ import Paper from '@material-ui/core/Paper';
 import InputAdornment from '@material-ui/core/InputAdornment'; // Importar InputAdornment
 import SearchIcon from '@material-ui/icons/Search'; // Importar o ícone de pesquisa
 import InputBase from "@material-ui/core/InputBase";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import MainContainer from "../../components/MainContainer";
 
 const useStyles = makeStyles((theme) => ({
@@ -255,32 +251,43 @@ const ToDoList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-          {tasks.map((task, index) => (
-                <TableRow key={index}>
-                  <TableCell component="th" scope="row">
-                    <Tooltip title={task.text} arrow>
-                      <span className={classes.taskText}>{task.text}</span>
-                    </Tooltip> {/* Nome da tarefa */}
-                  </TableCell>
-                  <TableCell align="center" className={classes.dateText}>
-                    {task.updatedAt.toLocaleString()}
-                  </TableCell> {/* Data de criação e atualização da tarefa */}
-                  <TableCell align="right">
-                    <IconButton onClick={() => handleEditTask(index)} className={classes.editButton}>
-                    <EditIcon />
-                    </IconButton> {/* Botão de editar */}
-                    <IconButton onClick={() => handleDeleteTask(index)} className={classes.deleteButton}>
-                    <DeleteIcon />
-                    </IconButton> {/* Botão de deletar */}
+              {tasks.length === 0 ? ( // Verificar se não há tarefas
+                <TableRow>
+                  <TableCell colSpan={3} align="center">
+                    Nenhuma tarefa adicionada
                   </TableCell>
                 </TableRow>
-          ))}
+              ) : (
+                tasks.map((task, index) => (
+                  <TableRow key={index}>
+                    <TableCell component="th" scope="row">
+                      {task.text}
+                    </TableCell>
+                    <TableCell align="center">
+                      {new Date(task.updatedAt).toLocaleDateString('pt-BR')}
+                    </TableCell>
+                    <TableCell align="right">
+                      <Tooltip title="Editar Tarefa">
+                        <IconButton className={classes.editButton} onClick={() => handleEditTask(index)}>
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Excluir Tarefa">
+                        <IconButton className={classes.deleteButton} onClick={() => handleDeleteTask(index)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </Paper>
+
       </MainContainer>
     </div>
   );
-};
+}
 
 export default ToDoList;
