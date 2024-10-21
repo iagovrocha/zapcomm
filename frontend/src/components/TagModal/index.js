@@ -57,12 +57,15 @@ const useStyles = makeStyles(theme => ({
 		borderRadius:"0.6rem",	
 		color:"#0c2c54",	
 		backgroundColor:"#34d3a3",
-		marginRight: "37.5%"
+		marginRight: "37.5%",
+		"&:hover": {
+			backgroundColor: "#5cdbb5",
+		  },
 	},
 
 	buttonProgress: {
 		color: green[500],
-
+		position: "absolute",
 		top: "50%",
 		left: "50%",
 		marginTop: -12,
@@ -154,15 +157,14 @@ const TagModal = ({ open, onClose, tagId, reload }) => {
 				<div className={classes.head}>
 					<DialogTitle id="form-dialog-title" className={classes.titulo}>
 						{(tagId ? `${i18n.t("tagModal.title.edit")}` : `${i18n.t("tagModal.title.add")}`)}
-					</DialogTitle>
-					<DialogTitle>
-						<Button
+
+						{/* <Button
 							onClick={handleClose}
 							color="secondary"
 							disabled={isSubmitting}
 						>
 							{i18n.t("tagModal.buttons.cancel")}
-						</Button>
+						</Button> */}
 					</DialogTitle>
 				</div>
 				<Formik
@@ -259,9 +261,16 @@ const TagModal = ({ open, onClose, tagId, reload }) => {
 								)}
 							</DialogContent>
 							<DialogActions>
+								{/* <Button
+									onClick={handleClose}
+									color="secondary"
+									disabled={isSubmitting}
+								>
+									{i18n.t("tagModal.buttons.cancel")}
+								</Button> */}
 								<Button
 									type="submit"
-									color="primary"
+									//color="#145441"
 									disabled={isSubmitting}
 									variant="contained"
 									className={classes.btnWrapper}

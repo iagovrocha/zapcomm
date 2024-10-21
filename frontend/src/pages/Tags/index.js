@@ -132,6 +132,12 @@ const useStyles = makeStyles((theme) => ({
     height: `calc(100% - 48px)`,
     backgroundColor: "#FFFFFF",
   },
+  acoes: {
+    color: "#0C2C54",
+    "&:hover": {
+      color: "#3c5676",
+    },
+  }
 }));
 
 const Tags = () => {
@@ -254,9 +260,7 @@ const Tags = () => {
   };
   return (
   <div className={classes.divBody}>
-    {/* Titulo */}
-    <h1><strong>{i18n.t("tags.title")}</strong></h1>
-    {/* Subtitulo */}
+    <h1 style={{ margin: "0" }}><b>{i18n.t("tags.title")}</b></h1>
     <Typography
       component="subtitle1"
       variant="body1"
@@ -358,7 +362,7 @@ const Tags = () => {
                   </TableCell>
                   <TableCell align="center">{tag.ticketsCount}</TableCell>
                   <TableCell align="center">
-                    <IconButton size="small" onClick={() => handleEditTag(tag)}>
+                    <IconButton size="small" onClick={() => handleEditTag(tag)} className={classes.acoes}>
                       <EditIcon />
                     </IconButton>
 
@@ -368,7 +372,8 @@ const Tags = () => {
                         setConfirmModalOpen(true);
                         setDeletingTag(tag);
                       }}
-                    >
+                      className={classes.acoes}
+                      >
                       <DeleteOutlineIcon />
                     </IconButton>
                   </TableCell>
