@@ -1,59 +1,21 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { makeStyles, Paper, Typography, Modal, IconButton } from "@material-ui/core";
+import { makeStyles, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from "@material-ui/core";
 import MainContainer from "../../components/MainContainer";
 import MainHeader from "../../components/MainHeader";
 import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
 import Title from "../../components/Title";
 import { i18n } from "../../translate/i18n";
-import useHelps from "../../hooks/useHelps";
 
 const useStyles = makeStyles(theme => ({
-  mainPaperContainer: {
-    overflowY: 'auto',
-    maxHeight: 'calc(100vh - 200px)',
+  table: {
+    minWidth: 650,
   },
-  mainPaper: {
-    width: '100%',
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-    gap: theme.spacing(3),
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(3),
-  },
-  helpPaper: {
-    position: 'relative',
-    width: '100%',
-    minHeight: '340px',
-    padding: theme.spacing(2),
-    boxShadow: theme.shadows[3],
-    borderRadius: theme.spacing(1),
+  clickableRow: {
     cursor: 'pointer',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    maxWidth: '340px',
-  },
-  paperHover: {
-    transition: 'transform 0.3s, box-shadow 0.3s',
+    color: theme.palette.primary.main,
     '&:hover': {
-      transform: 'scale(1.03)',
-      boxShadow: `0 0 8px`,
-      color: theme.palette.primary.main,
+      textDecoration: 'underline',
     },
-  },
-  videoThumbnail: {
-    width: '100%',
-    height: 'calc(100% - 56px)',
-    objectFit: 'cover',
-    borderRadius: `${theme.spacing(1)}px ${theme.spacing(1)}px 0 0`,
-  },
-  videoTitle: {
-    marginTop: theme.spacing(1),
-    flex: 1,
-  },
-  videoDescription: {
-    maxHeight: '100px',
-    overflow: 'hidden',
   },
   videoModal: {
     display: 'flex',
@@ -74,14 +36,18 @@ const useStyles = makeStyles(theme => ({
 
 const Helps = () => {
   const classes = useStyles();
-  const [records, setRecords] = useState([]);
-  const { list } = useHelps();
-  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [records, setRecords] = useState([]); // Estado para armazenar vídeos
+  const [selectedVideo, setSelectedVideo] = useState(null); // Estado para o vídeo selecionado
 
+  // Simulação de dados dos vídeos
   useEffect(() => {
     async function fetchData() {
-      const helps = await list();
-      setRecords(helps);
+      // Dados mockados de vídeos
+      const helps = [
+        { video: "dQw4w9WgXcQ", title: "Tutorial 1", description: "Este é o primeiro tutorial." },
+        { video: "9bZkp7q19f0", title: "Tutorial 2", description: "Este é o segundo tutorial." },
+      ];
+      setRecords(helps); // Atualiza o estado com os vídeos simulados
     }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -131,39 +97,40 @@ const Helps = () => {
     );
   };
 
-  const renderHelps = () => {
+  const renderHelpsTable = () => {
     return (
-      <>
-        <div className={`${classes.mainPaper} ${classes.mainPaperContainer}`}>
-          {records.length ? records.map((record, key) => (
-            <Paper key={key} className={`${classes.helpPaper} ${classes.paperHover}`} onClick={() => openVideoModal(record.video)}>
-              <img
-                src={`https://img.youtube.com/vi/${record.video}/mqdefault.jpg`}
-                alt="Thumbnail"
-                className={classes.videoThumbnail}
-              />
-              <Typography variant="button" className={classes.videoTitle}>
-                {record.title}
-              </Typography>
-              <Typography variant="caption" className={classes.videoDescription}>
-                {record.description}
-              </Typography>
-            </Paper>
-          )) : null}
-        </div>
-      </>
+      <div className={classes.divBody}>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Tutorial</TableCell>
+                <TableCell align="left">Descrição</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {records.map((record, key) => (
+                <TableRow key={key} onClick={() => openVideoModal(record.video)} className={classes.clickableRow}>
+                  <TableCell component="th" scope="row">
+                    {record.title}
+                  </TableCell>
+                  <TableCell align="left">{record.description}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     );
   };
 
   return (
     <MainContainer>
       <MainHeader>
-        <Title>{i18n.t("helps.title")} ({records.length})</Title>
+        <Title>{i18n.t("ola")} ({records.length})</Title>
         <MainHeaderButtonsWrapper></MainHeaderButtonsWrapper>
       </MainHeader>
-      <div className={classes.mainPaper}>
-        {renderHelps()}
-      </div>
+      {renderHelpsTable()}
       {renderVideoModal()}
     </MainContainer>
   );
