@@ -37,33 +37,35 @@ const useStyles = makeStyles(theme => ({
 const Helps = () => {
   const classes = useStyles();
   const [records, setRecords] = useState([]); // Estado para armazenar vídeos
-  const [selectedVideo, setSelectedVideo] = useState(null); // Estado para o vídeo selecionado
+  const [selectedContent, setSelectedContent] = useState(null); // Estado para o vídeo selecionado
 
   // Simulação de dados dos vídeos
   useEffect(() => {
     async function fetchData() {
       // Dados mockados de vídeos
       const helps = [
-        { video: "dQw4w9WgXcQ", title: "Tutorial 1", description: "Este é o primeiro tutorial." },
-        { video: "9bZkp7q19f0", title: "Tutorial 2", description: "Este é o segundo tutorial." },
+        { id: "9bZkp7q19f0", title: "Tutorial 2", description: "Este é o segundo tutorial." },
+        { id: "EOBDZwfRBpI", title: "Tutorial 3", description: "Este é o terceiro tutorial." },
+        { id: "dQw4w9WgXcQ", title: "Tutorial 1", description: "Este é o primeiro tutorial." },
+        { id: "1TmqOyMlKLJb3RXxtKERxWdmdfFGHv3-aqgKybGhNo_k", type: "doc", title: "Documento 1", description: "Este é o primeiro documento." }, // Documento do Google Docs
+        { id: "1nTbq39MgY2ZyR_k0a5L-vTkMmp6SgZaKQbPzDZ5cH8M", type: "doc", title: "Documento 2", description: "Este é o segundo documento." }, // Documento do Google Docs
       ];
       setRecords(helps); // Atualiza o estado com os vídeos simulados
     }
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const openVideoModal = (video) => {
-    setSelectedVideo(video);
+  const openContentModal = (Content) => {
+    setSelectedContent(Content);
   };
 
-  const closeVideoModal = () => {
-    setSelectedVideo(null);
+  const closeContentModal = () => {
+    setSelectedContent(null);
   };
 
   const handleModalClose = useCallback((event) => {
     if (event.key === "Escape") {
-      closeVideoModal();
+      closeContentModal();
     }
   }, []);
 
@@ -74,22 +76,31 @@ const Helps = () => {
     };
   }, [handleModalClose]);
 
-  const renderVideoModal = () => {
+  const renderContentModal = () => {
     return (
       <Modal
-        open={Boolean(selectedVideo)}
-        onClose={closeVideoModal}
+        open={Boolean(selectedContent)}
+        onClose={closeContentModal}
         className={classes.videoModal}
       >
         <div className={classes.videoModalContent}>
-          {selectedVideo && (
+          {selectedContent && (
             <iframe
               style={{ width: "100%", height: "100%", position: "absolute", top: 0, left: 0 }}
-              src={`https://www.youtube.com/embed/${selectedVideo}`}
+              src={`https://www.youtube.com/embed/${selectedContent.id}`}
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
+            />
+          )}
+          {selectedContent && selectedContent.type === "doc" && (
+            <iframe
+              style={{ width: "100%", height: "100%", position: "absolute", top: 0, left: 0 }}
+              src={`https://docs.google.com/document/d/${selectedContent.id}/preview`}
+              title="Google Doc"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             />
           )}
         </div>
@@ -98,7 +109,7 @@ const Helps = () => {
   };
 
   const renderHelpsTable = () => {
-    return (
+    return (  
       <div className={classes.divBody}>
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
@@ -110,7 +121,7 @@ const Helps = () => {
             </TableHead>
             <TableBody>
               {records.map((record, key) => (
-                <TableRow key={key} onClick={() => openVideoModal(record.video)} className={classes.clickableRow}>
+                <TableRow key={key} onClick={() => openContentModal(record)} className={classes.clickableRow}>
                   <TableCell component="th" scope="row">
                     {record.title}
                   </TableCell>
