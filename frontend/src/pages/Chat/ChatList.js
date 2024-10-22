@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
 import {
+  Card,
+  CardContent,
+  CardActions,
   Chip,
   IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
+  Typography,
+  Avatar,
   makeStyles,
+  Grid,
 } from "@material-ui/core";
 
 import { useHistory, useParams } from "react-router-dom";
@@ -22,24 +24,36 @@ import api from "../../services/api";
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
     display: "flex",
+    overflow: "hidden",
     flexDirection: "column",
     position: "relative",
     flex: 1,
     height: "calc(100% - 58px)",
-    overflow: "hidden",
     borderRadius: 0,
-    backgroundColor: theme.palette.boxlist, //DARK MODE PLW DESIGN//
+    backgroundColor: theme.palette.boxlist,
   },
   chatList: {
-    display: "flex",
-    flexDirection: "column",
+   display: "flex",
     position: "relative",
     flex: 1,
     overflowY: "scroll",
     ...theme.scrollbarStyles,
   },
-  listItem: {
+  chatCard: {
+    margin: theme.spacing(1),
     cursor: "pointer",
+    transition: "0.3s",
+    "&:hover": {
+      boxShadow: theme.shadows[3],
+    },
+  },
+  participants: {
+    marginTop: theme.spacing(1),
+    display: "flex",
+    alignItems: "center",
+  },
+  participantAvatar: {
+    marginRight: theme.spacing(1),
   },
 }));
 
@@ -58,7 +72,6 @@ export default function ChatList({
 
   const [confirmationModal, setConfirmModalOpen] = useState(false);
   const [selectedChat, setSelectedChat] = useState({});
-
   const { id } = useParams();
 
   const goToMessages = async (chat) => {
@@ -107,11 +120,16 @@ export default function ChatList({
       : "";
   };
 
-  const getItemStyle = (chat) => {
-    return {
-      borderLeft: chat.uuid === id ? "6px solid #002d6e" : null,
-      backgroundColor: chat.uuid === id ? "theme.palette.chatlist" : null,
-    };
+  const getParticipants = (chat) => {
+    return chat.users.map((user) => (
+      <Avatar
+        key={user.userId}
+        alt={user.name}
+        src={user.photoUrl}
+        className={classes.participantAvatar}
+        sizes="small"
+      />
+    ));
   };
 
   return (
@@ -125,34 +143,33 @@ export default function ChatList({
         Esta ação não pode ser revertida, confirmar?
       </ConfirmationModal>
       <div className={classes.mainContainer}>
-        <div className={classes.chatList}>
-          <List>
-            {Array.isArray(chats) &&
-              chats.length > 0 &&
-              chats.map((chat, key) => (
-                <ListItem
+        <Grid container spacing={2} className={classes.chatList}>
+          {Array.isArray(chats) &&
+            chats.length > 0 &&
+            chats.map((chat, key) => (
+              <Grid item xs={6} key={key}>
+                <Card
+                  className={classes.chatCard}
                   onClick={() => goToMessages(chat)}
-                  key={key}
-                  className={classes.listItem}
-                  style={getItemStyle(chat)}
-                  button
                 >
-                  <ListItemText
-                    primary={getPrimaryText(chat)}
-                    secondary={getSecondaryText(chat)}
-                  />
+                  <CardContent>
+                    <Typography variant="h6">{getPrimaryText(chat)}</Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {getSecondaryText(chat)}
+                    </Typography>
+                    <div className={classes.participants}>
+                      {getParticipants(chat)}
+                    </div>
+                  </CardContent>
                   {chat.ownerId === user.id && (
-                    <ListItemSecondaryAction>
+                    <CardActions>
                       <IconButton
                         onClick={() => {
                           goToMessages(chat).then(() => {
                             handleEditChat(chat);
                           });
                         }}
-                        edge="end"
-                        aria-label="delete"
                         size="small"
-                        style={{ marginRight: 5 }}
                       >
                         <EditIcon />
                       </IconButton>
@@ -161,18 +178,16 @@ export default function ChatList({
                           setSelectedChat(chat);
                           setConfirmModalOpen(true);
                         }}
-                        edge="end"
-                        aria-label="delete"
                         size="small"
                       >
                         <DeleteIcon />
                       </IconButton>
-                    </ListItemSecondaryAction>
+                    </CardActions>
                   )}
-                </ListItem>
-              ))}
-          </List>
-        </div>
+                </Card>
+              </Grid>
+            ))}
+        </Grid>
       </div>
     </>
   );

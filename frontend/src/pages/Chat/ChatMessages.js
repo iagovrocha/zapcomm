@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "auto",
     height: "100%",
     ...theme.scrollbarStyles,
-    backgroundColor: theme.palette.chatlist, //DARK MODE PLW DESIGN//
+    backgroundColor: "#f0f0f0", // Cinza claro
   },
   inputArea: {
     position: "relative",
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px 10px 5px",
     margin: "10px",
     position: "relative",
-    backgroundColor: "blue",
+    backgroundColor: "#d3d3d3", // Cinza claro para mensagens recebidas
     maxWidth: 300,
     borderRadius: 10,
     borderBottomLeftRadius: 0,
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px 10px 5px",
     margin: "10px 10px 10px auto",
     position: "relative",
-    backgroundColor: "green", //DARK MODE PLW DESIGN//
+    backgroundColor: "#d3d3d3", // Verde claro para mensagens enviadas
     textAlign: "right",
     maxWidth: 300,
     borderRadius: 10,

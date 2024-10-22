@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   gridContainer: {
     flex: 1,
-    height: "100%",
+    height: "50%",
     border: "1px solid rgba(0, 0, 0, 0.12)",
     backgroundColor: theme.palette.dark,
   },
@@ -333,7 +333,7 @@ function Chat(props) {
   const renderGrid = () => {
     return (
       <Grid className={classes.gridContainer} container>
-        <Grid className={classes.gridItem} md={3} item>
+        <Grid className={classes.gridItem} md={8} item>
           
             <div className={classes.btnContainer}>
               <Button
@@ -360,7 +360,7 @@ function Chat(props) {
             }}
           />
         </Grid>
-        <Grid className={classes.gridItem} md={9} item>
+        <Grid className={classes.gridItem} md={4} item>
           {isObject(currentChat) && has(currentChat, "id") && (
             <ChatMessages
               chat={currentChat}
@@ -393,7 +393,7 @@ function Chat(props) {
           </Tabs>
         </Grid>
         {tab === 0 && (
-          <Grid className={classes.gridItemTab} md={12} item>
+          <Grid className={classes.gridItemTab} md={14} item>
             <div className={classes.btnContainer}>
               <Button
                 onClick={() => setShowDialog(true)}
