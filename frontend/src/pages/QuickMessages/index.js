@@ -302,19 +302,6 @@ const QuickMessages = () => {
         />
         {/* <MainHeader> */}
         <div style={{display: "inline-flex", alignItems: 'center', width: "90%",}}> 
-
-              {/* <Title>
-                <strong>{i18n.t("quickMessages.title")}</strong>
-              </Title>
-              <Typography
-                component="subtitle1"
-                variant="body1"
-                style={{ fontFamily: "Inter Regular, sans-serif", color: "#828282" }}
-              >
-                {"Adicione, edite e exclua as respostas rápidas dos chamados."}
-              </Typography> */}
-
-            {/* Campo de busca e botão Adicionar abaixo da mensagem */}
             <div className={classes.serachInputWrapper}>
           <SearchIcon className={classes.searchIcon} />
             <InputBase
