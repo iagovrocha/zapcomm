@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { makeStyles, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from "@material-ui/core";
+import { makeStyles, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, colors } from "@material-ui/core";
 import MainContainer from "../../components/MainContainer";
 import MainHeader from "../../components/MainHeader";
 import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       textDecoration: 'underline',
     },
+    
   },
   videoModal: {
     display: 'flex',
@@ -44,9 +45,9 @@ const Helps = () => {
     async function fetchData() {
       // Dados mockados de vídeos
       const helps = [
-        { id: "9bZkp7q19f0", title: "Tutorial 2", description: "Este é o segundo tutorial." },
-        { id: "EOBDZwfRBpI", title: "Tutorial 3", description: "Este é o terceiro tutorial." },
-        { id: "dQw4w9WgXcQ", title: "Tutorial 1", description: "Este é o primeiro tutorial." },
+        { id: "9bZkp7q19f0", title: "Tutorial 1", description: "Este é o primeiro tutorial." },
+        { id: "EOBDZwfRBpI", title: "Tutorial 2", description: "Este é o segundo tutorial." },
+        { id: "dQw4w9WgXcQ", title: "Tutorial 3", description: "Este é o terceiro tutorial." },
         { id: "1TmqOyMlKLJb3RXxtKERxWdmdfFGHv3-aqgKybGhNo_k", type: "doc", title: "Documento 1", description: "Este é o primeiro documento." }, // Documento do Google Docs
         { id: "1nTbq39MgY2ZyR_k0a5L-vTkMmp6SgZaKQbPzDZ5cH8M", type: "doc", title: "Documento 2", description: "Este é o segundo documento." }, // Documento do Google Docs
       ];
@@ -116,7 +117,7 @@ const Helps = () => {
             <TableHead>
               <TableRow>
                 <TableCell>Tutorial</TableCell>
-                <TableCell align="left">Descrição</TableCell>
+                <TableCell align="left">Links</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -136,13 +137,20 @@ const Helps = () => {
   };
 
   return (
+    //coloquei o texto cinza que tava faltando
+    // tirei o ({records.length}) do title
     <MainContainer>
       <MainHeader>
-        <Title>{i18n.t("ola")} ({records.length})</Title>
+        <Title >{i18n.t("Ajuda")} </Title>
         <MainHeaderButtonsWrapper></MainHeaderButtonsWrapper>
       </MainHeader>
+      <p style={{ color: 'gray' , textAlign: 'left', margin:0 ,paddingTop:'35px'  }}>Assista aos tutoriais sobre como utilizar as ferramentas do zapcomm</p>
+      
       {renderHelpsTable()}
-      {renderVideoModal()}
+      <nav>
+        {renderContentModal()}
+      </nav>
+      
     </MainContainer>
   );
 };
