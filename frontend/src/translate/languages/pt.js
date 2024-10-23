@@ -825,13 +825,13 @@ const messages = {
 		  deleteAllTitle: "Deletar Todos",
         },
         table: {
-          name: "Nome",
+          name: "Tag",
           color: "Cor",
           tickets: "Registros Tagdos",
           actions: "Ações",
         },
         buttons: {
-          add: "Nova Tag",
+          add: "+ Adicionar",
 		  deleteAll: "Deletar Todas",
         },
         toasts: {
