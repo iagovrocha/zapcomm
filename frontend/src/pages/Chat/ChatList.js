@@ -10,14 +10,11 @@ import {
   makeStyles,
   Grid,
 } from "@material-ui/core";
-
 import { useHistory, useParams } from "react-router-dom";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import { useDate } from "../../hooks/useDate";
-
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-
 import ConfirmationModal from "../../components/ConfirmationModal";
 import api from "../../services/api";
 
@@ -29,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     flex: 1,
     height: "calc(100% - 58px)",
-    borderRadius: 0,
+    borderRadius: 10,
     backgroundColor: theme.palette.boxlist,
   },
   chatList: {
-   display: "flex",
+    display: "flex",
     position: "relative",
     flex: 1,
     overflowY: "scroll",
@@ -43,6 +40,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     cursor: "pointer",
     transition: "0.3s",
+    borderRadius: 10,
+    position: "relative",
     "&:hover": {
       boxShadow: theme.shadows[3],
     },
@@ -51,9 +50,14 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     display: "flex",
     alignItems: "center",
+    flexWrap: "wrap",
   },
-  participantAvatar: {
-    marginRight: theme.spacing(1),
+  profileAvatar: {
+    position: "absolute",
+    top: theme.spacing(1),
+    right: theme.spacing(1),
+    width: 30,
+    height: 30,
   },
 }));
 
@@ -120,15 +124,21 @@ export default function ChatList({
       : "";
   };
 
-  const getParticipants = (chat) => {
-    return chat.users.map((user) => (
+  const getParticipantsAvatar = (chat) => {
+    return chat.users.length > 0 && (
       <Avatar
-        key={user.userId}
-        alt={user.name}
-        src={user.photoUrl}
-        className={classes.participantAvatar}
-        sizes="small"
+        alt="Participantes"
+        src={chat.users[0].photoUrl} // Pode ser ajustado para mostrar o avatar do primeiro participante
+        className={classes.profileAvatar}
       />
+    );
+  };
+
+  const getParticipantsNames = (chat) => {
+    return chat.users.map((user) => (
+      <Typography key={user.userId} variant="body2">
+        {user.name}
+      </Typography>
     ));
   };
 
@@ -152,24 +162,31 @@ export default function ChatList({
                   className={classes.chatCard}
                   onClick={() => goToMessages(chat)}
                 >
+                  {getParticipantsAvatar(chat)}
                   <CardContent>
                     <Typography variant="h6">{getPrimaryText(chat)}</Typography>
                     <Typography variant="body2" color="textSecondary">
                       {getSecondaryText(chat)}
                     </Typography>
                     <div className={classes.participants}>
-                      {getParticipants(chat)}
+                      {getParticipantsNames(chat)}
                     </div>
                   </CardContent>
                   {chat.ownerId === user.id && (
                     <CardActions>
-                      <IconButton
+                      <IconButton 
                         onClick={() => {
                           goToMessages(chat).then(() => {
                             handleEditChat(chat);
                           });
                         }}
                         size="small"
+                        style={{
+                          color: "#0C2C54",
+                          "&:hover": {
+                            color: "#3c5676",
+                          },
+                        }}
                       >
                         <EditIcon />
                       </IconButton>
@@ -179,6 +196,12 @@ export default function ChatList({
                           setConfirmModalOpen(true);
                         }}
                         size="small"
+                        style={{
+                          color: "#0C2C54",
+                          "&:hover": {
+                            color: "#3c5676",
+                          },
+                        }}
                       >
                         <DeleteIcon />
                       </IconButton>

@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-
 import { useParams, useHistory } from "react-router-dom";
-
 import {
   Button,
   Dialog,
@@ -20,13 +18,9 @@ import ChatMessages from "./ChatMessages";
 import { UsersFilter } from "../../components/UsersFilter";
 import api from "../../services/api";
 import { SocketContext } from "../../context/Socket/SocketContext";
-
 import { has, isObject } from "lodash";
-
 import { AuthContext } from "../../context/Auth/AuthContext";
 import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
-import { i18n } from "../../translate/i18n";
-
 import IconButton from "@mui/material/IconButton";
 
 const useStyles = makeStyles((theme) => ({
@@ -54,18 +48,12 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   btnContainer: {
-    textAlign: "rigth",
+    textAlign: "right",
     padding: 10,
   },
 }));
 
-export function ChatModal({
-  open,
-  chat,
-  type,
-  handleClose,
-  handleLoadNewChat,
-}) {
+export function ChatModal({ open, chat, type, handleClose, handleLoadNewChat }) {
   const [users, setUsers] = useState([]);
   const [title, setTitle] = useState("");
 
@@ -107,20 +95,17 @@ export function ChatModal({
         handleLoadNewChat(data);
       }
       handleClose();
-    } catch (err) {}
-  };  
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title" style={{ backgroundColor: "#0c2c4c", color: "white"}}>
-        <div style={{display: 'flex', justifyContent: 'space-between', alignItems:'center' }}>
-        <span>Conversa</span>
-        <IconButton onClick={handleClose} style={{color: "white"}}>x</IconButton>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle style={{ backgroundColor: "#0c2c4c", color: "white" }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span>Conversa</span>
+          <IconButton onClick={handleClose} style={{ color: "white" }}>x</IconButton>
         </div>
       </DialogTitle>
       <DialogContent>
@@ -135,22 +120,22 @@ export function ChatModal({
               size="small"
               fullWidth
               InputProps={{
-                style: { borderRadius: 10 }, // Ajuste o valor conforme necessário
+                style: { borderRadius: 10 },
               }}
             />
           </Grid>
           <Grid xs={12} item>
-          <div style={{ borderRadius: '10px', overflow: 'hidden' }}>
-            <UsersFilter
-              onFiltered={(users) => setUsers(users)}
-              initialUsers={users}
-            />
+            <div style={{ borderRadius: '10px', overflow: 'hidden' }}>
+              <UsersFilter
+                onFiltered={(users) => setUsers(users)}
+                initialUsers={users}
+              />
             </div>
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions style={{ justifyContent: 'center' }}> {/* Centralização do botão */}
-        <Button onClick={handleSave} style={{backgroundColor: "#34d3a3", color: "#0c2454"}}>
+      <DialogActions style={{ justifyContent: 'center' }}>
+        <Button onClick={handleSave} style={{ backgroundColor: "#34d3a3", color: "#0c2454" }}>
           Salvar
         </Button>
       </DialogActions>
@@ -200,7 +185,6 @@ function Chat(props) {
         }
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -213,7 +197,6 @@ function Chat(props) {
         }
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChat]);
 
   useEffect(() => {
@@ -222,7 +205,13 @@ function Chat(props) {
 
     socket.on(`company-${companyId}-chat-user-${user.id}`, (data) => {
       if (data.action === "create") {
-        setChats((prev) => [data.record, ...prev]);
+        setChats((prev) => {
+          const exists = prev.some(chat => chat.id === data.record.id);
+          if (!exists) {
+            return [data.record, ...prev]; // Adiciona somente se não existir
+          }
+          return prev; // Retorna a lista original se já existir
+        });
       }
       if (data.action === "update") {
         const changedChats = chats.map((chat) => {
@@ -284,7 +273,6 @@ function Chat(props) {
     return () => {
       socket.disconnect();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChat, socketManager]);
 
   const selectChat = (chat) => {
@@ -302,14 +290,18 @@ function Chat(props) {
       await api.post(`/chats/${currentChat.id}/messages`, {
         message: contentMessage,
       });
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
     setLoading(false);
   };
 
   const deleteChat = async (chat) => {
     try {
       await api.delete(`/chats/${chat.id}`);
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const findMessages = async (chatId) => {
@@ -321,7 +313,9 @@ function Chat(props) {
       setMessagesPage((prev) => prev + 1);
       setMessagesPageInfo(data);
       setMessages((prev) => [...data.records, ...prev]);
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
     setLoading(false);
   };
 
@@ -336,7 +330,7 @@ function Chat(props) {
       const { data } = await api.get("/chats");
       return data;
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -344,20 +338,18 @@ function Chat(props) {
     return (
       <Grid className={classes.gridContainer} container>
         <Grid className={classes.gridItem} md={8} item>
-          
-            <div className={classes.btnContainer}>
-              <Button
-                onClick={() => {
-                  setDialogType("new");
-                  setShowDialog(true);
-                }}
-                color="primary"
-                variant="contained"
-              >
-                + Novo
-              </Button>
-            </div>
-          
+          <div className={classes.btnContainer}>
+            <Button
+              onClick={() => {
+                setDialogType("new");
+                setShowDialog(true);
+              }}
+              color="primary"
+              variant="contained"
+            >
+              + Novo
+            </Button>
+          </div>
           <ChatList
             chats={chats}
             pageInfo={chatsPageInfo}
@@ -396,7 +388,6 @@ function Chat(props) {
             indicatorColor="primary"
             textColor="primary"
             onChange={(e, v) => setTab(v)}
-            aria-label="disabled tabs example"
           >
             <Tab label="Chats" />
             <Tab label="Mensagens" />
