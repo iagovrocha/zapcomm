@@ -296,7 +296,7 @@ const Contacts = () => {
       >
         {"Adicione e gerencie seus contatos"}
       </Typography>
-      <MainContainer className={classes.mainContainer}>
+      {/* <MainContainer> */}
         <NewTicketModal
           modalOpen={newTicketModalOpen}
           initialContact={contactTicket}
@@ -331,7 +331,7 @@ const Contacts = () => {
             : `${i18n.t("contacts.confirmationModal.importMessage")}`}
         </ConfirmationModal>
         {/* <MainHeader> */} 
-          <div style={{display: "inline-flex", alignItems: 'center'}}> 
+          <div style={{display: "inline-flex", alignItems: 'center', width:"95%"}}> 
           {/* <Title>{i18n.t("contacts.title")}</Title> */}
           <div className={classes.serachInputWrapper}>
           <SearchIcon className={classes.searchIcon} />
@@ -414,6 +414,8 @@ const Contacts = () => {
                 </TableCell>
               </TableRow>
             </TableHead>
+            {contacts.length > 0 ? (
+              <>
             <TableBody>
               <>
                 {contacts.map((contact) => (
@@ -464,9 +466,19 @@ const Contacts = () => {
                 {loading && <TableRowSkeleton avatar columns={3} />}
               </>
             </TableBody>
+            </>
+            ) : (
+              <TableBody>
+                <TableRow>
+                  <TableCell colSpan="5" align="center">
+                    Nenhum contato a ser carregado no momento
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+              )}
           </Table>
         </Paper>
-      </MainContainer>
+      {/* </MainContainer> */}
       </div>
   );
 };

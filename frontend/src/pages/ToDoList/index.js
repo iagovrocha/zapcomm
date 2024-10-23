@@ -205,9 +205,9 @@ const ToDoList = () => {
           </Typography>
         </div>
 
-      <MainContainer className={classes.mainContainer}>
+      {/* <MainContainer className={classes.mainContainer}> */}
 
-        <div style={{display: "inline-flex", alignItems: 'center', width: "90%"}}> 
+        <div style={{display: "inline-flex", alignItems: 'center', width: "95%"}}> 
           <div className={classes.serachInputWrapper}>
             <SearchIcon className={classes.searchIcon} />
             <InputBase
@@ -278,7 +278,7 @@ const ToDoList = () => {
             </TableBody>
           </Table>
         </Paper>
-      </MainContainer>
+      {/* </MainContainer> */}
     </div>
   );
 };

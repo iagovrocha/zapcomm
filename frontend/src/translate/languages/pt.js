@@ -534,7 +534,7 @@ const messages = {
           deleteMessage: "Esta ação é irreversível! Deseja prosseguir?",
         },
         buttons: {
-          add: "Adicionar",
+          add: "Adicionar Resposta",
           attach: "Anexar Arquivo",
           cancel: "Cancelar",
           edit: "Editar",
@@ -638,7 +638,7 @@ const messages = {
       },
       campaigns: {
         title: "Campanhas",
-        searchPlaceholder: "Pesquisa",
+        searchPlaceholder: "Pesquisar...",
         buttons: {
           add: "Nova Campanha",
           contactLists: "Listas de Contatos",
@@ -710,7 +710,7 @@ const messages = {
         },
         table: {
           priority: "Prioridade",
-          title: "Title",
+          title: "Título",
           text: "Texto",
           mediaName: "Arquivo",
           status: "Status",

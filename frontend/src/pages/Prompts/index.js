@@ -49,6 +49,33 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2), // Adicionando um espaçamento interno
     marginBottom: theme.spacing(2), // Adicionando margem inferior para separar do conteúdo abaixo
   },
+  divBody: {
+    flex: 1,
+    padding: theme.spacing(1),
+    height: `calc(100% - 48px)`,
+    overflowY: "hidden",
+    background: "#FFFFFF"
+  },
+  Botoes: {
+    borderRadius: "40px",
+    padding: "10px 32px",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--logo-bg, #0C2C54)",
+  },
+  Tabela: {
+    backgroundColor: "#FFFFFF",
+    fontFamily: 'Inter Tight, sans-serif', 
+    color: 'black'
+  },
+  acoes: {
+    color: "#0C2C54",
+    "&:hover": {
+      color: "#3c5676",
+    },
+    width: "35px", 
+    height: "30px",
+  }
 }));
 
 const reducer = (state, action) => {
@@ -188,89 +215,114 @@ const Prompts = () => {
   };
 
   return (
-    <MainContainer>
-   
-
-      <ConfirmationModal
-        title={
-          selectedPrompt &&
-          `${i18n.t("prompts.confirmationModal.deleteTitle")} ${selectedPrompt.name
-          }?`
-        }
-        open={confirmModalOpen}
-        onClose={handleCloseConfirmationModal}
-        onConfirm={() => handleDeletePrompt(selectedPrompt.id)}
+    <div className={classes.divBody}>
+      <h1 style={{ margin: "0" }}><b>Prompts</b></h1>
+      <Typography
+        component="subtitle1"
+        variant="body1"
+        style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
       >
-        {i18n.t("prompts.confirmationModal.deleteMessage")}
-      </ConfirmationModal>
-      <PromptModal
-        open={promptModalOpen}
-        onClose={handleClosePromptModal}
-        promptId={selectedPrompt?.id}
-      />
-      <MainHeader>
-        <Title>{i18n.t("prompts.title")}</Title>
-        <MainHeaderButtonsWrapper>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleOpenPromptModal}
-          >
-            {i18n.t("prompts.buttons.add")}
-          </Button>
-        </MainHeaderButtonsWrapper>
-      </MainHeader>
-      <Paper className={classes.mainPaper} variant="outlined">
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell align="left">
-                {i18n.t("prompts.table.name")}
-              </TableCell>
-              <TableCell align="left">
-                {i18n.t("prompts.table.queue")}
-              </TableCell>
-              <TableCell align="left">
-                {i18n.t("prompts.table.max_tokens")}
-              </TableCell>
-              <TableCell align="center">
-                {i18n.t("prompts.table.actions")}
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <>
-              {prompts.map((prompt) => (
-                <TableRow key={prompt.id}>
-                  <TableCell align="left">{prompt.name}</TableCell>
-                  <TableCell align="left">{prompt.queue.name}</TableCell>
-                  <TableCell align="left">{prompt.maxTokens}</TableCell>
-                  <TableCell align="center">
-                    <IconButton
-                      size="small"
-                      onClick={() => handleEditPrompt(prompt)}
-                    >
-                      <Edit />
-                    </IconButton>
+        {"Adicione, edite e exclua seus prompts com ChatGPT"}
+      </Typography>
+      {/* <MainContainer> */}
+        <ConfirmationModal
+          title={
+            selectedPrompt &&
+            `${i18n.t("prompts.confirmationModal.deleteTitle")} ${selectedPrompt.name
+            }?`
+          }
+          open={confirmModalOpen}
+          onClose={handleCloseConfirmationModal}
+          onConfirm={() => handleDeletePrompt(selectedPrompt.id)}
+        >
+          {i18n.t("prompts.confirmationModal.deleteMessage")}
+        </ConfirmationModal>
+        <PromptModal
+          open={promptModalOpen}
+          onClose={handleClosePromptModal}
+          promptId={selectedPrompt?.id}
+        />
 
-                    <IconButton
-                      size="small"
-                      onClick={() => {
-                        setSelectedPrompt(prompt);
-                        setConfirmModalOpen(true);
-                      }}
-                    >
-                      <DeleteOutline />
-                    </IconButton>
+        {/* <MainHeader> */}
+        <div style={{display: "inline-flex", alignItems: 'right', width:"97%"}}> 
+          <MainHeaderButtonsWrapper>
+            <Button
+              className = {classes.Botoes}
+              variant="contained"
+              color="primary"
+              onClick={handleOpenPromptModal}
+            >
+              {i18n.t("prompts.buttons.add")}
+            </Button>
+          </MainHeaderButtonsWrapper>
+          </div>
+        {/* </MainHeader> */}
+        
+        <Paper className={classes.mainPaper}>
+
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell align="left" className={classes.Tabela}>
+                  <b>{i18n.t("prompts.table.name")}</b>
+                </TableCell>
+                <TableCell align="left" className={classes.Tabela}>
+                  <b>{i18n.t("prompts.table.queue")}</b>
+                </TableCell>
+                <TableCell align="left" className={classes.Tabela}>
+                  <b>{i18n.t("prompts.table.max_tokens")}</b>
+                </TableCell>
+                <TableCell align="center" className={classes.Tabela}>
+                  <b>{i18n.t("prompts.table.actions")}</b>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            {prompts.length > 0 ? (
+              <>
+            <TableBody>
+              <>
+                {prompts.map((prompt) => (
+                  <TableRow key={prompt.id}>
+                    <TableCell align="left">{prompt.name}</TableCell>
+                    <TableCell align="left">{prompt.queue.name}</TableCell>
+                    <TableCell align="left">{prompt.maxTokens}</TableCell>
+                    <TableCell align="center">
+                      <IconButton
+                        className={classes.acoes}
+                        onClick={() => handleEditPrompt(prompt)}
+                      >
+                        <Edit />
+                      </IconButton>
+
+                      <IconButton
+                        className={classes.acoes}
+                        onClick={() => {
+                          setSelectedPrompt(prompt);
+                          setConfirmModalOpen(true);
+                        }}
+                      >
+                        <DeleteOutline />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {loading && <TableRowSkeleton columns={4} />}
+              </>
+            </TableBody>
+            </>
+            ) : (
+              <TableBody>
+                <TableRow>
+                  <TableCell colSpan="4" align="center">
+                    Nenhum prompt a ser carregado no momento
                   </TableCell>
                 </TableRow>
-              ))}
-              {loading && <TableRowSkeleton columns={4} />}
-            </>
-          </TableBody>
-        </Table>
-      </Paper>
-    </MainContainer>
+              </TableBody>
+              )}
+          </Table>
+        </Paper>
+      {/* </MainContainer> */}
+    </div>
   );
 };
 
