@@ -25,8 +25,10 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import SearchIcon from "@material-ui/icons/Search";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from "@material-ui/icons/Edit";
+import Typography from "@material-ui/core/Typography";
 
 import "./Schedules.css"; // Importe o arquivo CSS
+import { InputBase } from "@material-ui/core";
 
 // Defina a função getUrlParam antes de usá-la
 function getUrlParam(paramName) {
@@ -98,6 +100,43 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     overflowY: "scroll",
     ...theme.scrollbarStyles,
+  },
+  divBody: {
+    flex: 1,
+    padding: theme.spacing(1),
+    height: `calc(100% - 48px)`,
+    backgroundColor: "#FFFFFF",
+  },
+  serachInputWrapper: {
+    border: "solid 1px #828282",
+		flex: 1,
+		display: "flex",
+		borderRadius: 40,
+		padding: 4,
+		marginRight: theme.spacing(1),
+    		width: '70%',
+    		height: '48px',
+	},
+
+	searchIcon: {
+		color: "grey",
+		marginLeft: 6,
+		marginRight: 6,
+		alignSelf: "center",
+	},
+
+	searchInput: {
+		flex: 1,
+		border: "none",
+		borderRadius: 30,
+	},
+
+  Botoes: {
+    borderRadius: "40px",
+    padding: "10px 32px",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--logo-bg, #001C27)"
   },
 }));
 
@@ -238,7 +277,16 @@ const Schedules = () => {
   };
 
   return (
-    <MainContainer>
+    <div className={classes.divBody}>
+      <h1 style={{ margin: "0" }}><b>Agendamentos</b></h1>
+      <Typography
+        component="subtitle1"
+        variant="body1"
+        style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+      >
+        {"Gerencie seus chamados e tarefas diárias"}
+      </Typography>
+    {/* <MainContainer> */}
       <ConfirmationModal
         title={
           deletingSchedule &&
@@ -259,23 +307,23 @@ const Schedules = () => {
         contactId={contactId}
         cleanContact={cleanContact}
       />
-      <MainHeader>
-        <Title>{i18n.t("schedules.title")} ({schedules.length})</Title>
-        <MainHeaderButtonsWrapper>
-          <TextField
+      {/* <MainHeader> */}
+      <div style={{display: "inline-flex", alignItems: 'center', width:"95%"}}>
+
+        <div className={classes.serachInputWrapper}>
+        <SearchIcon className={classes.searchIcon} />
+          <InputBase
+            className={classes.searchInput}
             placeholder={i18n.t("contacts.searchPlaceholder")}
             type="search"
             value={searchParam}
             onChange={handleSearch}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon style={{ color: "gray" }} />
-                </InputAdornment>
-              ),
-            }}
           />
+        </div>
+
+        <MainHeaderButtonsWrapper>
           <Button
+            className = {classes.Botoes}
             variant="contained"
             color="primary"
             onClick={handleOpenScheduleModal}
@@ -283,7 +331,8 @@ const Schedules = () => {
             {i18n.t("schedules.buttons.add")}
           </Button>
         </MainHeaderButtonsWrapper>
-      </MainHeader>
+      </div>
+      {/* </MainHeader> */}
       <Paper className={classes.mainPaper} variant="outlined" onScroll={handleScroll}>
         <Calendar
           messages={defaultMessages}
@@ -317,7 +366,8 @@ const Schedules = () => {
           style={{ height: 500 }}
         />
       </Paper>
-    </MainContainer>
+    {/* </MainContainer> */}
+    </div>
   );
 };
 
