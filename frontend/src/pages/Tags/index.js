@@ -87,6 +87,7 @@ const reducer = (state, action) => {
 
 const useStyles = makeStyles((theme) => ({
   mainPaper: {
+    backgroundColor: "#FFFFFF",
     flex: 1,
     padding: theme.spacing(1),
     overflowY: "scroll",
@@ -268,7 +269,7 @@ const Tags = () => {
     >
     {"Adicione e edite as tags utilizadas."}
     </Typography>
-    <MainContainer style={{backgroundColor: "#FFFFFF"}}>
+    {/* <MainContainer style={{backgroundColor: "#FFFFFF"}}> */}
       {/* Componete do Botão de Deletar */}
       <ConfirmationModal
         title={deletingTag && `${i18n.t("tags.confirmationModal.deleteTitle")}`}
@@ -384,7 +385,7 @@ const Tags = () => {
           </TableBody>
         </Table>
       </Paper>
-    </MainContainer>
+    {/* </MainContainer> */}
     </div>
   );
 };
