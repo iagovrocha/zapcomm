@@ -180,7 +180,7 @@ const AnnouncementModal = ({ open, onClose, announcementId, reload }) => {
         fullWidth
         scroll="paper"
       >
-        <DialogTitle id="form-dialog-title">
+        <DialogTitle id="form-dialog-title" style={{color: "#fff", backgroundColor: "#0C2C54"}}>
           {announcementId
             ? `${i18n.t("announcements.dialog.edit")}`
             : `${i18n.t("announcements.dialog.add")}`}

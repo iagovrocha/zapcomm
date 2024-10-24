@@ -100,7 +100,7 @@ const ScheduleModal = ({ open, onClose, scheduleId, contactId, cleanContact, rel
 				setCurrentContact(contact);
 			}
 		}
-	}, [contactId, contacts]);
+	}, [contactId, contacts]); 
 
 	useEffect(() => {
 		const { companyId } = user;
@@ -233,7 +233,7 @@ const ScheduleModal = ({ open, onClose, scheduleId, contactId, cleanContact, rel
 				fullWidth
 				scroll="paper"
 			>
-				<DialogTitle id="form-dialog-title">
+				<DialogTitle id="form-dialog-title" style={{color: "#fff", backgroundColor: "#0C2C54"}}>
 					{schedule.status === 'ERRO' ? 'Erro de Envio' : `Mensagem ${capitalize(schedule.status)}`}
 				</DialogTitle>
 				<div style={{ display: "none" }}>

@@ -413,7 +413,7 @@ const Dashboard = () => {
           </Typography>
         </div>
 
-      <Container maxWidth="lg" className={classes.container}>
+      <Container maxWidth="95%" className={classes.container}>
         <Grid container spacing={3} justifyContent="flex-end">
 
 

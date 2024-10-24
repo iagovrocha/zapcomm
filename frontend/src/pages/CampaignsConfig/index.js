@@ -43,6 +43,20 @@ const useStyles = makeStyles((theme) => ({
   tabPanelsContainer: {
     padding: theme.spacing(2),
   },
+  divBody: {
+    flex: 1,
+    padding: theme.spacing(1),
+    height: `calc(100% - 48px)`,
+    overflowY: "hidden",
+    background: "#FFFFFF"
+  },
+  Botoes: {
+    borderRadius: "40px",
+    padding: "10px 32px",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--logo-bg, #0C2C54)",
+  },
 }));
 
 const initialSettings = {
@@ -113,7 +127,16 @@ const CampaignsConfig = () => {
   };
 
   return (
-    <MainContainer>
+    <div className={classes.divBody}>
+      <h1 style={{ margin: "0" }}><b>Configurações de Campanhas</b></h1>
+      <Typography
+        component="subtitle1"
+        variant="body1"
+        style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+      >
+        {"Defina intervalos para suas campanhas"}
+      </Typography>
+    {/* <MainContainer> */}
       <ConfirmationModal
         title={i18n.t("campaigns.confirmationModal.deleteTitle")}
         open={confirmationOpen}
@@ -123,11 +146,7 @@ const CampaignsConfig = () => {
         {i18n.t("campaigns.confirmationModal.deleteMessage")}
       </ConfirmationModal>
       <MainHeader>
-        <Grid style={{ width: "99.6%" }} container>
-          <Grid xs={12} item>
-            <Title>{i18n.t("campaignsConfig.title")}</Title>
-          </Grid>
-        </Grid>
+
       </MainHeader>
       <Paper className={classes.mainPaper} variant="outlined">
         <Box className={classes.tabPanelsContainer}>
@@ -316,7 +335,8 @@ const CampaignsConfig = () => {
           </Grid>
         </Box>
       </Paper>
-    </MainContainer>
+    {/* </MainContainer> */}
+    </div>
   );
 };
 
