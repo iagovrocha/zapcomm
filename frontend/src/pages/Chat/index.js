@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-
 import { useParams, useHistory } from "react-router-dom";
-
 import {
   Button,
   Dialog,
@@ -20,11 +18,14 @@ import ChatMessages from "./ChatMessages";
 import { UsersFilter } from "../../components/UsersFilter";
 import api from "../../services/api";
 import { SocketContext } from "../../context/Socket/SocketContext";
-
 import { has, isObject } from "lodash";
-
 import { AuthContext } from "../../context/Auth/AuthContext";
 import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
+import IconButton from "@mui/material/IconButton";
+
+import Typography from "@material-ui/core/Typography";
+import InputBase from "@material-ui/core/InputBase";
+import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -32,14 +33,12 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     position: "relative",
     flex: 1,
-    padding: theme.spacing(2),
     height: `calc(100% - 48px)`,
     overflowY: "hidden",
-    border: "1px solid rgba(0, 0, 0, 0.12)",
   },
   gridContainer: {
     flex: 1,
-    height: "100%",
+    height: "50%",
     border: "1px solid rgba(0, 0, 0, 0.12)",
     backgroundColor: theme.palette.dark,
   },
@@ -54,15 +53,41 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "right",
     padding: 10,
   },
+  divBody: {
+    flex: 1,
+    padding: theme.spacing(1),
+    height: `calc(100% - 48px)`,
+    backgroundColor: "#FFFFFF",
+  },
+  searchInput: {
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "50px",
+    },
+  },
+  serachInputWrapper: {
+    border: "solid 1px #828282",
+		flex: 1,
+		display: "flex",
+		borderRadius: 40,
+		padding: 4,
+		marginRight: theme.spacing(1),
+    width: '70%',
+    height: '48px',
+	},
+  searchIcon: {
+		color: "grey",
+		marginLeft: 6,
+		marginRight: 6,
+		alignSelf: "center",
+	},
+  searchInput: {
+		flex: 1,
+		border: "none",
+		borderRadius: 30,
+	},
 }));
 
-export function ChatModal({
-  open,
-  chat,
-  type,
-  handleClose,
-  handleLoadNewChat,
-}) {
+export function ChatModal({ open, chat, type, handleClose, handleLoadNewChat }) {
   const [users, setUsers] = useState([]);
   const [title, setTitle] = useState("");
 
@@ -104,17 +129,19 @@ export function ChatModal({
         handleLoadNewChat(data);
       }
       handleClose();
-    } catch (err) {}
-  };  
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">Conversa</DialogTitle>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle style={{ backgroundColor: "#0c2c4c", color: "white" }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span>Conversa</span>
+          <IconButton onClick={handleClose} style={{ color: "white" }}>x</IconButton>
+        </div>
+      </DialogTitle>
       <DialogContent>
         <Grid spacing={2} container>
           <Grid xs={12} style={{ padding: 18 }} item>
@@ -126,21 +153,23 @@ export function ChatModal({
               variant="outlined"
               size="small"
               fullWidth
+              InputProps={{
+                style: { borderRadius: 10 },
+              }}
             />
           </Grid>
           <Grid xs={12} item>
-            <UsersFilter
-              onFiltered={(users) => setUsers(users)}
-              initialUsers={users}
-            />
+            <div style={{ borderRadius: '10px', overflow: 'hidden' }}>
+              <UsersFilter
+                onFiltered={(users) => setUsers(users)}
+                initialUsers={users}
+              />
+            </div>
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="primary">
-          Fechar
-        </Button>
-        <Button onClick={handleSave} color="primary" variant="contained">
+      <DialogActions style={{ justifyContent: 'center' }}>
+        <Button onClick={handleSave} style={{ backgroundColor: "#34d3a3", color: "#0c2454" }}>
           Salvar
         </Button>
       </DialogActions>
@@ -190,7 +219,6 @@ function Chat(props) {
         }
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -203,7 +231,6 @@ function Chat(props) {
         }
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChat]);
 
   useEffect(() => {
@@ -212,7 +239,13 @@ function Chat(props) {
 
     socket.on(`company-${companyId}-chat-user-${user.id}`, (data) => {
       if (data.action === "create") {
-        setChats((prev) => [data.record, ...prev]);
+        setChats((prev) => {
+          const exists = prev.some(chat => chat.id === data.record.id);
+          if (!exists) {
+            return [data.record, ...prev]; // Adiciona somente se não existir
+          }
+          return prev; // Retorna a lista original se já existir
+        });
       }
       if (data.action === "update") {
         const changedChats = chats.map((chat) => {
@@ -274,7 +307,6 @@ function Chat(props) {
     return () => {
       socket.disconnect();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChat, socketManager]);
 
   const selectChat = (chat) => {
@@ -292,14 +324,18 @@ function Chat(props) {
       await api.post(`/chats/${currentChat.id}/messages`, {
         message: contentMessage,
       });
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
     setLoading(false);
   };
 
   const deleteChat = async (chat) => {
     try {
       await api.delete(`/chats/${chat.id}`);
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const findMessages = async (chatId) => {
@@ -311,7 +347,9 @@ function Chat(props) {
       setMessagesPage((prev) => prev + 1);
       setMessagesPageInfo(data);
       setMessages((prev) => [...data.records, ...prev]);
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
     setLoading(false);
   };
 
@@ -326,28 +364,26 @@ function Chat(props) {
       const { data } = await api.get("/chats");
       return data;
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
   const renderGrid = () => {
     return (
       <Grid className={classes.gridContainer} container>
-        <Grid className={classes.gridItem} md={3} item>
-          
-            <div className={classes.btnContainer}>
-              <Button
-                onClick={() => {
-                  setDialogType("new");
-                  setShowDialog(true);
-                }}
-                color="primary"
-                variant="contained"
-              >
-                Nova
-              </Button>
-            </div>
-          
+        <Grid className={classes.gridItem} md={8} item>
+          <div className={classes.btnContainer}>
+            <Button
+              onClick={() => {
+                setDialogType("new");
+                setShowDialog(true);
+              }}
+              color="primary"
+              variant="contained"
+            >
+              + Novo
+            </Button>
+          </div>
           <ChatList
             chats={chats}
             pageInfo={chatsPageInfo}
@@ -360,7 +396,7 @@ function Chat(props) {
             }}
           />
         </Grid>
-        <Grid className={classes.gridItem} md={9} item>
+        <Grid className={classes.gridItem} md={4} item>
           {isObject(currentChat) && has(currentChat, "id") && (
             <ChatMessages
               chat={currentChat}
@@ -386,15 +422,25 @@ function Chat(props) {
             indicatorColor="primary"
             textColor="primary"
             onChange={(e, v) => setTab(v)}
-            aria-label="disabled tabs example"
           >
             <Tab label="Chats" />
             <Tab label="Mensagens" />
           </Tabs>
         </Grid>
         {tab === 0 && (
-          <Grid className={classes.gridItemTab} md={12} item>
+          <Grid className={classes.gridItemTab} md={14} item>
             <div className={classes.btnContainer}>
+              {/* Campo de busca e botão Adicionar abaixo da mensagem */}
+            <div className={classes.serachInputWrapper}>
+            <SearchIcon className={classes.searchIcon} />
+            <InputBase
+              className={classes.searchInput}
+              placeholder={("Buscar chat")}
+              type="search"
+              
+                  // }} Mudança de TextField para InputBase + Estilização em css + MainHeader comentado para alinhar os botões e a barra de pesquisa
+                  />
+            </div>
               <Button
                 onClick={() => setShowDialog(true)}
                 color="primary"
@@ -431,7 +477,15 @@ function Chat(props) {
   };
 
   return (
-    <>
+    <div className={classes.divBody}>
+      <h1 style={{ margin: "0" }}><b>{("Chat Interno")}</b></h1>
+      <Typography
+       component="subtitle1"
+       variant="body1"
+       style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+      >
+      {"Chat interno para colaboradores."}
+      </Typography>
       <ChatModal
         type={dialogType}
         open={showDialog}
@@ -448,7 +502,7 @@ function Chat(props) {
       <Paper className={classes.mainContainer}>
         {isWidthUp("md", props.width) ? renderGrid() : renderTab()}
       </Paper>
-    </>
+    </div>
   );
 }
 
