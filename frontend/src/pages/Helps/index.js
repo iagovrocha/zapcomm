@@ -1,21 +1,46 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { makeStyles, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import Modal from "@material-ui/core/Modal";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import InputBase from "@material-ui/core/InputBase";
+import SearchIcon from "@material-ui/icons/Search";
 import MainContainer from "../../components/MainContainer";
-import MainHeader from "../../components/MainHeader";
-import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
-import Title from "../../components/Title";
-import { i18n } from "../../translate/i18n";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
+  divBody: {
+    flex: '1',
+    padding: theme.spacing(1),
+    height: 'calc(100% - 98px)',
+  },
+  titleContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start', // Alinha os itens à esquerda
+    margin: 0, // Remove margens
+  },
+  searchInput: {
+    border: "solid 1px #828282",
+    display: "flex",
+    borderRadius: 80,
+    padding: 4,
+    marginRight: theme.spacing(1),
+    width: '70%',
+    height: '48px',
+    marginBottom: '10px'
+  },
+  input: {
+    flex: 1,
+  },
   table: {
     minWidth: 650,
-  },
-  clickableRow: {
-    cursor: 'pointer',
-    color: theme.palette.primary.main,
-    '&:hover': {
-      textDecoration: 'underline',
-    },
+    
   },
   videoModal: {
     display: 'flex',
@@ -37,20 +62,21 @@ const useStyles = makeStyles(theme => ({
 const Helps = () => {
   const classes = useStyles();
   const [records, setRecords] = useState([]); // Estado para armazenar vídeos
+  const [search, setSearch] = useState(''); // Estado para o filtro de busca
   const [selectedContent, setSelectedContent] = useState(null); // Estado para o vídeo selecionado
 
   // Simulação de dados dos vídeos
   useEffect(() => {
     async function fetchData() {
-      // Dados mockados de vídeos
       const helps = [
-        { id: "9bZkp7q19f0", title: "Tutorial 2", description: "Este é o segundo tutorial." },
-        { id: "EOBDZwfRBpI", title: "Tutorial 3", description: "Este é o terceiro tutorial." },
-        { id: "dQw4w9WgXcQ", title: "Tutorial 1", description: "Este é o primeiro tutorial." },
-        { id: "1TmqOyMlKLJb3RXxtKERxWdmdfFGHv3-aqgKybGhNo_k", type: "doc", title: "Documento 1", description: "Este é o primeiro documento." }, // Documento do Google Docs
-        { id: "1nTbq39MgY2ZyR_k0a5L-vTkMmp6SgZaKQbPzDZ5cH8M", type: "doc", title: "Documento 2", description: "Este é o segundo documento." }, // Documento do Google Docs
+        //id para video do youtube é o identificador unico apos o "v="
+        //id para documentos do Google Docs é o identificador unico entre o "/d/" e o "/edit"
+        { id: "id do video", title: "Tutorial 1", description: "Descrição do primeiro tutorial." },
+        { id: "id do video", title: "Tutorial 2", description: "Descrição do segundo tutorial." },
+        { id: "id do documento", type: "doc", title: "Tutorial 3", description: "Descrição do terceiro tutorial." },
+        { id: "id do documento", type: "doc", title: "Tutorial 4", description: "Descrição do quarto tutorial." },
       ];
-      setRecords(helps); // Atualiza o estado com os vídeos simulados
+      setRecords(helps);
     }
     fetchData();
   }, []);
@@ -63,26 +89,26 @@ const Helps = () => {
     setSelectedContent(null);
   };
 
-  const handleModalClose = useCallback((event) => {
-    if (event.key === "Escape") {
-      closeContentModal();
-    }
-  }, []);
+  // Função para as mudanças que acontecem na barra de busca
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value); //Atualiza o resultado da busca com o valor do input
+  };
 
-  useEffect(() => {
-    document.addEventListener("keydown", handleModalClose);
-    return () => {
-      document.removeEventListener("keydown", handleModalClose);
-    };
-  }, [handleModalClose]);
+  // Filtra os registros com base no termo de busca
+  const filteredRecords = records.filter(record =>
+    record.title.toLowerCase().includes(search.toLowerCase()) //Verifica se o título contém o termo de busca
+  );
 
+  // aqui renderiza o modal do conteudo
   const renderContentModal = () => {
     return (
       <Modal
-        open={Boolean(selectedContent)}
-        onClose={closeContentModal}
-        className={classes.videoModal}
+        open={Boolean(selectedContent)} // Verifica se há conteúdo selecionado
+        onClose={closeContentModal} // Fecha o modal ao clicar fora
+        className={classes.videoModal} // Aplica estilos ao modal
+
       >
+        {/*Conteudo dentro do modal*/}
         <div className={classes.videoModalContent}>
           {selectedContent && (
             <iframe
@@ -91,7 +117,7 @@ const Helps = () => {
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+              allowFullScreen  //permite tela cheia
             />
           )}
           {selectedContent && selectedContent.type === "doc" && (
@@ -107,12 +133,33 @@ const Helps = () => {
       </Modal>
     );
   };
+  // renderiza o resto
+  return (
+    <div className={classes.divBody}>
+      <div className={classes.titleContainer}> {/* Título e descrição */}
+        <h1 style={{ margin: '0' }}>Ajuda</h1>
+        <Typography
+          component="subtitle1"
+          variant="body1"
+          style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}
+        >
+          {'Assista aos tutoriais sobre como usar as ferramentas do Zapcomm'}
+        </Typography>
+      </div>
 
-  const renderHelpsTable = () => {
-    return (  
-      <div className={classes.divBody}>
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
+      <MainContainer> {/*Conteudo principal, contém tudo*/}
+        <div className={classes.searchInput}>
+          <SearchIcon style={{ color: "grey", marginLeft: 6, marginRight: 6 , alignSelf: 'center'}} />
+          <InputBase
+            className={classes.input}
+            placeholder="Pesquisar ajuda"
+            value={search} // Valor do input
+            onChange={handleSearchChange} // Função chamada ao mudar o valor do input
+          />
+        </div>
+
+        <Paper>
+          <Table className={classes.table} aria-label="Ajuda">
             <TableHead>
               <TableRow>
                 <TableCell>Tutorial</TableCell>
@@ -120,30 +167,29 @@ const Helps = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {records.map((record, key) => (
-                <TableRow key={key} onClick={() => openContentModal(record)} className={classes.clickableRow}>
-                  <TableCell component="th" scope="row">
-                    {record.title}
+              {filteredRecords.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={2} align="center">
+                    Não possui tutoriais
                   </TableCell>
-                  <TableCell align="left">{record.description}</TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                filteredRecords.map((record, key) => ( //Mapeia os conteudos
+                  <TableRow key={key} onClick={() => openContentModal(record)} style={{ cursor: 'pointer', color: '#3f51b5', textDecoration: 'underline' }}>
+                    <TableCell component="th" scope="row">
+                      {record.title}
+                    </TableCell>
+                    <TableCell align="left">{record.description}</TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
-        </TableContainer>
-      </div>
-    );
-  };
+        </Paper>
 
-  return (
-    <MainContainer>
-      <MainHeader>
-        <Title>{i18n.t("ola")} ({records.length})</Title>
-        <MainHeaderButtonsWrapper></MainHeaderButtonsWrapper>
-      </MainHeader>
-      {renderHelpsTable()}
-      {renderVideoModal()}
-    </MainContainer>
+        {renderContentModal()} {/* Renderiza o modal se houver conteúdo selecionado */}
+      </MainContainer>
+    </div>
   );
 };
 
