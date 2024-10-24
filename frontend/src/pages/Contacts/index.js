@@ -384,7 +384,7 @@ const Contacts = () => {
           </div>
         {/* </MainHeader> */}
         <Paper
-          className={classes.mainPaper}
+          // className={classes.mainPaper}
           // variant="outlined"
           onScroll={handleScroll}
         >
