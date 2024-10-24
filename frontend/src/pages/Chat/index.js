@@ -372,18 +372,6 @@ function Chat(props) {
     return (
       <Grid className={classes.gridContainer} container>
         <Grid className={classes.gridItem} md={8} item>
-          <div className={classes.btnContainer}>
-            <Button
-              onClick={() => {
-                setDialogType("new");
-                setShowDialog(true);
-              }}
-              color="primary"
-              variant="contained"
-            >
-              + Novo
-            </Button>
-          </div>
           <ChatList
             chats={chats}
             pageInfo={chatsPageInfo}
@@ -486,6 +474,18 @@ function Chat(props) {
       >
       {"Chat interno para colaboradores."}
       </Typography>
+      <div className={classes.btnContainer}>
+            <Button
+              onClick={() => {
+                setDialogType("new");
+                setShowDialog(true);
+              }}
+              color="primary"
+              variant="contained"
+            >
+              + Novo
+            </Button>
+          </div>
       <ChatModal
         type={dialogType}
         open={showDialog}
