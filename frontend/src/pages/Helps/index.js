@@ -1,5 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { makeStyles, Paper, Typography, Modal, IconButton } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+import { Modal } from "@material-ui/core";
+import { InputBase } from "@material-ui/core";
+import { Table } from "@material-ui/core";
+import { TableBody } from "@material-ui/core";
+import { TableCell } from "@material-ui/core";
+import { TableContainer } from "@material-ui/core";
+import { TableHead } from "@material-ui/core";
+import { TableRow } from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
 import MainContainer from "../../components/MainContainer";
 import MainHeader from "../../components/MainHeader";
 import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
@@ -7,7 +18,7 @@ import Title from "../../components/Title";
 import { i18n } from "../../translate/i18n";
 import useHelps from "../../hooks/useHelps";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   mainPaperContainer: {
     overflowY: 'auto',
     maxHeight: 'calc(100vh - 200px)',
@@ -70,34 +81,65 @@ const useStyles = makeStyles(theme => ({
     borderRadius: theme.spacing(1),
     overflow: 'hidden',
   },
+  divBody: {
+    flex: '1',
+    padding: theme.spacing(1),
+    height: 'calc(100% - 98px)',
+  },
+  titleContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    margin: 0,
+  },
+  searchInput: {
+    border: "solid 1px #828282",
+    display: "flex",
+    borderRadius: 80,
+    padding: 4,
+    marginRight: theme.spacing(1),
+    width: '70%',
+    height: '48px',
+    marginBottom: '10px',
+  },
+  input: {
+    flex: 1,
+  },
+  table: {
+    minWidth: 650,
+  },
 }));
 
 const Helps = () => {
   const classes = useStyles();
-  const [records, setRecords] = useState([]);
+  const [records, setRecords] = useState([]); // Armazena os tutoriais
+  const [search, setSearch] = useState(''); // Armazena o termo de busca
+  const [selectedVideo, setSelectedVideo] = useState(null); // Agora usa selectedVideo
   const { list } = useHelps();
-  const [selectedVideo, setSelectedVideo] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
-      const helps = await list();
-      setRecords(helps);
+      const helps = await list(); // Chama a função list para buscar os tutoriais
+      setRecords(helps); // Atualiza o estado com os tutoriais
     }
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [list]);
 
-  const openVideoModal = (video) => {
-    setSelectedVideo(video);
+  const openVideoModal = (videoId) => {
+    setSelectedVideo(videoId); // Passa o ID do vídeo selecionado
   };
 
   const closeVideoModal = () => {
-    setSelectedVideo(null);
+    setSelectedVideo(null); // Fecha o modal
+  };
+
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value); // Atualiza o termo de busca
   };
 
   const handleModalClose = useCallback((event) => {
     if (event.key === "Escape") {
-      closeVideoModal();
+      closeVideoModal(); // Fecha o modal se a tecla Escape for pressionada
     }
   }, []);
 
@@ -108,18 +150,22 @@ const Helps = () => {
     };
   }, [handleModalClose]);
 
+  const filteredRecords = records.filter(record =>
+    record.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   const renderVideoModal = () => {
     return (
       <Modal
-        open={Boolean(selectedVideo)}
-        onClose={closeVideoModal}
+        open={Boolean(selectedVideo)} // Verifica se há vídeo selecionado
+        onClose={closeVideoModal} // Fecha o modal ao clicar fora
         className={classes.videoModal}
       >
         <div className={classes.videoModalContent}>
           {selectedVideo && (
             <iframe
               style={{ width: "100%", height: "100%", position: "absolute", top: 0, left: 0 }}
-              src={`https://www.youtube.com/embed/${selectedVideo}`}
+              src={`https://www.youtube.com/embed/${selectedVideo}`} // Passa o ID do vídeo
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -133,39 +179,61 @@ const Helps = () => {
 
   const renderHelps = () => {
     return (
-      <>
-        <div className={`${classes.mainPaper} ${classes.mainPaperContainer}`}>
-          {records.length ? records.map((record, key) => (
-            <Paper key={key} className={`${classes.helpPaper} ${classes.paperHover}`} onClick={() => openVideoModal(record.video)}>
-              <img
-                src={`https://img.youtube.com/vi/${record.video}/mqdefault.jpg`}
-                alt="Thumbnail"
-                className={classes.videoThumbnail}
-              />
-              <Typography variant="button" className={classes.videoTitle}>
-                {record.title}
-              </Typography>
-              <Typography variant="caption" className={classes.videoDescription}>
-                {record.description}
-              </Typography>
-            </Paper>
-          )) : null}
-        </div>
-      </>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="Ajuda">
+          <TableHead>
+            <TableRow>
+              <TableCell>Tutorial</TableCell>
+              <TableCell align="left">Descrição</TableCell> {/* Alterado para Link do Vídeo */}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredRecords.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={2} align="center">
+                  Não possui tutoriais
+                </TableCell>
+              </TableRow>
+            ) : (
+              filteredRecords.map((record, key) => (
+                <TableRow key={key} onClick={() => openVideoModal(record.video)} style={{ cursor: 'pointer' }}>
+                  <TableCell component="th" scope="row">
+                    {record.title} {/* Título do tutorial */}
+                  </TableCell>
+                  <TableCell align="left">{record.description}</TableCell> {/* Descrição do tutorial */}
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
     );
   };
 
   return (
-    <MainContainer>
-      <MainHeader>
-        <Title>{i18n.t("helps.title")} ({records.length})</Title>
-        <MainHeaderButtonsWrapper></MainHeaderButtonsWrapper>
-      </MainHeader>
-      <div className={classes.mainPaper}>
-        {renderHelps()}
+    <div className={classes.divBody}>
+      <div className={classes.titleContainer}>
+        <h1 style={{ margin: '0' }}>Ajuda</h1>
+        <Typography component="subtitle1" variant="body1" style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}>
+          {'Assista aos tutoriais sobre como usar as ferramentas do Zapcomm'}
+        </Typography>
       </div>
-      {renderVideoModal()}
-    </MainContainer>
+
+      <MainContainer>
+        <div className={classes.searchInput}>
+          <SearchIcon style={{ color: "grey", marginLeft: 6, marginRight: 6, alignSelf: 'center' }} />
+          <InputBase
+            className={classes.input}
+            placeholder="Pesquisar ajuda"
+            value={search}
+            onChange={handleSearchChange} // Atualiza a busca
+          />
+        </div>
+
+        {renderHelps()} {/* Renderiza a tabela de tutoriais */}
+        {renderVideoModal()} {/* Renderiza o modal do vídeo */}
+      </MainContainer>
+    </div>
   );
 };
 
