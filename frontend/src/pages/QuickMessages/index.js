@@ -304,6 +304,7 @@ const QuickMessages = () => {
         <div style={{display: "inline-flex", alignItems: 'center', width: "95%",}}> 
 
             {/* Campo de busca e botão Adicionar abaixo da mensagem */}
+
             <div className={classes.serachInputWrapper}>
             <SearchIcon className={classes.searchIcon} />
             <InputBase

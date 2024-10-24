@@ -40,7 +40,9 @@ import toastError from "../../errors/toastError";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import { Can } from "../../components/Can";
 import useContactLists from "../../hooks/useContactLists";
-import { Grid } from "@material-ui/core";
+import { Grid, InputBase } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
 
 import planilhaExemplo from "../../assets/planilha.xlsx";
 import { SocketContext } from "../../context/Socket/SocketContext";
@@ -95,6 +97,63 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     overflowY: "scroll",
     ...theme.scrollbarStyles,
+  },
+  acoes: {
+    color: "#0C2C54",
+    "&:hover": {
+      color: "#3c5676",
+    },
+    width: "35px", // Reduzido para o tamanho desejado
+    height: "30px",
+  },
+
+  searchInput: {
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "50px",
+    },
+  },
+  serachInputWrapper: {
+    border: "solid 1px #828282",
+    flex: 1,
+    display: "flex",
+    borderRadius: 40,
+    padding: 4,
+    marginRight: theme.spacing(1),
+    width: '70%',
+    height: '48px',
+  },
+  searchIcon: {
+    color: "grey",
+    marginLeft: 6,
+    marginRight: 6,
+    alignSelf: "center",
+  },
+  searchInput: {
+    flex: 1,
+    border: "none",
+    borderRadius: 30,
+  },
+
+  divBody: {
+    flex: 1,
+    padding: theme.spacing(1),
+    height: `calc(100% - 48px)`,
+    overflowY: "hidden",
+    background: "#FFFFFF"
+  },
+
+  Botoes: {
+    borderRadius: "40px",
+    padding: "10px 32px",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--logo-bg, #0C2C54)",
+  },
+
+  Tabela: {
+    backgroundColor: "#FFFFFF",
+    fontFamily: 'Inter Tight, sans-serif',
+    color: 'black'
   },
 }));
 
@@ -248,7 +307,16 @@ const ContactListItems = () => {
   };
 
   return (
-    <MainContainer className={classes.mainContainer}>
+    <div className={classes.divBody}>
+      <h1 style={{ margin: "0" }}><b>{contactList.name}</b></h1>
+      <Typography
+        component="subtitle1"
+        variant="body1"
+        style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+      >
+        {`Edite e exclua os contatos da lista ${contactList.name}.`}
+      </Typography>
+      {/* <MainContainer className={classes.mainContainer}> */}
       <ContactListItemModal
         open={contactListItemModalOpen}
         onClose={handleCloseContactListItemModal}
@@ -258,9 +326,8 @@ const ContactListItems = () => {
       <ConfirmationModal
         title={
           deletingContact
-            ? `${i18n.t("contactListItems.confirmationModal.deleteTitle")} ${
-                deletingContact.name
-              }?`
+            ? `${i18n.t("contactListItems.confirmationModal.deleteTitle")} ${deletingContact.name
+            }?`
             : `${i18n.t("contactListItems.confirmationModal.importTitlte")}`
         }
         open={confirmOpen}
@@ -282,69 +349,73 @@ const ContactListItems = () => {
           </>
         )}
       </ConfirmationModal>
-      <MainHeader>
-        <Grid style={{ width: "99.6%" }} container>
+      {/* <MainHeader> */}
+      {/* <Grid style={{ width: "99.6%" }} container>
           <Grid xs={12} sm={5} item>
             <Title>{contactList.name}</Title>
           </Grid>
           <Grid xs={12} sm={7} item>
             <Grid spacing={2} container>
-              <Grid xs={12} sm={6} item>
-                <TextField
-                  fullWidth
-                  placeholder={i18n.t("contactListItems.searchPlaceholder")}
-                  type="search"
-                  value={searchParam}
-                  onChange={handleSearch}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon style={{ color: "gray" }} />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-              <Grid xs={4} sm={2} item>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  onClick={goToContactLists}
-                >
-                  {i18n.t("contactListItems.buttons.lists")}
-                </Button>
-              </Grid>
-              <Grid xs={4} sm={2} item>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    fileUploadRef.current.value = null;
-                    fileUploadRef.current.click();
-                  }}
-                >
-                  {i18n.t("contactListItems.buttons.import")}
-                </Button>
-              </Grid>
-              <Grid xs={4} sm={2} item>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  onClick={handleOpenContactListItemModal}
-                >
-                  {i18n.t("contactListItems.buttons.add")}
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </MainHeader>
+              <Grid xs={12} sm={6} item> */}
+      <div style={{ display: "inline-flex", alignItems: 'center', width: "95%", }}>
+        <div className={classes.serachInputWrapper}>
+          <SearchIcon className={classes.searchIcon} />
+          <InputBase
+            className={classes.searchInput}
+            fullWidth
+            placeholder={i18n.t("contactListItems.searchPlaceholder")}
+            type="search"
+            value={searchParam}
+            onChange={handleSearch}
+          />
+        </div>
+        {/* </Grid>
+              <Grid xs={4} sm={2} item> */}
+        <div
+          style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+        ></div>
+
+      <MainHeaderButtonsWrapper style={{}}>
+        <Button
+          className={classes.Botoes}
+          variant="contained"
+          color="primary"
+          onClick={goToContactLists}
+        >
+          {i18n.t("contactListItems.buttons.lists")}
+        </Button>
+        {/* </Grid>
+              <Grid xs={4} sm={2} item> */}
+        <Button
+          className={classes.Botoes}
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            fileUploadRef.current.value = null;
+            fileUploadRef.current.click();
+          }}
+        >
+          {i18n.t("contactListItems.buttons.import")}
+        </Button>
+        {/* </Grid>
+              <Grid xs={4} sm={2} item> */}
+        <Button
+         className={classes.Botoes}
+          variant="contained"
+          color="primary"
+          onClick={handleOpenContactListItemModal}
+        >
+          {i18n.t("contactListItems.buttons.add")}
+        </Button>
+        </MainHeaderButtonsWrapper>
+      </div>
+      {/* </Grid>
+            </Grid> */}
+      {/* </Grid>
+        </Grid> */}
+      {/* </MainHeader> */}
       <Paper
         className={classes.mainPaper}
-        variant="outlined"
         onScroll={handleScroll}
       >
         <>
@@ -363,21 +434,25 @@ const ContactListItems = () => {
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell align="center" style={{ width: "0%" }}>
-                #
+              <TableCell align="center" className={classes.Tabela} style={{ width: "0%" }}>
+              <b> # </b>
               </TableCell>
-              <TableCell>{i18n.t("contactListItems.table.name")}</TableCell>
-              <TableCell align="center">
-                {i18n.t("contactListItems.table.number")}
+              <TableCell className={classes.Tabela}>
+              <b>{i18n.t("contactListItems.table.name")}</b>
               </TableCell>
-              <TableCell align="center">
-                {i18n.t("contactListItems.table.email")}
+              <TableCell align="center" className={classes.Tabela}>
+              <b>{i18n.t("contactListItems.table.number")}</b>
               </TableCell>
-              <TableCell align="center">
-                {i18n.t("contactListItems.table.actions")}
+              <TableCell align="center" className={classes.Tabela}>
+              <b>{i18n.t("contactListItems.table.email")}</b>
+              </TableCell>
+              <TableCell align="center" className={classes.Tabela}>
+              <b>{i18n.t("contactListItems.table.actions")}</b>
               </TableCell>
             </TableRow>
           </TableHead>
+          {contacts.length > 0 ? (
+              <>
           <TableBody>
             <>
               {contacts.map((contact) => (
@@ -402,7 +477,7 @@ const ContactListItems = () => {
                   <TableCell align="center">{contact.email}</TableCell>
                   <TableCell align="center">
                     <IconButton
-                      size="small"
+                      className={classes.acoes}
                       onClick={() => hadleEditContact(contact.id)}
                     >
                       <EditIcon />
@@ -412,7 +487,7 @@ const ContactListItems = () => {
                       perform="contacts-page:deleteContact"
                       yes={() => (
                         <IconButton
-                          size="small"
+                        className={classes.acoes}
                           onClick={() => {
                             setConfirmOpen(true);
                             setDeletingContact(contact);
@@ -428,9 +503,20 @@ const ContactListItems = () => {
               {loading && <TableRowSkeleton columns={4} />}
             </>
           </TableBody>
+          </>
+            ) : (
+              <TableBody>
+                <TableRow>
+                  <TableCell colSpan="4" align="center">
+                    Nenhuma contato a ser carregado no momento
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+              )}
         </Table>
       </Paper>
-    </MainContainer>
+      {/* </MainContainer> */}
+    </div>
   );
 };
 
