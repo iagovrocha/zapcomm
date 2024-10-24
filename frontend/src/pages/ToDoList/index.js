@@ -284,12 +284,7 @@ const ToDoList = () => {
             </TableBody>
           </Table>
         </Paper>
-<<<<<<< HEAD
       {/* </MainContainer> */}
-=======
-
-      </MainContainer>
->>>>>>> 91f293d450089ada6a6b878b347ff90f851b6ad2
     </div>
   );
 }
