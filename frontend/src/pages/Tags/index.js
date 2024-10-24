@@ -322,7 +322,7 @@ const Tags = () => {
         </div>
       </div>  
       <Paper
-        className={classes.mainPaper}
+        // className={classes.mainPaper}
         // variant="outlined"
         onScroll={handleScroll}
       >

@@ -31,7 +31,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 const useStyles = makeStyles(theme => ({
 	root: {
 		display: "flex",
-		padding: "1rem",
+		// padding: "1rem",
 		flexWrap: "wrap",
 	},
 
