@@ -17,6 +17,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { Grid } from "@material-ui/core";
 import MainContainer from "../../components/MainContainer";
 import MainHeader from "../../components/MainHeader";
+import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
 import Title from "../../components/Title";
 import api from "../../services/api";
 import { i18n } from "../../translate/i18n";
@@ -28,26 +29,29 @@ import { isArray } from "lodash";
 import { SocketContext } from "../../context/Socket/SocketContext";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import Typography from "@material-ui/core/Typography";
+import InputBase from "@material-ui/core/InputBase";
 
 const useStyles = makeStyles((theme) => ({
   mainPaper: {
+    backgroundColor: "#FFFFFF",
     flex: 1,
     padding: theme.spacing(1),
-    overflowY: "scroll",
     ...theme.scrollbarStyles,
   },
   editButton: {
-    backgroundColor: "#00C853",
-    color: "white",
+    color: "#0C2C54",
     "&:hover": {
-      backgroundColor: "#00E676",
+      color: "#3c5676",
     },
-    width: "30px", // Reduzido para o tamanho desejado
+    width: "35px", // Reduzido para o tamanho desejado
     height: "30px",
   },
   deleteButton: {
-    color: "red",
-    width: "30px", // Reduzido para o tamanho desejado
+    color: "#0C2C54",
+    "&:hover": {
+      color: "#3c5676",
+    },
+    width: "35px", // Reduzido para o tamanho desejado
     height: "30px",
   },
   searchInput: {
@@ -55,6 +59,27 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: "50px",
     },
   },
+  serachInputWrapper: {
+    border: "solid 1px #828282",
+		flex: 1,
+		display: "flex",
+		borderRadius: 40,
+		padding: 4,
+		marginRight: theme.spacing(1),
+    width: '70%',
+    height: '48px',
+	},
+	searchIcon: {
+		color: "grey",
+		marginLeft: 6,
+		marginRight: 6,
+		alignSelf: "center",
+	},
+	searchInput: {
+		flex: 1,
+		border: "none",
+		borderRadius: 30,
+	},
   addButton: {
     backgroundColor: "#0C2C54",
     color: "#fff",
@@ -71,6 +96,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     height: `calc(100% - 48px)`,
     overflowY: "hidden",
+    background: "#FFFFFF"
   },
 
   Botoes: {
@@ -82,6 +108,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   Tabela: {
+    backgroundColor: "#FFFFFF",
     fontFamily: 'Inter Tight, sans-serif', 
     color: 'black'
   },
@@ -251,7 +278,7 @@ const QuickMessages = () => {
       >
         {"Adicione, edite e exclua as respostas rápidas dos chamados."}
       </Typography>
-      <MainContainer>
+      {/* <MainContainer> */}
         <ConfirmationModal
           title={
             deletingQuickmessage &&
@@ -273,72 +300,59 @@ const QuickMessages = () => {
           aria-labelledby="form-dialog-title"
           quickmessageId={selectedQuickmessage && selectedQuickmessage.id}
         />
-        <MainHeader>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              {/* <Title>
-                <strong>{i18n.t("quickMessages.title")}</strong>
-              </Title>
-              <Typography
-                component="subtitle1"
-                variant="body1"
-                style={{ fontFamily: "Inter Regular, sans-serif", color: "#828282" }}
-              >
-                {"Adicione, edite e exclua as respostas rápidas dos chamados."}
-              </Typography> */}
-            </Grid>
+        {/* <MainHeader> */}
+        <div style={{display: "inline-flex", alignItems: 'center', width: "95%",}}> 
 
             {/* Campo de busca e botão Adicionar abaixo da mensagem */}
-            <Grid item xs={12} container justifyContent="space-between" alignItems="center" spacing={2}>
-              {/* Campo de busca */}
-              <Grid item xs={9}>
-                <TextField
-                  fullWidth
-                  placeholder={i18n.t("quickMessages.searchPlaceholder")}
-                  value={searchParam}
-                  onChange={handleSearch}
-                  className={classes.searchInput}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                  variant="outlined"
-                />
-              </Grid>
-              {/* barra lateral entre itens */}
-              <div
+            <div className={classes.serachInputWrapper}>
+            <SearchIcon className={classes.searchIcon} />
+            <InputBase
+              className={classes.searchInput}
+              placeholder={i18n.t("quickMessages.searchPlaceholder")}
+              type="search"
+              value={searchParam}
+              onChange={handleSearch}
+              
+                  // }} Mudança de TextField para InputBase + Estilização em css + MainHeader comentado para alinhar os botões e a barra de pesquisa
+                  />
+            </div>
+
+            <div
                 style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
               ></div>
 
-              {/* Botão Adicionar */}
-              <Grid item xs={2}>
-                <Button
-                  variant="contained"
-                  className={classes.Botoes}
-                  color="primary"
-                  onClick={handleOpenQuickMessageDialog}
-                  fullWidth
-                >
-                  {i18n.t("quickMessages.buttons.add")}
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-        </MainHeader>
-        <Paper className={classes.mainPaper} onScroll={handleScroll}>
-          <Table stickyHeader>
+            <MainHeaderButtonsWrapper style={{}}>
+            
+            <Button
+              variant="contained"
+              className={classes.Botoes}
+              color="primary"
+              onClick={handleOpenQuickMessageDialog}
+              fullWidth
+            >
+              {i18n.t("quickMessages.buttons.add")}
+            </Button>
+
+            </MainHeaderButtonsWrapper>
+        </div>
+
+        {/* </MainHeader> */}
+
+        <Paper 
+          className={classes.mainPaper} 
+          // variant="outlined"
+          onScroll={handleScroll}>
+
+          <Table size="small">
             <TableHead>
               <TableRow>
                 <TableCell className={classes.Tabela}>
                   <b>{i18n.t("Título")}</b>
                 </TableCell>
-                <TableCell className={classes.Tabela}>
+                <TableCell className={classes.Tabela} style={{align: "center"}}>
                   <b>{i18n.t("Mensagem")}</b>
                 </TableCell>
-                <TableCell className={classes.Tabela}>
+                <TableCell className={classes.Tabela} style={{align: "center"}}>
                   <b>{i18n.t("Ações")}</b>
                 </TableCell>
               </TableRow>
@@ -354,23 +368,25 @@ const QuickMessages = () => {
                     <TableCell>{quickmessage.shortcode}</TableCell>
                     <TableCell>{quickmessage.message}</TableCell>
                     <TableCell align="center">
-                      <Grid container justifyContent="center">
+                      <Grid container>
+                        <div style={{display:"flex", justifyContent:"center"}}>
                         <Grid item>
-                          <Button
+                          <IconButton
                             className={classes.editButton}
                             onClick={() => handleEditQuickmessage(quickmessage)}
                           >
-                            Editar
-                          </Button>
+                            <EditIcon />
+                          </IconButton>
                         </Grid>
                         <Grid item>
-                          <Button
+                          <IconButton
                             className={classes.deleteButton}
                             onClick={() => handleConfirmDelete(quickmessage)}
                           >
-                            Deletar
-                          </Button>
+                            <DeleteIcon />
+                          </IconButton>
                         </Grid>
+                        </div>
                       </Grid>
                     </TableCell>
                   </TableRow>
@@ -387,7 +403,7 @@ const QuickMessages = () => {
             </TableBody>
           </Table>
         </Paper>
-      </MainContainer>
+      {/* </MainContainer> */}
     </div>
   );
 };

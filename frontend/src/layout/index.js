@@ -335,7 +335,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
   }
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{backgroundColor: "#FFFFFF"}}>
       <Drawer
         variant={drawerVariant}
         className={drawerOpen ? classes.drawerPaper : classes.drawerPaperClose}
@@ -368,6 +368,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
         position="absolute"
         className={clsx(classes.appBar, drawerOpen && classes.appBarShift)}
         color="primary"
+        style={{boxShadow: "none"}}
       >
         <Toolbar variant="dense" className={classes.toolbar}>
           <IconButton
