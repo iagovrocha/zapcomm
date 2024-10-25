@@ -23,16 +23,18 @@ import { AuthContext } from "../../context/Auth/AuthContext";
 import withWidth, { isWidthUp } from "@material-ui/core/withWidth";
 import IconButton from "@mui/material/IconButton";
 
+import Typography from "@material-ui/core/Typography";
+import InputBase from "@material-ui/core/InputBase";
+import SearchIcon from "@material-ui/icons/Search";
+
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
     display: "flex",
     flexDirection: "column",
     position: "relative",
     flex: 1,
-    padding: theme.spacing(2),
     height: `calc(100% - 48px)`,
     overflowY: "hidden",
-    border: "1px solid rgba(0, 0, 0, 0.12)",
   },
   gridContainer: {
     flex: 1,
@@ -51,6 +53,54 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "right",
     padding: 10,
   },
+  divBody: {
+    flex: 1,
+    padding: theme.spacing(1),
+    height: `calc(100% - 48px)`,
+    backgroundColor: "#FFFFFF",
+  },
+  searchInput: {
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "50px",
+    },
+  },
+  serachInputWrapper: {
+    border: "solid 1px #828282",
+		flex: 1,
+		display: "flex",
+		borderRadius: 40,
+		padding: 4,
+		marginRight: theme.spacing(1),
+    width: '70%',
+    height: '48px',
+	},
+  searchIcon: {
+		color: "grey",
+		marginLeft: 6,
+		marginRight: 6,
+		alignSelf: "center",
+	},
+  searchInput: {
+		flex: 1,
+		border: "none",
+		borderRadius: 30,
+	},
+  BotaoAdicionar: {
+    height: "48px !important",
+    borderRadius: "40px",
+    padding: "10px 32px",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--logo-bg, #001C27)",
+    margin: 5,
+  },
+  SubEBtn: {
+    boxSizing: "border-box",
+    width: "100%",
+    display: "inline-flex",
+    justifyContent: "space-between",
+    // paddingBottom: 10,
+  }, 
 }));
 
 export function ChatModal({ open, chat, type, handleClose, handleLoadNewChat }) {
@@ -338,18 +388,6 @@ function Chat(props) {
     return (
       <Grid className={classes.gridContainer} container>
         <Grid className={classes.gridItem} md={8} item>
-          <div className={classes.btnContainer}>
-            <Button
-              onClick={() => {
-                setDialogType("new");
-                setShowDialog(true);
-              }}
-              color="primary"
-              variant="contained"
-            >
-              + Novo
-            </Button>
-          </div>
           <ChatList
             chats={chats}
             pageInfo={chatsPageInfo}
@@ -396,6 +434,17 @@ function Chat(props) {
         {tab === 0 && (
           <Grid className={classes.gridItemTab} md={14} item>
             <div className={classes.btnContainer}>
+              {/* Campo de busca e botão Adicionar abaixo da mensagem */}
+            <div className={classes.serachInputWrapper}>
+            <SearchIcon className={classes.searchIcon} />
+            <InputBase
+              className={classes.searchInput}
+              placeholder={("Buscar chat")}
+              type="search"
+              
+                  // }} Mudança de TextField para InputBase + Estilização em css + MainHeader comentado para alinhar os botões e a barra de pesquisa
+                  />
+            </div>
               <Button
                 onClick={() => setShowDialog(true)}
                 color="primary"
@@ -432,7 +481,30 @@ function Chat(props) {
   };
 
   return (
-    <>
+    <div className={classes.divBody}>
+      <div className={classes.SubEBtn}>
+      <div>
+      <h1 style={{ margin: "0" }}><b>{("Chat Interno")}</b></h1>
+      <Typography
+       component="subtitle1"
+       variant="body1"
+       style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+      >
+      {"Chat interno para colaboradores."}
+      </Typography>
+      </div>
+      <Button
+        onClick={() => {
+          setDialogType("new");
+          setShowDialog(true);
+        }}
+        className={classes.BotaoAdicionar}
+        color="primary"
+        variant="contained"
+      >
+        + Novo
+      </Button>
+      </div>
       <ChatModal
         type={dialogType}
         open={showDialog}
@@ -449,7 +521,7 @@ function Chat(props) {
       <Paper className={classes.mainContainer}>
         {isWidthUp("md", props.width) ? renderGrid() : renderTab()}
       </Paper>
-    </>
+    </div>
   );
 }
 

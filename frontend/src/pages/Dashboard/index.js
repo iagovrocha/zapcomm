@@ -207,6 +207,18 @@ const useStyles = makeStyles((theme) => ({
     overflow: "auto",
     flexDirection: "column",
   },
+  divBody: {
+    flex: '1',
+    padding: theme.spacing(1),
+    height: 'calc(100% - 98px)',
+    background: "#FFFFFF"
+  },
+  titleContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start', // Alinha os itens à esquerda
+    marginBottom: '1rem', // Espaçamento abaixo do contêiner
+  },
 }));
 const Dashboard = () => {
   const classes = useStyles();
@@ -387,8 +399,21 @@ const Dashboard = () => {
   }
 
   return (
-    <div>
-      <Container maxWidth="lg" className={classes.container}>
+    <div className={classes.divBody}>
+
+        <div className={classes.titleContainer}>
+          <h1 style={{margin: '0'}}>Dashboard</h1> {/*Titulo tarefas*/}
+          <Typography
+            className={classes.info}
+            component="subtitle1"
+            variant="body1"
+            style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}
+            >
+              {'Visualize seus chamados, tempo de espera médio e gráfico acerca dos chamados no mês e na semana'}
+          </Typography>
+        </div>
+
+      <Container maxWidth="95%" className={classes.container}>
         <Grid container spacing={3} justifyContent="flex-end">
 
 

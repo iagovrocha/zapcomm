@@ -31,7 +31,9 @@ import TableRowSkeleton from "../../components/TableRowSkeleton";
 import ContactListDialog from "../../components/ContactListDialog";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import toastError from "../../errors/toastError";
-import { Grid } from "@material-ui/core";
+import { Grid, InputBase } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
 
 import planilhaExemplo from "../../assets/planilha.xlsx";
 import { SocketContext } from "../../context/Socket/SocketContext";
@@ -86,6 +88,64 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     overflowY: "scroll",
     ...theme.scrollbarStyles,
+  },
+
+  acoes: {
+    color: "#0C2C54",
+    "&:hover": {
+      color: "#3c5676",
+    },
+    width: "35px", // Reduzido para o tamanho desejado
+    height: "30px",
+  },
+
+  searchInput: {
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "50px",
+    },
+  },
+  serachInputWrapper: {
+    border: "solid 1px #828282",
+    flex: 1,
+    display: "flex",
+    borderRadius: 40,
+    padding: 4,
+    marginRight: theme.spacing(1),
+    width: '70%',
+    height: '48px',
+  },
+  searchIcon: {
+    color: "grey",
+    marginLeft: 6,
+    marginRight: 6,
+    alignSelf: "center",
+  },
+  searchInput: {
+    flex: 1,
+    border: "none",
+    borderRadius: 30,
+  },
+
+  divBody: {
+    flex: 1,
+    padding: theme.spacing(1),
+    height: `calc(100% - 48px)`,
+    overflowY: "hidden",
+    background: "#FFFFFF"
+  },
+
+  Botoes: {
+    borderRadius: "40px",
+    padding: "10px 32px",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--logo-bg, #0C2C54)",
+  },
+
+  Tabela: {
+    backgroundColor: "#FFFFFF",
+    fontFamily: 'Inter Tight, sans-serif',
+    color: 'black'
   },
 }));
 
@@ -197,12 +257,20 @@ const ContactLists = () => {
   };
 
   return (
-    <MainContainer>
+    <div className={classes.divBody}>
+      <h1 style={{ margin: "0" }}><b>Lista de Contatos</b></h1>
+      <Typography
+        component="subtitle1"
+        variant="body1"
+        style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+      >
+        {"Adicione, edite e exclua suas listas para as campanhas."}
+      </Typography>
+      {/* <MainContainer> */}
       <ConfirmationModal
         title={
           deletingContactList &&
-          `${i18n.t("contactLists.confirmationModal.deleteTitle")} ${
-            deletingContactList.name
+          `${i18n.t("contactLists.confirmationModal.deleteTitle")} ${deletingContactList.name
           }?`
         }
         open={confirmModalOpen}
@@ -217,62 +285,71 @@ const ContactLists = () => {
         aria-labelledby="form-dialog-title"
         contactListId={selectedContactList && selectedContactList.id}
       />
-      <MainHeader>
-        <Grid style={{ width: "99.6%" }} container>
+      {/* <MainHeader> */}
+      {/* <Grid style={{ width: "99.6%" }} container>
           <Grid xs={12} sm={8} item>
             <Title>{i18n.t("contactLists.title")}</Title>
           </Grid>
           <Grid xs={12} sm={4} item>
             <Grid spacing={2} container>
-              <Grid xs={7} sm={6} item>
-                <TextField
-                  fullWidth
-                  placeholder={i18n.t("contacts.searchPlaceholder")}
-                  type="search"
-                  value={searchParam}
-                  onChange={handleSearch}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon style={{ color: "gray" }} />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-              <Grid xs={5} sm={6} item>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  onClick={handleOpenContactListModal}
-                >
-                  {i18n.t("contactLists.buttons.add")}
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </MainHeader>
+              <Grid xs={7} sm={6} item> */}
+      <div style={{ display: "inline-flex", alignItems: 'center', width: "90%", }}>
+        <div className={classes.serachInputWrapper}>
+          <SearchIcon className={classes.searchIcon} />
+          <InputBase
+            className={classes.searchInput}
+            fullWidth
+            placeholder={i18n.t("contacts.searchPlaceholder")}
+            type="search"
+            value={searchParam}
+            onChange={handleSearch}
+          />
+          {/* </Grid>
+              <Grid xs={5} sm={6} item> */}
+        </div>
+        <div
+                style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+              ></div>
+
+            <MainHeaderButtonsWrapper style={{}}>
+
+        <Button
+          className={classes.Botoes}
+          fullWidth
+          variant="contained"
+          color="primary"
+          onClick={handleOpenContactListModal}
+        >
+          {i18n.t("contactLists.buttons.add")}
+        </Button>
+        </MainHeaderButtonsWrapper>
+      </div>
+      {/* </Grid>
+            </Grid> */}
+      {/* </Grid>
+        </Grid> */}
+      {/* </MainHeader> */}
       <Paper
         className={classes.mainPaper}
-        variant="outlined"
+        // variant="outlined"
         onScroll={handleScroll}
       >
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell align="center">
-                {i18n.t("contactLists.table.name")}
+              <TableCell align="center" className={classes.Tabela}>
+              <b>{i18n.t("contactLists.table.name")}</b>
               </TableCell>
-              <TableCell align="center">
-                {i18n.t("contactLists.table.contacts")}
+              <TableCell align="center" className={classes.Tabela}>
+                <b>{i18n.t("contactLists.table.contacts")}</b>
               </TableCell>
-              <TableCell align="center">
-                {i18n.t("contactLists.table.actions")}
+              <TableCell align="center" className={classes.Tabela}>
+              <b> {i18n.t("contactLists.table.actions")}</b>
               </TableCell>
             </TableRow>
           </TableHead>
+          {contactLists.length > 0 ? (
+              <>
           <TableBody>
             <>
               {contactLists.map((contactList) => (
@@ -283,27 +360,27 @@ const ContactLists = () => {
                   </TableCell>
                   <TableCell align="center">
                     <a href={planilhaExemplo} download="planilha.xlsx">
-                      <IconButton size="small" title="Baixar Planilha Exemplo">
+                      <IconButton className={classes.acoes} title="Baixar Planilha Exemplo">
                         <DownloadIcon />
                       </IconButton>
                     </a>
 
                     <IconButton
-                      size="small"
+                      className={classes.acoes}
                       onClick={() => goToContacts(contactList.id)}
                     >
                       <PeopleIcon />
                     </IconButton>
 
                     <IconButton
-                      size="small"
+                      className={classes.acoes}
                       onClick={() => handleEditContactList(contactList)}
                     >
                       <EditIcon />
                     </IconButton>
 
                     <IconButton
-                      size="small"
+                      className={classes.acoes}
                       onClick={(e) => {
                         setConfirmModalOpen(true);
                         setDeletingContactList(contactList);
@@ -317,9 +394,20 @@ const ContactLists = () => {
               {loading && <TableRowSkeleton columns={3} />}
             </>
           </TableBody>
+          </>
+            ) : (
+              <TableBody>
+                <TableRow>
+                  <TableCell colSpan="3" align="center">
+                    Nenhuma lista a ser carregada no momento
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+              )}
         </Table>
       </Paper>
-    </MainContainer>
+      {/* </MainContainer> */}
+    </div>
   );
 };
 

@@ -129,7 +129,7 @@ const ContactModal = ({ open, onClose, contactId, initialValues, onSave }) => {
 	return (
 		<div className={classes.root}>
 			<Dialog open={open} onClose={handleClose} maxWidth="lg" scroll="paper">
-				<DialogTitle id="form-dialog-title">
+				<DialogTitle id="form-dialog-title" style={{color: "#fff", backgroundColor: "#0C2C54"}}>
 					{contactId
 						? `${i18n.t("contactModal.title.edit")}`
 						: `${i18n.t("contactModal.title.add")}`}

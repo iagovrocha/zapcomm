@@ -2,41 +2,112 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from "@material-ui/core/Typography";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import InputAdornment from '@material-ui/core/InputAdornment'; // Importar InputAdornment
+import SearchIcon from '@material-ui/icons/Search'; // Importar o ícone de pesquisa
+import InputBase from "@material-ui/core/InputBase";
+import MainContainer from "../../components/MainContainer";
 
-const useStyles = makeStyles({
-  root: {
+const useStyles = makeStyles((theme) => ({
+
+  // root: {
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //  // margin: '2rem'
+  // },
+  Tabela: {
+    backgroundColor: "#FFFFFF",
+    fontFamily: 'Inter Tight, sans-serif', 
+    color: 'black'
+  },
+
+  divBody: {
+    flex: '1',
+    padding: theme.spacing(1),
+    height: 'calc(100% - 98px)', 
+    background: "#FFFFFF"
+  },
+  titleContainer: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    margin: '2rem'
+    alignItems: 'flex-start', // Alinha os itens à esquerda
+    marginBottom: '7px', // Espaçamento abaixo do contêiner
   },
-  inputContainer: {
-    display: 'flex',
-    width: '100%',
-    marginBottom: '1rem'
+  serachInputWrapper: {
+    border: "solid 1px #828282",
+		flex: 1,
+		display: "flex",
+		borderRadius: 40,
+		padding: 4,
+		marginRight: theme.spacing(1),
+    		width: '70%',
+    		height: '48px',
+	},
+  input: { // Área de inserir texto
+		flex: 1,
+		border: "none",
+		borderRadius: 30,
   },
-  input: {
-    flexGrow: 1,
-    marginRight: '1rem'
+  searchIcon: {
+		color: "grey",
+		marginLeft: 6,
+		marginRight: 6,
+		alignSelf: "center",
+	},
+  button: { // botão de adicionar ou salvar
+    borderRadius: "40px",
+    padding: "10px 32px",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--logo-bg, #001C27)"
   },
-  listContainer: {
-    width: '100%',
-    height: '100%',
-    marginTop: '1rem',
-    backgroundColor: '#f5f5f5',
-    borderRadius: '5px',
+
+  table: { // Tabela das tarefas que serão adicionadas
+    minWidth: 650,
+    marginTop: "10px",
+
   },
-  list: {
-    marginBottom: '5px'
-  }
-});
+  tableHeader: { // Cabeçalho da tabela
+    backgroundColor: '', // alterar a cor do fundo do cabeçalho dos resultados
+    color: 'black',
+  },
+  editButton: {
+    color: "#0C2C54",
+    "&:hover": {
+      color: "#3c5676",
+    },
+    width: "35px", // Reduzido para o tamanho desejado
+    height: "30px",
+  },
+  deleteButton: {
+    color: "#0C2C54",
+    "&:hover": {
+      color: "#3c5676",
+    },
+    width: "35px", // Reduzido para o tamanho desejado
+    height: "30px",
+  },
+  //taskText: { // Texto da tarefa
+    //maxWidth: '300px',
+    //overflow: 'hidden',
+    //textOverflow: 'ellipsis',
+  //},
+  //dateText: { // Data de criação e atualização da tarefa
+    //textAlign: 'center',
+  //},
+
+}));
 
 const ToDoList = () => {
   const classes = useStyles();
@@ -44,6 +115,14 @@ const ToDoList = () => {
   const [task, setTask] = useState('');
   const [tasks, setTasks] = useState([]);
   const [editIndex, setEditIndex] = useState(-1);
+  const [error, setError] = useState(''); // Estado para armazenar a mensagem de erro
+  const [hasMore, setHasMore] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const loadMore = () => {
+    setPageNumber((prevState) => prevState + 1);
+  };
 
   useEffect(() => {
     const savedTasks = localStorage.getItem('tasks');
@@ -52,12 +131,27 @@ const ToDoList = () => {
     }
   }, []);
 
+  const handleScroll = (e) => {
+    if (!hasMore || loading) return;
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+    if (scrollHeight - (scrollTop + 100) < clientHeight) {
+      loadMore();
+    }
+  };
+
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
   const handleTaskChange = (event) => {
-    setTask(event.target.value);
+    const inputValue = event.target.value;
+    if (inputValue.length > 50) {
+      setError('A tarefa não pode exceder 50 caracteres.');
+      return;
+    } else {
+      setError(''); // Limpa o erro se estiver dentro do limite
+    }
+    setTask(inputValue);
   };
 
   const handleAddTask = () => {
@@ -70,13 +164,13 @@ const ToDoList = () => {
     if (editIndex >= 0) {
       // Editar tarefa existente
       const newTasks = [...tasks];
-      newTasks[editIndex] = {text: task, updatedAt: now, createdAt: newTasks[editIndex].createdAt};
+      newTasks[editIndex] = { text: task, updatedAt: now, createdAt: newTasks[editIndex].createdAt };
       setTasks(newTasks);
       setTask('');
       setEditIndex(-1);
     } else {
       // Adicionar nova tarefa
-      setTasks([...tasks, {text: task, createdAt: now, updatedAt: now}]);
+      setTasks([...tasks, { text: task, createdAt: now, updatedAt: now }]);
       setTask('');
     }
   };
@@ -93,39 +187,106 @@ const ToDoList = () => {
   };
 
   return (
-    <div className={classes.root}>
-      <div className={classes.inputContainer}>
-        <TextField
-          className={classes.input}
-          label="Nova tarefa"
-          value={task}
-          onChange={handleTaskChange}
-          variant="outlined"
-        />
-        <Button variant="contained" color="primary" onClick={handleAddTask}>
-          {editIndex >= 0 ? 'Salvar' : 'Adicionar'}
-        </Button>
-      </div>
-      <div className={classes.listContainer}>
-        <List>
-          {tasks.map((task, index) => (
-            <ListItem key={index} className={classes.list}>
-              <ListItemText primary={task.text} secondary={task.updatedAt.toLocaleString()} />
-              <ListItemSecondaryAction>
-                <IconButton onClick={() => handleEditTask(index)}>
-                  <EditIcon />
-                </IconButton>
-                <IconButton onClick={() => handleDeleteTask(index)}>
-                  <DeleteIcon />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))}
-        </List>
-      </div>
+    <div className={classes.divBody}>
+      {/* <div className={classes.root}> */}
+        <div className={classes.titleContainer}>
+          <h1 style={{margin: '0'}}>Tarefas</h1> {/*Titulo tarefas*/}
+          <Typography
+            className={classes.info}
+            component="subtitle1"
+            variant="body1"
+            style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}
+            >
+              {'Adicione suas tarefas'}
+          </Typography>
+        </div>
+
+      {/* <MainContainer className={classes.mainContainer}> */}
+
+        <div style={{display: "inline-flex", alignItems: 'center', width: "95%"}}> 
+          <div className={classes.serachInputWrapper}>
+            <SearchIcon className={classes.searchIcon} />
+            <InputBase
+              className={classes.input}
+              placeholder="Nova tarefa (Máx: 50 caracteres)"
+              value={task}
+              onChange={handleTaskChange}
+              variant="outlined"
+                error={!!error} // irá mostrar um erro se houver
+                helperText={error} // Mostra a nebsagem de erro abaixo do campo
+              //   InputProps={{
+              //     startAdornment: (
+              //       <InputAdornment position="start">
+              //         <SearchIcon style={{ color: "gray" }} />
+              //       </InputAdornment>
+              //     ),
+              //   style: {
+              //       borderRadius: '40px',
+              //   }
+              // }}
+            />
+          </div>
+
+          <div 
+            style={{width: '1px', height: "43px", background: '#BDBDBD', marginLeft: '50px', marginRight: '50px'}}>
+          </div>
+
+          <Button className={classes.button} variant="contained" color="primary" onClick={handleAddTask}>
+            {editIndex >= 0 ? 'Salvar Alteração' : 'Adicionar Tarefa'}
+          </Button>
+
+        </div>
+
+        <Paper 
+          className={classes.mainPaper} 
+          // variant="outlined"
+          onScroll={handleScroll}>
+
+          <Table className={classes.table} aria-label="Lista de Tarefas" size="small">
+            <TableHead className={classes.tableHeader}>
+              <TableRow>
+                <TableCell><b>Tarefas</b></TableCell> {/* Nome da coluna de Tarefas */}
+                <TableCell align="center"><b>Data</b></TableCell> {/* Nome da coluna de Data */}
+                <TableCell align="right"><b>Ações</b></TableCell> {/* Nome da coluna de Ações */}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {tasks.length === 0 ? ( // Verificar se não há tarefas
+                <TableRow>
+                  <TableCell colSpan={3} align="center">
+                    Nenhuma tarefa adicionada
+                  </TableCell>
+                </TableRow>
+              ) : (
+                tasks.map((task, index) => (
+                  <TableRow key={index}>
+                    <TableCell component="th" scope="row">
+                      {task.text}
+                    </TableCell>
+                    <TableCell align="center">
+                      {new Date(task.updatedAt).toLocaleDateString('pt-BR')}
+                    </TableCell>
+                    <TableCell align="right">
+                      <Tooltip title="Editar Tarefa">
+                        <IconButton className={classes.editButton} onClick={() => handleEditTask(index)}>
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Excluir Tarefa">
+                        <IconButton className={classes.deleteButton} onClick={() => handleDeleteTask(index)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </Paper>
+      {/* </MainContainer> */}
     </div>
   );
-};
-
+}
 
 export default ToDoList;

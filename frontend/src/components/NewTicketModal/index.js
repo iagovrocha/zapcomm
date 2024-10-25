@@ -287,7 +287,7 @@ const NewTicketModal = ({ modalOpen, onClose, initialContact }) => {
         onSave={handleAddNewContactTicket}
       ></ContactModal>
       <Dialog open={modalOpen} onClose={handleClose}>
-        <DialogTitle id="form-dialog-title">
+        <DialogTitle id="form-dialog-title" style={{backgroundColor: "#0C2C54", color: "#FFFFFF"}}>
           {i18n.t("newTicketModal.title")}
         </DialogTitle>
         <DialogContent dividers>
