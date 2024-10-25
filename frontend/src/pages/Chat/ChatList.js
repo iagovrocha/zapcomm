@@ -20,7 +20,7 @@ import api from "../../services/api";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
-    display: "flex",
+   
     overflow: "hidden",
     flexDirection: "column",
     position: "relative",
@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     height: "calc(100% - 58px)",
     borderRadius: 10,
     backgroundColor: theme.palette.boxlist,
+    paddingBottom: theme.spacing(2), // Espaçamento no fundo
   },
   chatList: {
     display: "flex",
@@ -42,9 +43,12 @@ const useStyles = makeStyles((theme) => ({
     transition: "0.3s",
     borderRadius: 10,
     position: "relative",
-    "&:hover": {
-      boxShadow: theme.shadows[3],
-    },
+    height: 150, // Aumentando a altura do cartão
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  cardContent: {
+    flex: 1, // Faz o CardContent ocupar o espaço restante
   },
   participants: {
     marginTop: theme.spacing(1),
@@ -128,7 +132,7 @@ export default function ChatList({
     return chat.users.length > 0 && (
       <Avatar
         alt="Participantes"
-        src={chat.users[0].photoUrl} // Pode ser ajustado para mostrar o avatar do primeiro participante
+        src={chat.users[0].photoUrl}
         className={classes.profileAvatar}
       />
     );
@@ -163,7 +167,7 @@ export default function ChatList({
                   onClick={() => goToMessages(chat)}
                 >
                   {getParticipantsAvatar(chat)}
-                  <CardContent>
+                  <CardContent className={classes.cardContent}>
                     <Typography variant="h6">{getPrimaryText(chat)}</Typography>
                     <Typography variant="body2" color="textSecondary">
                       {getSecondaryText(chat)}
