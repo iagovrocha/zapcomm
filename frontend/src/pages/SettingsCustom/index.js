@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import useCompanies from "../../hooks/useCompanies";
 import useAuth from "../../hooks/useAuth.js";
 import useSettings from "../../hooks/useSettings";
+import Typography from "@material-ui/core/Typography";
 
 import OnlyForSuperUser from "../../components/OnlyForSuperUser";
 
@@ -52,6 +53,12 @@ const useStyles = makeStyles((theme) => ({
   },
   textfield: {
     width: "100%",
+  },
+  divBody: {
+    flex: 1,
+    padding: theme.spacing(1),
+    height: `calc(100% - 48px)`,
+    backgroundColor: "#FFFFFF",
   },
 }));
 
@@ -150,6 +157,15 @@ const SettingsCustom = () => {
   };
 
   return (
+    <div className={classes.divBody}>
+      <h1 style={{ margin: "0" }}><b>Configurações</b></h1>
+      <Typography
+        component="subtitle1"
+        variant="body1"
+        style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+      >
+        {"Modifique as configurações gerais"}
+      </Typography>
     <MainContainer className={classes.root}>
       <MainHeader>
         <Title>{i18n.t("settings.title")}</Title>
@@ -229,6 +245,7 @@ const SettingsCustom = () => {
         </Paper>
       </Paper>
     </MainContainer>
+    </div>
   );
 };
 
