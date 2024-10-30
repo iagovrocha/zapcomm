@@ -33,9 +33,9 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
   tab: {
-    backgroundColor: theme.palette.options,
-    borderRadius: 4,
-  },
+		minWidth: 120, //120
+		width: 120,    //120
+	},
   paper: {
     ...theme.scrollbarStyles,
     overflowY: "scroll",
@@ -59,6 +59,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     height: `calc(100% - 48px)`,
     backgroundColor: "#FFFFFF",
+  },
+  MenuItens: {
+    boxSizing: "border-box",
+    width: "95%",
+    display: "inline-flex",
+    justifyContent: "space-between",
   },
 }));
 
@@ -162,16 +168,49 @@ const SettingsCustom = () => {
       <Typography
         component="subtitle1"
         variant="body1"
-        style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+        style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282'}}
       >
         {"Modifique as configurações gerais"}
       </Typography>
-    <MainContainer className={classes.root}>
-      <MainHeader>
-        <Title>{i18n.t("settings.title")}</Title>
-      </MainHeader>
       <Paper className={classes.mainPaper} elevation={1}>
+      <div className={classes.MenuIte}>
         <Tabs
+          indicatorColor= "rgba(0, 0, 0, 0.00)"
+          value={tab}
+          onChange={handleTabChange}
+          >
+          <Tab
+            value={"options"}
+            label={<b>{i18n.t("Opções")}</b>}
+            classes={{ root: classes.tab }}
+            />
+
+          <div
+            style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "5px", marginRight: "5px" }}
+          >
+          </div>
+
+          <Tab
+            value={"companies"}
+            label={<b>{i18n.t("Empresas")}</b>}
+            classes={{ root: classes.tab }}
+            />
+
+          <div
+            style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "5px", marginRight: "5px" }}
+          >
+          </div>
+
+          <Tab
+            value={"helps"}
+            label={<b>{i18n.t("Ajuda")}</b>}
+            classes={{ root: classes.tab }}
+            />
+        </Tabs>
+      </div>
+
+      {/* DAQUI PRA CIMA  */}
+        {/* <Tabs
           value={tab}
           indicatorColor="primary"
           textColor="primary"
@@ -185,7 +224,9 @@ const SettingsCustom = () => {
           {isSuper() ? <Tab label="Empresas" value={"companies"} /> : null}
           {isSuper() ? <Tab label="Planos" value={"plans"} /> : null}
           {isSuper() ? <Tab label="Ajuda" value={"helps"} /> : null}
-        </Tabs>
+        </Tabs> */}
+
+
         <Paper className={classes.paper} elevation={0}>
           <TabPanel
             className={classes.container}
@@ -244,7 +285,7 @@ const SettingsCustom = () => {
           </TabPanel>
         </Paper>
       </Paper>
-    </MainContainer>
+    {/* </MainContainer> */}
     </div>
   );
 };
