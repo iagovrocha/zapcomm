@@ -30,6 +30,9 @@ import ConfirmationModal from "../../components/ConfirmationModal";
 import toastError from "../../errors/toastError";
 import { SocketContext } from "../../context/Socket/SocketContext";
 
+import Typography from "@material-ui/core/Typography";
+import InputBase from "@material-ui/core/InputBase";
+
 const reducer = (state, action) => {
   if (action.type === "LOAD_USERS") {
     const users = action.payload;
@@ -81,6 +84,52 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "scroll",
     ...theme.scrollbarStyles,
   },
+  serachInputWrapper: {
+    border: "solid 1px #828282",
+		flex: 1,
+		display: "flex",
+		borderRadius: 40,
+		padding: 4,
+		marginRight: theme.spacing(1),
+	},
+
+	searchIcon: {
+		color: "grey",
+		marginLeft: 6,
+		marginRight: 6,
+		alignSelf: "center",
+	},
+
+	searchInput: {
+		flex: 1,
+		border: "none",
+		borderRadius: 30,
+	},
+  AgrupamentoDoPesquisarENovo: {
+    paddingTop: "10px",
+    paddingBottom: "12px",
+    display: "inline-flex",
+    width: "95%"
+  },
+  BotaoAdicionar: {
+    borderRadius: "40px",
+    padding: "10px 32px",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--logo-bg, #001C27)"
+  },
+  divBody: {
+    flex: 1,
+    padding: theme.spacing(1),
+    height: `calc(100% - 48px)`,
+    backgroundColor: "#FFFFFF",
+  },
+  acoes: {
+    color: "#0C2C54",
+    "&:hover": {
+      color: "#3c5676",
+    },
+  }
 }));
 
 const Users = () => {
@@ -186,6 +235,45 @@ const Users = () => {
   };
 
   return (
+    <div className={classes.divBody}>
+    <h1 style={{ margin: "0" }}><b>{i18n.t("users.title")}</b></h1>
+    <Typography
+      component="subtitle1"
+      variant="body1"
+      style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+    >
+    {i18n.t("users.subtitulo")}
+    </Typography>
+      <div className={classes.AgrupamentoDoPesquisarENovo}>
+        <div className={classes.serachInputWrapper}>
+          <SearchIcon className={classes.searchIcon} />
+          <InputBase
+            placeholder={i18n.t("contacts.searchPlaceholder")}
+            type="search"
+            value={searchParam}
+            onChange={handleSearch}
+          // InputProps={{
+          //   startAdornment: (
+          //     <InputAdornment position="start">
+          //       <SearchIcon style={{ color: "gray" }} />
+          //     </InputAdornment>
+          //   ),
+          // }}
+          />
+        </div>
+        <div
+          style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+        >
+        </div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleOpenUserModal}
+          className={classes.BotaoAdicionar}
+        >
+         +   {i18n.t("users.buttons.add")}
+        </Button>
+      </div>
     <MainContainer>
       <ConfirmationModal
         title={
@@ -206,10 +294,10 @@ const Users = () => {
         aria-labelledby="form-dialog-title"
         userId={selectedUser && selectedUser.id}
       />
-      <MainHeader>
+      {/* <MainHeader>
         <Title>{i18n.t("users.title")}</Title>
         <MainHeaderButtonsWrapper>
-          <TextField
+          <InputBase
             placeholder={i18n.t("contacts.searchPlaceholder")}
             type="search"
             value={searchParam}
@@ -222,6 +310,10 @@ const Users = () => {
               ),
             }}
           />
+          <div
+          style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+          >
+          </div>
           <Button
             variant="contained"
             color="primary"
@@ -230,7 +322,7 @@ const Users = () => {
             {i18n.t("users.buttons.add")}
           </Button>
         </MainHeaderButtonsWrapper>
-      </MainHeader>
+      </MainHeader> */}
       <Paper
         className={classes.mainPaper}
         variant="outlined"
@@ -266,6 +358,7 @@ const Users = () => {
                     <IconButton
                       size="small"
                       onClick={() => handleEditUser(user)}
+                      
                     >
                       <EditIcon />
                     </IconButton>
@@ -276,6 +369,7 @@ const Users = () => {
                         setConfirmModalOpen(true);
                         setDeletingUser(user);
                       }}
+                      className={classes.acoes}
                     >
                       <DeleteOutlineIcon />
                     </IconButton>
@@ -288,6 +382,7 @@ const Users = () => {
         </Table>
       </Paper>
     </MainContainer>
+    </div>
   );
 };
 
