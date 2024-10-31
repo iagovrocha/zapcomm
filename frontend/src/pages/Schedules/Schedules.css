@@ -20,3 +20,37 @@
     opacity: 1;
   }
   
+  .rbc-off-range-bg {
+    background-color: rgb(206, 243, 232);
+    opacity: 50%;
+    border: 1px solid;
+  }
+
+  .rbc-row-bg {
+    border-bottom: 1px solid;
+  }
+
+  .rbc-day-bg {
+    border-right: 1px solid;
+  }
+
+  .rbc-row-bg:first-child {
+    border-left: 1px solid;
+  }
+
+  .rbc-header {
+    border-bottom: 1px solid;
+  }
+
+  .fc-timegrid-slot {
+    background-color: white !important;
+  }
+
+  .rbc-toolbar-label {
+    font-size: 20px;
+    font-weight: 800; 
+    color: #000000; 
+    font-family: 'Inter', sans-serif;
+    text-transform: capitalize; 
+}
+
