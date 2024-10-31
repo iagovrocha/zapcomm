@@ -11,17 +11,25 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
     alignItems: "center",
+    backgroundColor: "#F4F4F4",
+    overflowY: "-moz-hidden-unscrollable",
     padding: theme.spacing(1),
   },
   button: {
-    background: "#10a110",
+    background: "#0C2C54",
     border: "none",
     padding: "10px",
     color: "white",
     fontWeight: "bold",
-    borderRadius: "5px",
+    borderRadius: "10px",
   },
-  
+  divBody: {
+    flex: 1,
+    padding: theme.spacing(1),
+    height: `calc(100% - 48px)`,
+    backgroundColor: "#F4F4F4",
+    width: "100%",
+  },
 }));
 
 const Kanban = () => {
@@ -80,12 +88,12 @@ const Kanban = () => {
 
   const popularCards = (jsonString) => {
     const filteredTickets = tickets.filter(ticket => ticket.tags.length === 0);
-
     const lanes = [
       {
         id: "lane0",
-        title: i18n.t("Em aberto"),
-        label: "0",
+        colorBorder: "#0C2C54",
+        title: i18n.t("Chamados em Aberto"),
+        label: `${filteredTickets.length} Chamados`,
         cards: filteredTickets.map(ticket => ({
           id: ticket.id.toString(),
           label: "Ticket nº " + ticket.id.toString(),
@@ -105,10 +113,113 @@ const Kanban = () => {
                 </button>
               </div>
             ),
+          style: {backgroundColor: "#FFFFFF", borderRadius: 20},
           title: ticket.contact.name,
           draggable: true,
           href: "/tickets/" + ticket.uuid,
         })),
+        style: {
+          backgroundColor: "#F4F4F4",
+        }
+      },
+      {
+        id: "lane1",
+        colorBorder: "#0C2C54",
+        title: i18n.t("Chamados em Atendimento"),
+        label: `${filteredTickets.length} Chamados`,
+        cards: filteredTickets.map(ticket => ({
+          id: ticket.id.toString(),
+          label: "Ticket nº " + ticket.id.toString(),
+          description: (
+              <div>
+                <p>
+                  {ticket.contact.number}
+                  <br />
+                  {ticket.lastMessage}
+                </p>
+                <button 
+                  className={classes.button} 
+                  onClick={() => {
+                    handleCardClick(ticket.uuid)
+                  }}>
+                    Ver Ticket
+                </button>
+              </div>
+            ),
+          style: {backgroundColor: "#FFFFFF", borderRadius: 20},
+          title: ticket.contact.name,
+          draggable: true,
+          href: "/tickets/" + ticket.uuid,
+        })),
+        style: {
+          backgroundColor: "#F4F4F4",
+        }
+      },
+      {
+        id: "lane2",
+        colorBorder: "#0C2C54",
+        title: i18n.t("Chamados Impedidos"),
+        label: `${filteredTickets.length} Chamados`,
+        cards: filteredTickets.map(ticket => ({
+          id: ticket.id.toString(),
+          label: "Ticket nº " + ticket.id.toString(),
+          description: (
+              <div>
+                <p>
+                  {ticket.contact.number}
+                  <br />
+                  {ticket.lastMessage}
+                </p>
+                <button 
+                  className={classes.button} 
+                  onClick={() => {
+                    handleCardClick(ticket.uuid)
+                  }}>
+                    Ver Ticket
+                </button>
+              </div>
+            ),
+          style: {backgroundColor: "#FFFFFF", borderRadius: 20},
+          title: ticket.contact.name,
+          draggable: true,
+          href: "/tickets/" + ticket.uuid,
+        })),
+        style: {
+          backgroundColor: "#F4F4F4",
+        }
+      },
+      {
+        id: "lane3",
+        colorBorder: "#0C2C54",
+        title: i18n.t("Chamados Finalizados"),
+        label: `${filteredTickets.length} Chamados`,
+        cards: filteredTickets.map(ticket => ({
+          id: ticket.id.toString(),
+          label: "Ticket nº " + ticket.id.toString(),
+          description: (
+              <div>
+                <p>
+                  {ticket.contact.number}
+                  <br />
+                  {ticket.lastMessage}
+                </p>
+                <button 
+                  className={classes.button} 
+                  onClick={() => {
+                    handleCardClick(ticket.uuid)
+                  }}>
+                    Ver Ticket
+                </button>
+              </div>
+            ),
+          style: {backgroundColor: "#FFFFFF", borderRadius: 20},
+          title: ticket.contact.name,
+          draggable: true,
+          href: "/tickets/" + ticket.uuid,
+        })),
+        style: {
+          backgroundColor: "#F4F4F4",
+        }
       },
       ...tags.map(tag => {
         const filteredTickets = tickets.filter(ticket => {
@@ -118,8 +229,9 @@ const Kanban = () => {
 
         return {
           id: tag.id.toString(),
+          colorBorder: tag.color,
           title: tag.name,
-          label: tag.id.toString(),
+          label:`${filteredTickets.length} Chamados`,
           cards: filteredTickets.map(ticket => ({
             id: ticket.id.toString(),
             label: "Ticket nº " + ticket.id.toString(),
@@ -140,11 +252,14 @@ const Kanban = () => {
                 </button>
               </div>
             ),
+            style: {backgroundColor: "#FFFFFF", borderRadius: 20},
             title: ticket.contact.name,
             draggable: true,
             href: "/tickets/" + ticket.uuid,          
           })),
-          style: { backgroundColor: tag.color, color: "white" }
+          style: {
+            backgroundColor: "#F4F4F4",
+          }
         };
       }),
     ];
@@ -163,24 +278,80 @@ const Kanban = () => {
 
   const handleCardMove = async (cardId, sourceLaneId, targetLaneId) => {
     try {
-        
-          await api.delete(`/ticket-tags/${targetLaneId}`);
-        toast.success('Ticket Tag Removido!');
-          await api.put(`/ticket-tags/${targetLaneId}/${sourceLaneId}`);
-        toast.success('Ticket Tag Adicionado com Sucesso!');
-
+      
+        await api.delete(`/ticket-tags/${targetLaneId}`);
+      toast.success('Ticket Tag Removido!');
+        await api.put(`/ticket-tags/${targetLaneId}/${sourceLaneId}`);
+      toast.success('Ticket Tag Adicionado com Sucesso!');
+        await fetchTickets(jsonString);
+      popularCards(jsonString);
+      
     } catch (err) {
       console.log(err);
     }
   };
-
+  const CustomLaneHeader = ({label, cards, title, current, target, colorBorder}) => {
+    return (
+      <div>
+        <header
+          style={{
+            borderBottom: `4px solid ${colorBorder}`,
+            paddingBottom: 6,
+            marginBottom: 10,
+            justifyContent: 'space-between',
+          }}>
+          <div style={{
+            color: "#000000",
+            fontFamily: "Inter Regular, sans-serif",
+            fontSize: "20px",
+            fontStyle: "normal",
+            fontWeight: 600,
+            lineHeight: "normal",
+          }}>{title}</div>  
+          <div style={{            
+            color: "rgba(0, 0, 0, 0.50)",
+            fontFamily: "Inter Regular, sans-serif",
+            fontSize: "15px",
+            fontStyle: "normal",
+            fontWeight: 600,
+            lineHeight: "normal",
+            }}>{label}</div>
+        </header>
+      </div>
+    )
+  };
+  const CustomScrollableLane = () => {
+    return (
+      
+      <div style={{
+        flex: "1",
+        overflowY: "auto",
+        minWidth: "250px",
+        overflowX: "hidden",
+        alignSelf: "center",
+        maxHeight: "90vh",
+        marginTop: "10px",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        }}>
+      </div>
+    )
+    };
   return (
-    <div className={classes.root}>
-      <Board 
-		data={file} 
-		onCardMoveAcrossLanes={handleCardMove}
-		style={{backgroundColor: 'rgba(252, 252, 252, 0.03)'}}
-    />
+    <div className={classes.divBody}>
+      <h1 style={{ margin: "0" }}><b>Kanban</b></h1>
+      <div>
+        <div className={classes.root}>
+          <Board
+            data={file}
+            onCardMoveAcrossLanes={handleCardMove}
+            style={{ backgroundColor: '#F4F4F4' }}
+            components={{
+              LaneHeader: CustomLaneHeader,
+            }}
+          />
+        </div>
+      </div>
     </div>
   );
 };
