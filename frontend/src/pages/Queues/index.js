@@ -39,6 +39,13 @@ const useStyles = makeStyles((theme) => ({
     height: `calc(100% - 48px)`,
     backgroundColor: "#FFFFFF",
   },
+  Botoes: {
+    borderRadius: "40px",
+    padding: "10px 32px",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--logo-bg, #0C2C54)",
+  },
   headerContainer: {
     display: "flex",
     alignItems: "center",
@@ -187,6 +194,7 @@ const Queues = () => {
         </div>
         <Button
           variant="contained"
+          className={classes.Botoes}
           color="primary"
           onClick={handleOpenQueueModal}
         >

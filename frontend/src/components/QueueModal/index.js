@@ -212,7 +212,7 @@ const QueueModal = ({ open, onClose, queueId }) => {
         onClose={handleClose}
         scroll="paper"
       >
-        <DialogTitle >
+        <DialogTitle style={{ backgroundColor: "#0c2c4c", color: "white", textAlign: "center" }}>
           {queueId
             ? `${i18n.t("queueModal.title.edit")}`
             : `${i18n.t("queueModal.title.add")}`}
@@ -225,7 +225,7 @@ const QueueModal = ({ open, onClose, queueId }) => {
           aria-label="disabled tabs example"
         >
           <Tab label="Dados da Fila" />
-          {schedulesEnabled && <Tab label="Horários de Atendimento" />}
+          {schedulesEnabled && <Tab label="Horários de Atendimento"/>}
         </Tabs>
         {tab === 0 && (
           <Paper>
