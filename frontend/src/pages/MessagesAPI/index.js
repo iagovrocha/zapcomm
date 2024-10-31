@@ -13,22 +13,28 @@ import axios from "axios";
 import usePlans from "../../hooks/usePlans";
 
 const useStyles = makeStyles((theme) => ({
+  divBody: {
+    flex: 1,
+    padding: theme.spacing(1),
+    height: `calc(100% - 48px)`,
+    backgroundColor: "#FFFFFF",
+  },
   mainPaper: {
     flex: 1,
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     paddingBottom: 100
   },
   mainHeader: {
     marginTop: theme.spacing(1),
   },
-  elementMargin: {
-    padding: theme.spacing(2),
-  },
   formContainer: {
     maxWidth: 500,
   },
   textRight: {
-    textAlign: "right"
+    textAlign: "right",
+  },
+  botoes: {
+    borderRadius: "40px",
   }
 }));
 
@@ -163,7 +169,7 @@ const MessagesAPI = () => {
                   type="submit"
                   color="primary"
                   variant="contained"
-                  className={classes.btnWrapper}
+                  className={classes.botoes}
                 >
                   {isSubmitting ? (
                     <CircularProgress
@@ -233,7 +239,7 @@ const MessagesAPI = () => {
                   type="submit"
                   color="primary"
                   variant="contained"
-                  className={classes.btnWrapper}
+                  className={classes.botoes}
                 >
                   {isSubmitting ? (
                     <CircularProgress
@@ -251,90 +257,100 @@ const MessagesAPI = () => {
   }
 
   return (
-    <Paper
-      className={classes.mainPaper}
-      style={{marginLeft: "5px"}}
-      // className={classes.elementMargin}
-      variant="outlined"
-    >
-      <Typography variant="h5">
-        Documentação para envio de mensagens
-      </Typography>
-      <Typography variant="h6" color="primary" className={classes.elementMargin}>
-        Métodos de Envio
-      </Typography>
-      <Typography component="div">
-        <ol>
-          <li>Mensagens de Texto</li>
-          <li>Mensagens de Media</li>
-        </ol>
-      </Typography>
-      <Typography variant="h6" color="primary" className={classes.elementMargin}>
-        Instruções
-      </Typography>
-      <Typography className={classes.elementMargin} component="div">
-        <b>Observações importantes</b><br />
-        <ul>
-          <li>Antes de enviar mensagens, é necessário o cadastro do token vinculado à conexão que enviará as mensagens. <br />Para realizar o cadastro acesse o menu "Conexões", clique no botão editar da conexão e insira o token no devido campo.</li>
-          <li>
-            O número para envio não deve ter mascara ou caracteres especiais e deve ser composto por:
-            <ul>
-              <li>Código do país</li>
-              <li>DDD</li>
-              <li>Número</li>
-            </ul>
-          </li>
-        </ul>
-      </Typography>
-      <Typography variant="h6" color="primary" className={classes.elementMargin}>
-        1. Mensagens de Texto
-      </Typography>
-      <Grid container>
-        <Grid item xs={12} sm={6}>
-          <Typography className={classes.elementMargin} component="div">
-            <p>Seguem abaixo a lista de informações necessárias para envio das mensagens de texto:</p>
-            <b>Endpoint: </b> {getEndpoint()} <br />
-            <b>Método: </b> POST <br />
-            <b>Headers: </b> Authorization (Bearer token) e Content-Type (application/json) <br />
-            <b>Body: </b> {"{ \"number\": \"5599999999999\", \"body\": \"Sua mensagem\" }"}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Typography className={classes.elementMargin}>
-            <b>Teste de Envio</b>
-          </Typography>
-          {renderFormMessageText()}
-        </Grid>
-      </Grid>
-      <Typography variant="h6" color="primary" className={classes.elementMargin}>
-        2. Mensagens de Media
-      </Typography>
-      <Grid container>
-        <Grid item xs={12} sm={6}>
-          <Typography className={classes.elementMargin} component="div">
-            <p>Seguem abaixo a lista de informações necessárias para envio das mensagens de texto:</p>
-            <b>Endpoint: </b> {getEndpoint()} <br />
-            <b>Método: </b> POST <br />
-            <b>Headers: </b> Authorization (Bearer token) e Content-Type (multipart/form-data) <br />
-            <b>FormData: </b> <br />
-            <ul>
-              <li>
-                <b>number: </b> 5599999999999
-              </li>
-              <li>
-                <b>medias: </b> arquivo
-              </li>
-            </ul>
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Typography className={classes.elementMargin}>
-            <b>Teste de Envio</b>
-          </Typography>
-          {renderFormMessageMedia()}
-        </Grid>
-      </Grid>
-    </Paper>
+    <div className={classes.divBody}>
+      {/*<Paper
+        className={classes.mainPaper}
+        style={{marginLeft: "5px"}}
+        // className={classes.elementMargin}
+        variant="outlined"
+      >*/}
+        <div className={classes.cabecalho}>
+            <h1 style={{ margin: '0' }}>API</h1>
+            <Typography component="subtitle1" variant="body1" style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}>
+              {'Documentação para o envio de mensagens'}
+            </Typography>
+            <div
+              style={{width: '60%', height: '1px',backgroundColor: '#BDBDBD', margin: '16px 0'}}>
+            </div>
+        </div>
+        <Paper className={classes.mainPaper}>
+            <Typography variant="h6" color="primary" className={classes.elementMargin}>
+              Métodos de Envio
+            </Typography>
+            <Typography component="div">
+              <ol>
+                <li>Mensagens de Texto</li>
+                <li>Mensagens de Media</li>
+              </ol>
+            </Typography>
+            <Typography variant="h6" color="primary" className={classes.elementMargin}>
+              Instruções
+            </Typography>
+            <Typography className={classes.elementMargin} component="div">
+              Observações importantes<br />
+              <ul>
+                <li>Antes de enviar mensagens, é necessário o cadastro do token vinculado à conexão que enviará as mensagens. <br />Para realizar o cadastro acesse o menu "Conexões", clique no botão editar da conexão e insira o token no devido campo.</li>
+                <li>
+                  O número para envio não deve ter mascara ou caracteres especiais e deve ser composto por:
+                  <ul>
+                    <li>Código do país</li>
+                    <li>DDD</li>
+                    <li>Número</li>
+                  </ul>
+                </li>
+              </ul>
+            </Typography>
+            <Typography variant="h6" color="primary" className={classes.elementMargin}>
+              1. Mensagens de Texto
+            </Typography>
+            <Grid container>
+              <Grid item xs={12} sm={6}>
+                <Typography className={classes.elementMargin} component="div">
+                  <p>Seguem abaixo a lista de informações necessárias para envio das mensagens de texto:</p>
+                  <b>Endpoint: </b> {getEndpoint()} <br />
+                  <b>Método: </b> POST <br />
+                  <b>Headers: </b> Authorization (Bearer token) e Content-Type (application/json) <br />
+                  <b>Body: </b> {"{ \"number\": \"5599999999999\", \"body\": \"Sua mensagem\" }"}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Typography variant="h6" color="primary" className={classes.elementMargin}>
+                  <b>Teste de Envio</b>
+                </Typography>
+                {renderFormMessageText()}
+              </Grid>
+            </Grid>
+            <Typography variant="h6" color="primary" className={classes.elementMargin}>
+              2. Mensagens de Media
+            </Typography>
+            <Grid container>
+              <Grid item xs={12} sm={6}>
+                <Typography className={classes.elementMargin} component="div">
+                  <p>Seguem abaixo a lista de informações necessárias para envio das mensagens de texto:</p>
+                  <b>Endpoint: </b> {getEndpoint()} <br />
+                  <b>Método: </b> POST <br />
+                  <b>Headers: </b> Authorization (Bearer token) e Content-Type (multipart/form-data) <br />
+                  <b>FormData: </b> <br />
+                  <ul>
+                    <li>
+                      <b>number: </b> 5599999999999
+                    </li>
+                    <li>
+                      <b>medias: </b> arquivo
+                    </li>
+                  </ul>
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Typography variant="h6" color="primary" className={classes.elementMargin}>
+                  Teste de Envio
+                </Typography>
+                {renderFormMessageMedia()}
+              </Grid>
+            </Grid>
+        </Paper>
+      {/*<Paper>*/}
+    </div>
   );
 };
 
