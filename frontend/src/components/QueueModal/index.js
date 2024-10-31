@@ -212,7 +212,7 @@ const QueueModal = ({ open, onClose, queueId }) => {
         onClose={handleClose}
         scroll="paper"
       >
-        <DialogTitle>
+        <DialogTitle >
           {queueId
             ? `${i18n.t("queueModal.title.edit")}`
             : `${i18n.t("queueModal.title.add")}`}

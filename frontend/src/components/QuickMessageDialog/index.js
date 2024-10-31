@@ -62,10 +62,8 @@ const useStyles = makeStyles((theme) => ({
     dialogTitle: {
         backgroundColor: "#0C2C54",    // Fundo azul-escuro no título
         color: "#FFF", // Cor do texto branca
-        textAlign: "center", // Centralizar o título
         borderTopLeftRadius: "0px", // Bordas arredondadas
         borderTopRightRadius: "0px",
-        position: "relative", // Adicionado para o posicionamento do botão
     },
     textField: {
         width: "100%",
@@ -79,12 +77,12 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: theme.spacing(2),
     },
     saveButton: {
-        backgroundColor: "#28C76F", // Cor verde para o botão
-        color: "#FFF",
+        backgroundColor: "#34d3a3", // Cor verde para o botão
+        color: "#0c2c54",
         borderRadius: "20px", // Botão com bordas arredondadas
         padding: theme.spacing(1, 4),
         "&:hover": {
-            backgroundColor: "#28A65F",
+            backgroundColor: "#34d3a3",
         },
     },
 }));
@@ -216,20 +214,16 @@ const QuickMessageDialog = ({ open, onClose, quickemessageId, reload }) => {
             >
                 {i18n.t("quickMessages.confirmationModal.deleteMessage")}
             </ConfirmationModal>
-            <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth scroll="paper">
+            <Dialog open={open} onClose={handleClose} maxWidth="xs">
                 <DialogTitle className={classes.dialogTitle}>
-                    {quickemessageId
-                        ? `${i18n.t("quickMessages.dialog.edit")}`
-                        : `${i18n.t("Adicionar Resposta ao Chamado")}`}
-                    <IconButton
-                        edge="end"
-                        color="inherit"
-                        onClick={handleClose}
-                        aria-label="close"
-                        style={{ position: "absolute", right: 8, top: 8 }} // Posição do botão
-                    >
-                        <CloseIcon />
-                    </IconButton>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span>
+                        {quickemessageId
+                            ? `${i18n.t("quickMessages.dialog.edit")}`
+                            : `${i18n.t("Adicionar Resposta ao Chamado")}`}
+                        </span>
+                        <IconButton onClick={handleClose} style={{ color: "white" }}>x</IconButton>
+                    </div>  
                 </DialogTitle>
                 <div style={{ display: "none" }}>
                     <input
@@ -310,7 +304,7 @@ const QuickMessageDialog = ({ open, onClose, quickemessageId, reload }) => {
                                     {i18n.t("Cancelar")}
                                 </Button> */}
                                 <div className={classes.btnWrapper}>
-                                    <ButtonWithSpinner
+                                    <ButtonWithSpinner 
                                         type="submit"
                                         disabled={isSubmitting}
                                         className={classes.saveButton}
