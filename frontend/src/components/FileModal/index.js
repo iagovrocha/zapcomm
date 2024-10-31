@@ -178,7 +178,7 @@ const FilesModal = ({ open, onClose, fileListId, reload }) => {
                 maxWidth="md"
                 fullWidth
                 scroll="paper">
-                <DialogTitle id="form-dialog-title">
+                <DialogTitle id="form-dialog-title" style={{color: "#fff", backgroundColor: "#0C2C54"}}>
                     {(fileListId ? `${i18n.t("fileModal.title.edit")}` : `${i18n.t("fileModal.title.add")}`)}
                 </DialogTitle>
                 <Formik

@@ -115,8 +115,8 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: 30,
 	},
   AgrupamentoDoPesquisarENovo: {
-    paddingTop: "10px",
-    paddingBottom: "12px",
+    paddingTop: "7px",
+    paddingBottom: "8px",
     display: "inline-flex",
     width: "95%"
   },
@@ -340,6 +340,8 @@ const Tags = () => {
               </TableCell>
             </TableRow>
           </TableHead>
+          {tags.length > 0 ? (
+              <>
           <TableBody>
             <>
               {tags.map((tag) => (
@@ -383,6 +385,16 @@ const Tags = () => {
               {loading && <TableRowSkeleton columns={4} />}
             </>
           </TableBody>
+          </>
+            ) : (
+              <TableBody>
+                <TableRow>
+                  <TableCell colSpan="4" align="center">
+                    Nenhuma tag a ser carregada no momento
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+              )}
         </Table>
       </Paper>
     {/* </MainContainer> */}
