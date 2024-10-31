@@ -85,6 +85,22 @@ const useStyles = makeStyles((theme) => ({
 		border: "none",
 		borderRadius: 30,
 	},
+  BotaoAdicionar: {
+    height: "48px !important",
+    borderRadius: "40px",
+    padding: "10px 32px",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--logo-bg, #001C27)",
+    margin: 5,
+  },
+  SubEBtn: {
+    boxSizing: "border-box",
+    width: "100%",
+    display: "inline-flex",
+    justifyContent: "space-between",
+    // paddingBottom: 10,
+  }, 
 }));
 
 export function ChatModal({ open, chat, type, handleClose, handleLoadNewChat }) {
@@ -372,18 +388,6 @@ function Chat(props) {
     return (
       <Grid className={classes.gridContainer} container>
         <Grid className={classes.gridItem} md={8} item>
-          <div className={classes.btnContainer}>
-            <Button
-              onClick={() => {
-                setDialogType("new");
-                setShowDialog(true);
-              }}
-              color="primary"
-              variant="contained"
-            >
-              + Novo
-            </Button>
-          </div>
           <ChatList
             chats={chats}
             pageInfo={chatsPageInfo}
@@ -478,6 +482,8 @@ function Chat(props) {
 
   return (
     <div className={classes.divBody}>
+      <div className={classes.SubEBtn}>
+      <div>
       <h1 style={{ margin: "0" }}><b>{("Chat Interno")}</b></h1>
       <Typography
        component="subtitle1"
@@ -486,6 +492,19 @@ function Chat(props) {
       >
       {"Chat interno para colaboradores."}
       </Typography>
+      </div>
+      <Button
+        onClick={() => {
+          setDialogType("new");
+          setShowDialog(true);
+        }}
+        className={classes.BotaoAdicionar}
+        color="primary"
+        variant="contained"
+      >
+        + Novo
+      </Button>
+      </div>
       <ChatModal
         type={dialogType}
         open={showDialog}

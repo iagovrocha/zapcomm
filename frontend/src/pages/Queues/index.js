@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer, useState, useContext } from "react";
-
 import {
   Button,
   IconButton,
@@ -12,12 +11,8 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
-
 import MainContainer from "../../components/MainContainer";
-import MainHeader from "../../components/MainHeader";
-import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
 import TableRowSkeleton from "../../components/TableRowSkeleton";
-import Title from "../../components/Title";
 import { i18n } from "../../translate/i18n";
 import toastError from "../../errors/toastError";
 import api from "../../services/api";
@@ -30,7 +25,6 @@ import { SocketContext } from "../../context/Socket/SocketContext";
 const useStyles = makeStyles((theme) => ({
   mainPaper: {
     flex: 1,
-    padding: theme.spacing(1),
     overflowY: "scroll",
     ...theme.scrollbarStyles,
   },
@@ -38,6 +32,32 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+  },
+  divBody: {
+    flex: 1,
+    padding: theme.spacing(1),
+    height: `calc(100% - 48px)`,
+    backgroundColor: "#FFFFFF",
+  },
+  Botoes: {
+    borderRadius: "40px",
+    padding: "10px 32px",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--logo-bg, #0C2C54)",
+  },
+  headerContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: theme.spacing(1), // Ajuste de espaçamento
+  },
+  descriptionContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    // marginTop: '8px', // Ajuste de espaçamento
   },
 }));
 
@@ -102,7 +122,6 @@ const Queues = () => {
       try {
         const { data } = await api.get("/queue");
         dispatch({ type: "LOAD_QUEUES", payload: data });
-
         setLoading(false);
       } catch (err) {
         toastError(err);
@@ -161,13 +180,31 @@ const Queues = () => {
   };
 
   return (
-    <MainContainer>
+    <div className={classes.divBody}>
+      <div className={classes.descriptionContainer}>
+        <div>
+        <h1 style={{ margin: "0" }}><b>{i18n.t("Filas & Chatbot")}</b></h1>
+        <Typography
+          component="subtitle1"
+          variant="body1"
+          style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}
+        >
+          {"Adicione, edite e exclua filas para separar os chamados."}
+        </Typography>
+        </div>
+        <Button
+          variant="contained"
+          className={classes.Botoes}
+          color="primary"
+          onClick={handleOpenQueueModal}
+        >
+          {i18n.t("queues.buttons.add")}
+        </Button>
+      </div>
       <ConfirmationModal
         title={
           selectedQueue &&
-          `${i18n.t("queues.confirmationModal.deleteTitle")} ${
-            selectedQueue.name
-          }?`
+          `${i18n.t("queues.confirmationModal.deleteTitle")} ${selectedQueue.name}?`
         }
         open={confirmModalOpen}
         onClose={handleCloseConfirmationModal}
@@ -180,55 +217,32 @@ const Queues = () => {
         onClose={handleCloseQueueModal}
         queueId={selectedQueue?.id}
       />
-      <MainHeader>
-        <Title>{i18n.t("queues.title")}</Title>
-        <MainHeaderButtonsWrapper>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleOpenQueueModal}
-          >
-            {i18n.t("queues.buttons.add")}
-          </Button>
-        </MainHeaderButtonsWrapper>
-      </MainHeader>
-      <Paper className={classes.mainPaper} variant="outlined">
+      <Paper className={classes.mainPaper}>
         <Table size="small">
           <TableHead>
             <TableRow>
-			   <TableCell align="center">
-                {i18n.t("queues.table.id")}
-              </TableCell>
-              <TableCell align="center">
-                {i18n.t("queues.table.name")}
-              </TableCell>
-              <TableCell align="center">
-                {i18n.t("queues.table.color")}
-              </TableCell>
-              <TableCell align="center">
-                {i18n.t("queues.table.orderQueue")}
-              </TableCell>
-              <TableCell align="center">
-                {i18n.t("queues.table.greeting")}
-              </TableCell>
-              <TableCell align="center">
-                {i18n.t("queues.table.actions")}
-              </TableCell>
+              <TableCell align="center">{i18n.t("queues.table.id")}</TableCell>
+              <TableCell align="center">{i18n.t("queues.table.name")}</TableCell>
+              <TableCell align="center">{i18n.t("queues.table.color")}</TableCell>
+              <TableCell align="center">{i18n.t("queues.table.orderQueue")}</TableCell>
+              <TableCell align="center">{i18n.t("queues.table.greeting")}</TableCell>
+              <TableCell align="center">{i18n.t("queues.table.actions")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <>
               {queues.map((queue) => (
                 <TableRow key={queue.id}>
-				<TableCell align="center">{queue.id}</TableCell>
+                  <TableCell align="center">{queue.id}</TableCell>
                   <TableCell align="center">{queue.name}</TableCell>
                   <TableCell align="center">
                     <div className={classes.customTableCell}>
                       <span
                         style={{
                           backgroundColor: queue.color,
-                          width: 60,
+                          width: 20,
                           height: 20,
+                          borderRadius: '50%',
                           alignSelf: "center",
                         }}
                       />
@@ -259,6 +273,12 @@ const Queues = () => {
                   <TableCell align="center">
                     <IconButton
                       size="small"
+                      style={{
+                        color: "#0C2C54",
+                        "&:hover": {
+                          color: "#3c5676",
+                        },
+                      }}
                       onClick={() => handleEditQueue(queue)}
                     >
                       <Edit />
@@ -266,6 +286,12 @@ const Queues = () => {
 
                     <IconButton
                       size="small"
+                      style={{
+                        color: "#0C2C54",
+                        "&:hover": {
+                          color: "#3c5676",
+                        },
+                      }}
                       onClick={() => {
                         setSelectedQueue(queue);
                         setConfirmModalOpen(true);
@@ -281,7 +307,7 @@ const Queues = () => {
           </TableBody>
         </Table>
       </Paper>
-    </MainContainer>
+    </div>
   );
 };
 
