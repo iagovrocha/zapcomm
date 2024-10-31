@@ -67,7 +67,7 @@ const useStyles = makeStyles(theme => ({
 		flex: 1,
 		display: "flex",
 		borderRadius: 40,
-		padding: 8,
+		padding: 4,
 		marginRight: theme.spacing(1),
 	},
 
@@ -82,8 +82,8 @@ const useStyles = makeStyles(theme => ({
 		flex: 1,
 		border: "none",
 		borderRadius: 30,
-		padding: 8, // Para um pouco de espaço interno
-        outline: "none", // Remove o contorno padrão
+		padding: 4, // Para um pouco de espaço interno
+        
 	},
 
 	divBody: {
@@ -106,6 +106,14 @@ const useStyles = makeStyles(theme => ({
 	buttonProgress: {
 		color: green[500],
 	},
+	BotaoAdicionar: {
+		borderRadius: "40px",
+		padding: "10px 32px",
+		justifyContent: "center",
+		alignItems: "center",
+		border: "1px solid var(--logo-bg, #001C27)"
+	  },
+
 }));
 
 const CustomToolTip = ({ title, content, children }) => {
@@ -379,7 +387,10 @@ const Connections = () => {
               
             ></InputBase>
           </div>
-				
+		  <div
+          style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+          >
+          </div>
 				<MainHeaderButtonsWrapper>
 					<Can
 						role={user.profile}
@@ -390,6 +401,8 @@ const Connections = () => {
 							<Button
 								variant="contained"
 								color="primary"
+								//adicionei a classe pro botao ficar padronizado 
+								className={classes.BotaoAdicionar}
 								onClick={handleOpenWhatsAppModal}
 							>
 								{i18n.t("connections.buttons.add")}
