@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 		backgroundColor: "#FFFFFF",
 		padding: theme.spacing(1), //Aqui ele ajusta espaço na tela de ticket
 		height: `calc(100% - 48px)`,
-		overflowY: "hidden",
+		overflowY: "auto",
 	},
 
 	chatPapper: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 		display: "flex",
 		height: "100%",
 		flexDirection: "column",
-		overflowY: "hidden",
+		overflowY: "auto",
 	},
 	messagesWrapper: {
 		display: "flex",
