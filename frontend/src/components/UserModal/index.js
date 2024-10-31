@@ -41,6 +41,8 @@ const useStyles = makeStyles(theme => ({
 
 	btnWrapper: {
 		position: "relative",
+		color: "#0c2c54",
+		backgroundColor: "#34d3a3"
 	},
 
 	buttonProgress: {
@@ -54,6 +56,11 @@ const useStyles = makeStyles(theme => ({
 	formControl: {
 		margin: theme.spacing(1),
 		minWidth: 120,
+	},
+
+	header: {
+		backgroundColor: "#0c2c54",
+		color: "white",
 	},
 }));
 
@@ -132,7 +139,7 @@ const UserModal = ({ open, onClose, userId }) => {
 				fullWidth
 				scroll="paper"
 			>
-				<DialogTitle id="form-dialog-title">
+				<DialogTitle className={classes.header} id="form-dialog-title">
 					{userId
 						? `${i18n.t("userModal.title.edit")}`
 						: `${i18n.t("userModal.title.add")}`}

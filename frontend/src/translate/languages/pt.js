@@ -773,6 +773,7 @@ const messages = {
       },
       users: {
         title: "Usuários",
+        subtitulo: "Adicione, edite e exclua os usuários.",
         table: {
 		  id: "ID",
           name: "Nome",
