@@ -80,7 +80,6 @@ const reducer = (state, action) => {
 const useStyles = makeStyles((theme) => ({
   mainPaper: {
     flex: 1,
-    padding: theme.spacing(1),
     overflowY: "scroll",
     ...theme.scrollbarStyles,
   },
@@ -274,7 +273,7 @@ const Users = () => {
          +   {i18n.t("users.buttons.add")}
         </Button>
       </div>
-    <MainContainer>
+    {/* <MainContainer> */}
       <ConfirmationModal
         title={
           deletingUser &&
@@ -381,7 +380,7 @@ const Users = () => {
           </TableBody>
         </Table>
       </Paper>
-    </MainContainer>
+    {/* </MainContainer> */}
     </div>
   );
 };
