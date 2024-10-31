@@ -15,8 +15,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 
 	cancelar: {
-		backgroundColor: "red",
-		color: "white",
+		color: "#F50057",
 	},
 
 	ok: {

@@ -358,7 +358,7 @@ const Users = () => {
                     <IconButton
                       size="small"
                       onClick={() => handleEditUser(user)}
-                      
+                      className={classes.acoes}
                     >
                       <EditIcon />
                     </IconButton>
