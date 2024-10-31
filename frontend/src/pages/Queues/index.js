@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
-    marginTop: '8px', // Ajuste de espaçamento
+    // marginTop: '8px', // Ajuste de espaçamento
   },
 }));
 
@@ -174,10 +174,9 @@ const Queues = () => {
 
   return (
     <div className={classes.divBody}>
-      <div className={classes.headerContainer}>
-        <h1 style={{ margin: "0" }}><b>{i18n.t("Filas & Chatbot")}</b></h1>
-      </div>
       <div className={classes.descriptionContainer}>
+        <div>
+        <h1 style={{ margin: "0" }}><b>{i18n.t("Filas & Chatbot")}</b></h1>
         <Typography
           component="subtitle1"
           variant="body1"
@@ -185,6 +184,7 @@ const Queues = () => {
         >
           {"Adicione, edite e exclua filas para separar os chamados."}
         </Typography>
+        </div>
         <Button
           variant="contained"
           color="primary"
