@@ -183,6 +183,12 @@ const Connections = () => {
 		setSearchParam(event.target.value.toLowerCase());
 	  };
 
+	const filteredWhatsApps = whatsApps ? (searchParam
+	? whatsApps.filter(whatsApp =>
+		whatsApp.name.toLowerCase().includes(searchParam)
+	)
+	: whatsApps) : [];
+
 	const handleOpenWhatsAppModal = () => {
 		setSelectedWhatsApp(null);
 		setWhatsAppModalOpen(true);
@@ -449,62 +455,50 @@ const Connections = () => {
 					</TableHead>
 					<TableBody>
 						{loading ? (
-							<TableRowSkeleton />
-						) : (
-							<>
-								{whatsApps?.length > 0 &&
-									whatsApps.map(whatsApp => (
-										<TableRow key={whatsApp.id}>
-											<TableCell align="center">{whatsApp.name}</TableCell>
-											<TableCell align="center">
-												{renderStatusToolTips(whatsApp)}
-											</TableCell>
-											<Can
-												role={user.profile}
-												perform="connections-page:actionButtons"
-												yes={() => (
-													<TableCell align="center">
-														{renderActionButtons(whatsApp)}
-													</TableCell>
-												)}
-											/>
-											<TableCell align="center">
-												{format(parseISO(whatsApp.updatedAt), "dd/MM/yy HH:mm")}
-											</TableCell>
-											<TableCell align="center">
-												{whatsApp.isDefault && (
-													<div className={classes.customTableCell}>
-														<CheckCircle style={{ color: green[500] }} />
-													</div>
-												)}
-											</TableCell>
-											<Can
-												role={user.profile}
-												perform="connections-page:editOrDeleteConnection"
-												yes={() => (
-													<TableCell align="center">
-														<IconButton
-															size="small"
-															onClick={() => handleEditWhatsApp(whatsApp)}
-														>
-															<Edit />
-														</IconButton>
-
-														<IconButton
-															size="small"
-															onClick={e => {
-																handleOpenConfirmationModal("delete", whatsApp.id);
-															}}
-														>
-															<DeleteOutline />
-														</IconButton>
-													</TableCell>
-												)}
-											/>
-										</TableRow>
-									))}
-							</>
-						)}
+						 <TableRow><TableCell colSpan={5} align="center"><CircularProgress /></TableCell></TableRow>
+                        ) : (
+                            <>
+                                {filteredWhatsApps.length > 0 ? (
+                                    filteredWhatsApps.map(whatsApp => (
+                                        <TableRow key={whatsApp.id}>
+                                            <TableCell align="center">{whatsApp.name}</TableCell>
+                                            <TableCell align="center">{renderStatusToolTips(whatsApp)}</TableCell>
+                                            <Can
+                                                role={user.profile}
+                                                perform="connections-page:actionButtons"
+                                                yes={() => (
+                                                    <TableCell align="center">
+                                                        {renderActionButtons(whatsApp)}
+                                                    </TableCell>
+                                                )}
+                                            />
+                                            <TableCell align="center">
+                                                {format(parseISO(whatsApp.updatedAt), "dd/MM/yy HH:mm")}
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                {whatsApp.isDefault && <CheckCircle style={{ color: green[500] }} />}
+                                            </TableCell>
+                                            <Can
+                                                role={user.profile}
+                                                perform="connections-page:editOrDeleteConnection"
+                                                yes={() => (
+                                                    <TableCell align="center">
+                                                        <IconButton size="small" onClick={() => handleEditWhatsApp(whatsApp)}><Edit /></IconButton>
+                                                        <IconButton size="small" onClick={() => handleOpenConfirmationModal("delete", whatsApp.id)}><DeleteOutline /></IconButton>
+                                                    </TableCell>
+                                                )}
+                                            />
+                                        </TableRow>
+                                    ))
+                                ) : (
+                                    <TableRow>
+                                        <TableCell colSpan={6} align="center">
+                                            <Typography variant="body1">Nenhuma conexão encontrada</Typography>
+                                        </TableCell>
+                                    </TableRow>
+                                )}
+                            </>
+                        )}
 					</TableBody>
 				</Table>
 			</Paper>
