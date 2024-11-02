@@ -36,7 +36,20 @@ const useStyles = makeStyles(theme => ({
 
     btnWrapper: {
         position: "relative",
+        backgroundColor: "#34d3a3", // Cor verde para o botão
+        color: "#0c2c54",
+        borderRadius: "20px", // Botão com bordas arredondadas
+        padding: theme.spacing(1, 4),
+        "&:hover": {
+            backgroundColor: "#34d3a3",
+        },
     },
+
+    dialogActions: {
+        justifyContent: "center", // Centralizar o botão
+        paddingBottom: theme.spacing(2),
+    },
+
 
     buttonProgress: {
         color: green[500],
@@ -149,11 +162,36 @@ const PromptModal = ({ open, onClose, promptId }) => {
                 scroll="paper"
                 fullWidth
             >
-                <DialogTitle id="form-dialog-title" style={{color: "#fff", backgroundColor: "#0C2C54"}}>
-                    {promptId
-                        ? `${i18n.t("promptModal.title.edit")}`
-                        : `${i18n.t("promptModal.title.add")}`}
+                <DialogTitle
+                    id="form-dialog-title"
+                    style={{
+                        color: "#fff",
+                        backgroundColor: "#0C2C54",
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        position: 'relative'
+                    }}
+                >
+                    <span>
+                        {promptId
+                            ? `${i18n.t("promptModal.title.edit")}`
+                            : `${i18n.t("promptModal.title.add")}`}
+                    </span>
+                    <IconButton
+                        onClick={handleClose}
+                        style={{
+                            color: "white",
+                            position: "absolute",
+                            right: "10px",
+                            top: '50%',
+                            transform: 'translateY(-50%)'
+                        }}
+                    >
+                        x
+                    </IconButton>
                 </DialogTitle>
+
                 <Formik
                     initialValues={prompt}
                     enableReinitialize={true}
@@ -214,7 +252,7 @@ const PromptModal = ({ open, onClose, promptId }) => {
                                 <QueueSelectSingle />
                                 <div className={classes.multFieldLine}>
                                     <FormControl fullWidth margin="dense" variant="outlined">
-                                    <InputLabel>{i18n.t("promptModal.form.voice")}</InputLabel>
+                                        <InputLabel>{i18n.t("promptModal.form.voice")}</InputLabel>
                                         <Select
                                             id="type-select"
                                             labelWidth={60}
@@ -294,7 +332,7 @@ const PromptModal = ({ open, onClose, promptId }) => {
                                         fullWidth
                                     />
                                 </div>
-                                
+
                                 <div className={classes.multFieldLine}>
                                     <Field
                                         as={TextField}
@@ -328,15 +366,17 @@ const PromptModal = ({ open, onClose, promptId }) => {
                                     />
                                 </div>
                             </DialogContent>
-                            <DialogActions>
-                                <Button
+                            <DialogActions className={classes.dialogActions}>
+
+                                {/* <Button
                                     onClick={handleClose}
                                     color="secondary"
                                     disabled={isSubmitting}
                                     variant="outlined"
                                 >
                                     {i18n.t("promptModal.buttons.cancel")}
-                                </Button>
+                                </Button> */}
+
                                 <Button
                                     type="submit"
                                     color="primary"
@@ -346,7 +386,7 @@ const PromptModal = ({ open, onClose, promptId }) => {
                                 >
                                     {promptId
                                         ? `${i18n.t("promptModal.buttons.okEdit")}`
-                                        : `${i18n.t("promptModal.buttons.okAdd")}`}
+                                        : `${i18n.t("Salvar")}`}
                                     {isSubmitting && (
                                         <CircularProgress
                                             size={24}
