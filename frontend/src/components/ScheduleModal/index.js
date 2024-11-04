@@ -43,8 +43,26 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	btnWrapper: {
-		position: "relative",
-	},
+        position: "relative",
+        backgroundColor: "#34d3a3",
+        color: "#0c2c54",
+        borderRadius: "20px", 
+        padding: theme.spacing(1, 4),
+        "&:hover": {
+            backgroundColor: "#34d3a3",
+        },
+    },
+
+	btnWrapper2: {
+        position: "relative",
+        borderRadius: "20px", 
+        padding: theme.spacing(1, 2),
+    },
+
+    dialogActions: {
+        justifyContent: "center", 
+        paddingBottom: theme.spacing(2),
+    },
 
 	buttonProgress: {
 		color: green[500],
@@ -233,8 +251,32 @@ const ScheduleModal = ({ open, onClose, scheduleId, contactId, cleanContact, rel
 				fullWidth
 				scroll="paper"
 			>
-				<DialogTitle id="form-dialog-title" style={{color: "#fff", backgroundColor: "#0C2C54"}}>
+				<DialogTitle
+                    id="form-dialog-title"
+                    style={{
+                        color: "#fff",
+                        backgroundColor: "#0C2C54",
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        position: 'relative'
+                    }}
+                >
+                    <span>
 					{schedule.status === 'ERRO' ? 'Erro de Envio' : `Mensagem ${capitalize(schedule.status)}`}
+                    </span>
+                    <IconButton
+                        onClick={handleClose}
+                        style={{
+                            color: "white",
+                            position: "absolute",
+                            right: "10px",
+                            top: '50%',
+                            transform: 'translateY(-50%)'
+                        }}
+                    >
+                        x
+                    </IconButton>	
 				</DialogTitle>
 				<div style={{ display: "none" }}>
 					<input
@@ -332,25 +374,26 @@ const ScheduleModal = ({ open, onClose, scheduleId, contactId, cleanContact, rel
 									</Grid>
 								)}
 							</DialogContent>
-							<DialogActions>
+							<DialogActions className={classes.dialogActions}>
 								{!attachment && !schedule.mediaPath && (
 									<Button
 										color="primary"
 										onClick={() => attachmentFile.current.click()}
 										disabled={isSubmitting}
 										variant="outlined"
+										className={classes.btnWrapper2}
 									>
 										{i18n.t("quickMessages.buttons.attach")}
 									</Button>
 								)}
-								<Button
+								{/* <Button
 									onClick={handleClose}
 									color="secondary"
 									disabled={isSubmitting}
 									variant="outlined"
 								>
 									{i18n.t("scheduleModal.buttons.cancel")}
-								</Button>
+								</Button> */}
 								{(schedule.sentAt === null || schedule.sentAt === "") && (
 									<Button
 										type="submit"
