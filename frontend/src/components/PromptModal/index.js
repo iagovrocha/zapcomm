@@ -386,7 +386,7 @@ const PromptModal = ({ open, onClose, promptId }) => {
                                 >
                                     {promptId
                                         ? `${i18n.t("promptModal.buttons.okEdit")}`
-                                        : `${i18n.t("Salvar")}`}
+                                        : `${i18n.t("promptModal.buttons.okAdd")}`}
                                     {isSubmitting && (
                                         <CircularProgress
                                             size={24}
