@@ -212,10 +212,14 @@ const QueueModal = ({ open, onClose, queueId }) => {
         onClose={handleClose}
         scroll="paper"
       >
-        <DialogTitle style={{ backgroundColor: "#0c2c4c", color: "white", textAlign: "center" }}>
-          {queueId
+        <DialogTitle style={{ backgroundColor: "#0c2c4c", color: "white"}}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span> {queueId
             ? `${i18n.t("queueModal.title.edit")}`
             : `${i18n.t("queueModal.title.add")}`}
+            </span>
+            <IconButton onClick={handleClose} style={{ color: "white" }}>x</IconButton>
+          </div>
         </DialogTitle>
         <Tabs
           value={tab}
@@ -422,19 +426,12 @@ const QueueModal = ({ open, onClose, queueId }) => {
                   </DialogContent>
                   <DialogActions>
                     <Button
-                      onClick={handleClose}
-                      color="secondary"
-                      disabled={isSubmitting}
-                      variant="outlined"
-                    >
-                      {i18n.t("queueModal.buttons.cancel")}
-                    </Button>
-                    <Button
                       type="submit"
                       color="primary"
                       disabled={isSubmitting}
                       variant="contained"
                       className={classes.btnWrapper}
+                      style={{ display: 'block', margin: 'auto' }}
                     >
                       {queueId
                         ? `${i18n.t("queueModal.buttons.okEdit")}`
