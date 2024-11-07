@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   btnWrapper: {
-    borderRadius: 10,
+    borderRadius: "20px",
     color: "#0c2c54",
     backgroundColor: "#34d3a3",
     "&:hover": {
@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: -12,
   },
   btnLeft: {
-    borderRadius: 10,
+    borderRadius: "20px",
     display: "flex",
     marginRight: "1%",
     marginLeft: 12,
