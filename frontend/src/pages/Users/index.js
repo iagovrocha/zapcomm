@@ -85,30 +85,32 @@ const useStyles = makeStyles((theme) => ({
   },
   serachInputWrapper: {
     border: "solid 1px #828282",
-		flex: 1,
-		display: "flex",
-		borderRadius: 40,
-		padding: 4,
-		marginRight: theme.spacing(1),
-	},
+    flex: 1,
+    display: "flex",
+    borderRadius: 40,
+    padding: 4,
+    marginRight: theme.spacing(1),
+  },
 
-	searchIcon: {
-		color: "grey",
-		marginLeft: 6,
-		marginRight: 6,
-		alignSelf: "center",
-	},
+  searchIcon: {
+    color: "grey",
+    marginLeft: 6,
+    marginRight: 6,
+    alignSelf: "center",
+  },
 
-	searchInput: {
-		flex: 1,
-		border: "none",
-		borderRadius: 30,
-	},
+  searchInput: {
+    flex: 1,
+    border: "none",
+    borderRadius: 30,
+    width: "100%"
+  },
   AgrupamentoDoPesquisarENovo: {
-    paddingTop: "10px",
+    paddingTop: "7px",
     paddingBottom: "12px",
     display: "inline-flex",
-    width: "95%"
+    width: "95%",
+    margin: "0",
   },
   BotaoAdicionar: {
     borderRadius: "40px",
@@ -235,14 +237,14 @@ const Users = () => {
 
   return (
     <div className={classes.divBody}>
-    <h1 style={{ margin: "0" }}><b>{i18n.t("users.title")}</b></h1>
-    <Typography
-      component="subtitle1"
-      variant="body1"
-      style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
-    >
-    {i18n.t("users.subtitulo")}
-    </Typography>
+      <h1 style={{ margin: "0" }}><b>{i18n.t("users.title")}</b></h1>
+      <Typography
+        component="subtitle1"
+        variant="body1"
+        style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+      >
+        {i18n.t("users.subtitulo")}
+      </Typography>
       <div className={classes.AgrupamentoDoPesquisarENovo}>
         <div className={classes.serachInputWrapper}>
           <SearchIcon className={classes.searchIcon} />
@@ -251,6 +253,7 @@ const Users = () => {
             type="search"
             value={searchParam}
             onChange={handleSearch}
+            className={classes.searchInput}
           // InputProps={{
           //   startAdornment: (
           //     <InputAdornment position="start">
@@ -270,15 +273,14 @@ const Users = () => {
           onClick={handleOpenUserModal}
           className={classes.BotaoAdicionar}
         >
-         +   {i18n.t("users.buttons.add")}
+          +   {i18n.t("users.buttons.add")}
         </Button>
       </div>
-    {/* <MainContainer> */}
+      {/* <MainContainer> */}
       <ConfirmationModal
         title={
           deletingUser &&
-          `${i18n.t("users.confirmationModal.deleteTitle")} ${
-            deletingUser.name
+          `${i18n.t("users.confirmationModal.deleteTitle")} ${deletingUser.name
           }?`
         }
         open={confirmModalOpen}
@@ -330,7 +332,7 @@ const Users = () => {
         <Table size="small">
           <TableHead>
             <TableRow>
-			<TableCell align="center">
+              <TableCell align="center">
                 {i18n.t("users.table.id")}
               </TableCell>
               <TableCell align="center">{i18n.t("users.table.name")}</TableCell>
@@ -349,7 +351,7 @@ const Users = () => {
             <>
               {users.map((user) => (
                 <TableRow key={user.id}>
-				  <TableCell align="center">{user.id}</TableCell>
+                  <TableCell align="center">{user.id}</TableCell>
                   <TableCell align="center">{user.name}</TableCell>
                   <TableCell align="center">{user.email}</TableCell>
                   <TableCell align="center">{user.profile}</TableCell>
@@ -380,7 +382,7 @@ const Users = () => {
           </TableBody>
         </Table>
       </Paper>
-    {/* </MainContainer> */}
+      {/* </MainContainer> */}
     </div>
   );
 };

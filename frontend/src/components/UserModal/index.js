@@ -26,6 +26,7 @@ import QueueSelect from "../QueueSelect";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import { Can } from "../Can";
 import useWhatsApps from "../../hooks/useWhatsApps";
+import IconButton from "@mui/material/IconButton";
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -40,9 +41,13 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	btnWrapper: {
-		position: "relative",
+		borderRadius: 10,
 		color: "#0c2c54",
-		backgroundColor: "#34d3a3"
+		backgroundColor: "#34d3a3",
+		marginRight: "37.5%",
+		"&:hover": {
+			backgroundColor: "#5cdbb5",
+		},
 	},
 
 	buttonProgress: {
@@ -139,10 +144,13 @@ const UserModal = ({ open, onClose, userId }) => {
 				fullWidth
 				scroll="paper"
 			>
-				<DialogTitle className={classes.header} id="form-dialog-title">
-					{userId
-						? `${i18n.t("userModal.title.edit")}`
-						: `${i18n.t("userModal.title.add")}`}
+				<DialogTitle className={classes.header}>
+					<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+						{userId
+							? `${i18n.t("userModal.title.edit")}`
+							: `${i18n.t("userModal.title.add")}`}
+						<IconButton onClick={handleClose} style={{ color: "white" }}>x</IconButton>
+					</div>
 				</DialogTitle>
 				<Formik
 					initialValues={user}
@@ -256,13 +264,13 @@ const UserModal = ({ open, onClose, userId }) => {
 										</FormControl>
 									)}
 								/>
-								
-								
-								
+
+
+
 								<div className={classes.divider}>
 									<span className={classes.dividerText}>Liberações</span>
 								</div>
-								
+
 								<Can
 									role={loggedInUser.profile}
 									perform="user-modal:editProfile"
@@ -296,17 +304,17 @@ const UserModal = ({ open, onClose, userId }) => {
 
 									)}
 								/>
-								
+
 							</DialogContent>
 							<DialogActions>
-								<Button
+								{/* <Button
 									onClick={handleClose}
 									color="secondary"
 									disabled={isSubmitting}
 									variant="outlined"
 								>
 									{i18n.t("userModal.buttons.cancel")}
-								</Button>
+								</Button> */}
 								<Button
 									type="submit"
 									color="primary"
