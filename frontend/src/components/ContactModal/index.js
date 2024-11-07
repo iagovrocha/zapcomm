@@ -39,8 +39,20 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	btnWrapper: {
-		position: "relative",
-	},
+        position: "relative",
+        backgroundColor: "#34d3a3", 
+        color: "#0c2c54",
+        borderRadius: "20px", 
+        padding: theme.spacing(1, 4),
+        "&:hover": {
+            backgroundColor: "#34d3a3",
+        },
+    },
+
+    dialogActions: {
+        justifyContent: "center",
+        paddingBottom: theme.spacing(2),
+    },
 
 	buttonProgress: {
 		color: green[500],
@@ -124,16 +136,40 @@ const ContactModal = ({ open, onClose, contactId, initialValues, onSave }) => {
 		} catch (err) {
 			toastError(err);
 		}
-	};
+	}; 
 
 	return (
 		<div className={classes.root}>
 			<Dialog open={open} onClose={handleClose} maxWidth="lg" scroll="paper">
-				<DialogTitle id="form-dialog-title" style={{color: "#fff", backgroundColor: "#0C2C54"}}>
-					{contactId
-						? `${i18n.t("contactModal.title.edit")}`
-						: `${i18n.t("contactModal.title.add")}`}
-				</DialogTitle>
+			<DialogTitle
+                    id="form-dialog-title"
+                    style={{
+                        color: "#fff",
+                        backgroundColor: "#0C2C54",
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        position: 'relative'
+                    }}
+                >
+                    <span>
+                        {contactId
+                            ? `${i18n.t("contactModal.title.edit")}`
+                            : `${i18n.t("contactModal.title.add")}`}
+                    </span>
+                    <IconButton
+                        onClick={handleClose}
+                        style={{
+                            color: "white",
+                            position: "absolute",
+                            right: "10px",
+                            top: '50%',
+                            transform: 'translateY(-50%)'
+                        }}
+                    >
+                        x
+                    </IconButton>
+                </DialogTitle>
 				<Formik
 					initialValues={contact}
 					enableReinitialize={true}
@@ -246,15 +282,15 @@ const ContactModal = ({ open, onClose, contactId, initialValues, onSave }) => {
 									)}
 								</FieldArray>
 							</DialogContent>
-							<DialogActions>
-								<Button
+							<DialogActions className={classes.dialogActions}>
+								{/* <Button
 									onClick={handleClose}
 									color="secondary"
 									disabled={isSubmitting}
 									variant="outlined"
 								>
 									{i18n.t("contactModal.buttons.cancel")}
-								</Button>
+								</Button> */}
 								<Button
 									type="submit"
 									color="primary"

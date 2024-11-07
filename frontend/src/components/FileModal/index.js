@@ -60,6 +60,24 @@ const useStyles = makeStyles(theme => ({
 
     btnWrapper: {
         position: "relative",
+        backgroundColor: "#34d3a3", // Cor verde para o botão
+        color: "#0c2c54",
+        borderRadius: "20px", // Botão com bordas arredondadas
+        padding: theme.spacing(1, 4),
+        "&:hover": {
+            backgroundColor: "#34d3a3",
+        },
+    },
+
+    btnWrapper2: {
+        position: "relative",
+        borderRadius: "20px",
+        padding: theme.spacing(1, 2),
+    },
+
+    dialogActions: {
+        justifyContent: "center",
+        paddingBottom: theme.spacing(2),
     },
 
     buttonProgress: {
@@ -91,14 +109,14 @@ const FileListSchema = Yup.object().shape({
 const FilesModal = ({ open, onClose, fileListId, reload }) => {
     const classes = useStyles();
     const { user } = useContext(AuthContext);
-    const [ files, setFiles ] = useState([]);
+    const [files, setFiles] = useState([]);
     const [selectedFileNames, setSelectedFileNames] = useState([]);
 
 
     const initialState = {
         name: "",
         message: "",
-        options: [{ name: "", path:"", mediaType:"" }],
+        options: [{ name: "", path: "", mediaType: "" }],
     };
 
     const [fileList, setFileList] = useState(initialState);
@@ -125,30 +143,30 @@ const FilesModal = ({ open, onClose, fileListId, reload }) => {
     const handleSaveFileList = async (values) => {
 
         const uploadFiles = async (options, filesOptions, id) => {
-                const formData = new FormData();
-                formData.append("fileId", id);
-                formData.append("typeArch", "fileList")
-                filesOptions.forEach((fileOption, index) => {
-                    if (fileOption.file) {
-                        formData.append("files", fileOption.file);
-                        formData.append("mediaType", fileOption.file.type)
-                        formData.append("name", options[index].name);
-                        formData.append("id", options[index].id);
-                    }
-                });
-      
-              try {
+            const formData = new FormData();
+            formData.append("fileId", id);
+            formData.append("typeArch", "fileList")
+            filesOptions.forEach((fileOption, index) => {
+                if (fileOption.file) {
+                    formData.append("files", fileOption.file);
+                    formData.append("mediaType", fileOption.file.type)
+                    formData.append("name", options[index].name);
+                    formData.append("id", options[index].id);
+                }
+            });
+
+            try {
                 const { data } = await api.post(`/files/uploadList/${id}`, formData);
                 setFiles([]);
                 return data;
-              } catch (err) {
+            } catch (err) {
                 toastError(err);
-              }
+            }
             return null;
         }
 
         const fileData = { ...values, userId: user.id };
-        
+
         try {
             if (fileListId) {
                 const { data } = await api.put(`/files/${fileListId}`, fileData)
@@ -163,7 +181,7 @@ const FilesModal = ({ open, onClose, fileListId, reload }) => {
             toast.success(i18n.t("fileModal.success"));
             if (typeof reload == 'function') {
                 reload();
-            }            
+            }
         } catch (err) {
             toastError(err);
         }
@@ -178,8 +196,33 @@ const FilesModal = ({ open, onClose, fileListId, reload }) => {
                 maxWidth="md"
                 fullWidth
                 scroll="paper">
-                <DialogTitle id="form-dialog-title" style={{color: "#fff", backgroundColor: "#0C2C54"}}>
-                    {(fileListId ? `${i18n.t("fileModal.title.edit")}` : `${i18n.t("fileModal.title.add")}`)}
+                <DialogTitle
+                    id="form-dialog-title"
+                    style={{
+                        color: "#fff",
+                        backgroundColor: "#0C2C54",
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        position: 'relative'
+                    }}
+                >
+                    <span>
+                        {(fileListId ? `${i18n.t("fileModal.title.edit")}` : `${i18n.t("fileModal.title.add")}`)}
+                    </span>
+
+                    <IconButton
+                        onClick={handleClose}
+                        style={{
+                            color: "white",
+                            position: "absolute",
+                            right: "10px",
+                            top: '50%',
+                            transform: 'translateY(-50%)'
+                        }}
+                    >
+                        x
+                    </IconButton>
                 </DialogTitle>
                 <Formik
                     initialValues={fileList}
@@ -239,13 +282,13 @@ const FilesModal = ({ open, onClose, fileListId, reload }) => {
                                         <>
                                             {values.options &&
                                                 values.options.length > 0 &&
-                                                values.options.map((info, index) => (    
+                                                values.options.map((info, index) => (
                                                     <div
                                                         className={classes.extraAttr}
                                                         key={`${index}-info`}
                                                     >
-                                                        <Grid container  spacing={0}>
-                                                            <Grid xs={6} md={10} item> 
+                                                        <Grid container spacing={0}>
+                                                            <Grid xs={6} md={10} item>
                                                                 <Field
                                                                     as={TextField}
                                                                     label={i18n.t("fileModal.form.extraName")}
@@ -257,15 +300,15 @@ const FilesModal = ({ open, onClose, fileListId, reload }) => {
                                                                     minRows={2}
                                                                     className={classes.textField}
                                                                 />
-                                                            </Grid>     
+                                                            </Grid>
                                                             <Grid xs={2} md={2} item style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
                                                                 <input
                                                                     type="file"
                                                                     onChange={(e) => {
                                                                         const selectedFile = e.target.files[0];
-                                                                        const updatedOptions = [...values.options];                                                                
+                                                                        const updatedOptions = [...values.options];
                                                                         updatedOptions[index].file = selectedFile;
-                                                                       
+
                                                                         setFiles('options', updatedOptions);
 
                                                                         // Atualize a lista selectedFileNames para o campo específico
@@ -287,23 +330,24 @@ const FilesModal = ({ open, onClose, fileListId, reload }) => {
                                                                     onClick={() => remove(index)}
                                                                 >
                                                                     <DeleteOutlineIcon />
-                                                                </IconButton>    
+                                                                </IconButton>
                                                             </Grid>
                                                             <Grid xs={12} md={12} item>
-                                                                {info.path? info.path : selectedFileNames[index]}                               
-                                                            </Grid> 
-                                                        </Grid>                                                    
-                                                </div>                     
-                                                                                           
+                                                                {info.path ? info.path : selectedFileNames[index]}
+                                                            </Grid>
+                                                        </Grid>
+                                                    </div>
+
                                                 ))}
                                             <div className={classes.extraAttr}>
                                                 <Button
                                                     style={{ flex: 1, marginTop: 8 }}
                                                     variant="outlined"
                                                     color="primary"
-                                                    onClick={() => {push({ name: "", path: ""});
-                                                    setSelectedFileNames([...selectedFileNames, ""]);
-                                                }}
+                                                    onClick={() => {
+                                                        push({ name: "", path: "" });
+                                                        setSelectedFileNames([...selectedFileNames, ""]);
+                                                    }}
                                                 >
                                                     {`+ ${i18n.t("fileModal.buttons.fileOptions")}`}
                                                 </Button>
@@ -312,15 +356,15 @@ const FilesModal = ({ open, onClose, fileListId, reload }) => {
                                     )}
                                 </FieldArray>
                             </DialogContent>
-                            <DialogActions>
-                                <Button
+                            <DialogActions className={classes.dialogActions}>
+                                {/* <Button
                                     onClick={handleClose}
                                     color="secondary"
                                     disabled={isSubmitting}
                                     variant="outlined"
                                 >
                                     {i18n.t("fileModal.buttons.cancel")}
-                                </Button>
+                                </Button> */}
                                 <Button
                                     type="submit"
                                     color="primary"

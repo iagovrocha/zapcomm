@@ -883,7 +883,7 @@ const messages = {
           edit: "Editar lista de arquivos",
         },
         buttons: {
-          okAdd: "Salvar",
+          okAdd: "Adicionar",
           okEdit: "Editar",
           cancel: "Cancelar",
           fileOptions: "Adicionar arquivo",
