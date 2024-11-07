@@ -53,25 +53,15 @@ const TicketsCustom = () => {
 		<div className={classes.chatContainer}>
 			<div className={classes.chatPapper}>
 				<Grid container spacing={0}>
-					<Grid item xs={12} className={classes.contactsWrapper}>
+					<Grid item xs={ticketId ? (7) : (12)} className={classes.contactsWrapper}>
 						<TicketsManager />
 					</Grid>
-					{/* <Grid item xs={8} className={classes.messagesWrapper}>
-						{ticketId ? (
-							<>
-								<Ticket />
-							</>
-						) : (
-							<Paper square variant="outlined" className={classes.welcomeMsg}> */}
-							{/* PLW DESIGN LOGO */}
-							{/* <div>
-							<center><img style={{ margin: "0 auto", width: "70%" }} src={logo} alt="logologin" /></center>
-							</div> */}
-							{/* PLW DESIGN LOGO */}
-							{/*<span>{i18n.t("chat.noTicketMessage")}</span>*/}
-							{/* </Paper>
-						)}
-					</Grid> */}
+					{ticketId ? (
+						<Grid item xs={5} className={classes.messagesWrapper}>
+							<Ticket />
+						</Grid>
+					) : ""
+					}
 				</Grid>
 			</div>
 		</div>
