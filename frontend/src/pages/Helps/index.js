@@ -12,6 +12,9 @@ import {TableHead} from "@material-ui/core";
 import {TableRow} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import useHelps from "../../hooks/useHelps";
+import YouTubeIcon from '@material-ui/icons/YouTube';
+
+
 
 const useStyles = makeStyles((theme) => ({
   divBody: {
@@ -45,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Inter Tight, sans-serif', 
     color: 'black'
   },
+  
   videoModal: {
     display: 'flex',
     alignItems: 'center',
@@ -128,7 +132,7 @@ const Helps = () => {
   );
 
   const renderHelps = () => (
-      <Paper>
+      <Paper className={classes.tableContainer}>
         <Table className={classes.table} aria-label="Ajuda" size="small">
           <TableHead className={classes.tableHeader}>
             <TableRow>
@@ -146,7 +150,12 @@ const Helps = () => {
             ) : (
               filteredRecords.map((record, index) => (
                 <TableRow key={index} onClick={() => openVideoModal(record.video)} style={{ cursor: 'pointer' }}>
-                  <TableCell component="th" scope="row">{record.title}</TableCell>
+                  <TableCell component="th" scope="row">
+                    <span style={{ display: 'flex', alignItems: 'center' }}>
+                      <YouTubeIcon style={{ marginLeft: 8, color: 'red' }} />
+                      {record.title}
+                    </span>
+                  </TableCell>
                   <TableCell align="left">{record.description}</TableCell>
                 </TableRow>
               ))
@@ -169,7 +178,7 @@ const Helps = () => {
         <SearchIcon style={{ color: "grey", marginLeft: 6, marginRight: 6, alignSelf: 'center' }} />
         <InputBase
           className={classes.input}
-          placeholder="Pesquisar ajuda"
+          placeholder="Pesquisar..."
           value={search}
           onChange={handleSearchChange} // Atualiza a busca
         />
