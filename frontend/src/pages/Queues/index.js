@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import { SocketContext } from "../../context/Socket/SocketContext";
 import TableRowSkeleton from "../../components/TableRowSkeleton";
+import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
 
 const useStyles = makeStyles((theme) => ({
   mainPaper: {
@@ -46,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     border: "1px solid var(--logo-bg, #0C2C54)",
   },
-  searchInputWrapper: {
+  serachInputWrapper: {
     border: "solid 1px #828282",
     flex: 1,
     display: "flex",
@@ -73,19 +74,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     marginBottom: theme.spacing(1),
   },
-  descriptionContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "100%",
+  Tabela: {
+    fontFamily: 'Inter Tight, sans-serif', 
+    color: 'black'
   },
-  searchContainer: {
-    display: "flex",
-    alignItems: "center",
-    width: "95%",
-    paddingTop: "1%",
-    // marginBottom: theme.spacing(2),
-  },  
 }));
 
 const reducer = (state, action) => {
@@ -188,51 +180,14 @@ const Queues = () => {
 
   return (
     <div className={classes.divBody}>
-      <div className={classes.descriptionContainer}>
-        <div>
-          <h1 style={{ margin: "0" }}><b>{i18n.t("Filas & Chatbot")}</b></h1>
-          <Typography
-            component="subtitle1"
-            variant="body1"
-            style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}
-          >
-            {"Adicione, edite e exclua filas para separar os chamados."}
-          </Typography>
-        </div>
-      </div>
-      <div className={classes.searchContainer}>
-  <div className={classes.searchInputWrapper}>
-    <SearchIcon className={classes.searchIcon} />
-    <InputBase
-      className={classes.searchInput}
-      placeholder={i18n.t("contacts.searchPlaceholder")}
-      type="search"
-      value={searchParam}
-      onChange={handleSearch}
-    />
-  </div>
- 
-  <div
-    style={{
-      width: "1px",
-      height: "43px",
-      background: "#BDBDBD",
-      marginLeft: "40px",  
-    }}
-  ></div>
-  <Button
-    variant="contained"
-    className={classes.Botoes}
-    color="primary"
-    onClick={handleOpenQueueModal}
-    style={{
-      marginLeft: "40px", 
-    }}
-  >
-    {i18n.t("queues.buttons.add")}
-  </Button>
-</div>
-
+      <h1 style={{ margin: "0" }}><b>{i18n.t("Filas & Chatbot")}</b></h1>
+      <Typography
+        component="subtitle1"
+        variant="body1"
+        style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}
+      >
+        {"Adicione, edite e exclua filas para separar os chamados."}
+      </Typography>
 
       <ConfirmationModal
         title={
@@ -245,102 +200,165 @@ const Queues = () => {
       > (
         {i18n.t("queues.confirmationModal.deleteMessage")}
       </ConfirmationModal>
-      <div style={{ display: "inline-flex", alignItems: 'center', width: "80%" }}>
-        <QueueModal
-          open={queueModalOpen}
-          onClose={handleCloseQueueModal}
-          queueId={selectedQueue?.id}
-        />
-      </div>
-      <Paper className={classes.mainPaper}>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">{i18n.t("queues.table.id")}</TableCell>
-              <TableCell align="center">{i18n.t("queues.table.name")}</TableCell>
-              <TableCell align="center">{i18n.t("queues.table.color")}</TableCell>
-              <TableCell align="center">{i18n.t("queues.table.orderQueue")}</TableCell>
-              <TableCell align="center">{i18n.t("queues.table.greeting")}</TableCell>
-              <TableCell align="center">{i18n.t("queues.table.actions")}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredQueues.map((queue) => (
-              <TableRow key={queue.id}>
-                <TableCell align="center">{queue.id}</TableCell>
-                <TableCell align="center">{queue.name}</TableCell>
-                <TableCell align="center">
-                  <div className={classes.customTableCell}>
-                    <span
-                      style={{
-                        backgroundColor: queue.color,
-                        width: 20,
-                        height: 20,
-                        borderRadius: "50%",
-                        alignSelf: "center",
-                      }}
-                    />
-                  </div>
+      <QueueModal
+        open={queueModalOpen}
+        onClose={handleCloseQueueModal}
+        queueId={selectedQueue?.id}
+      />
+
+      <div style={{ display: "inline-flex", alignItems: 'center', width: "95%" }}>
+        {/* <Title>{i18n.t("contacts.title")}</Title> */}
+        <div className={classes.serachInputWrapper}>
+          <SearchIcon className={classes.searchIcon} />
+          <InputBase
+            className={classes.searchInput}
+            placeholder={i18n.t("contacts.searchPlaceholder")}
+            type="search"
+            value={searchParam}
+            onChange={handleSearch}
+
+          // InputProps={{
+          //   startAdornment: (
+          //     <InputAdornment position="start">
+          //       <SearchIcon style={{ color: "gray" }} />
+          //     </InputAdornment>
+          //   ),
+          // }} Mudança de TextField para InputBase + Estilização em css + MainHeader comentado para alinhar os botões e a barra de pesquisa
+          />
+        </div>
+
+        <div
+          style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+        ></div>
+
+        <MainHeaderButtonsWrapper style={{}}>
+          <Button
+            variant="contained"
+            className={classes.Botoes}
+            color="primary"
+            onClick={handleOpenQueueModal}
+            style={{
+              marginLeft: "40px",
+            }}
+          >
+            {i18n.t("queues.buttons.add")}
+          </Button>
+        </MainHeaderButtonsWrapper>
+        </div>
+
+        <Paper className={classes.mainPaper}>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center" className={classes.Tabela}>
+                  <b>{i18n.t("queues.table.id")}</b>
+                  </TableCell>
+                <TableCell align="center" className={classes.Tabela}>
+                  <b>{i18n.t("queues.table.name")}</b>
+                  </TableCell>
+                <TableCell align="center" className={classes.Tabela}>
+                  <b>{i18n.t("queues.table.color")}</b>
+                  </TableCell>
+                <TableCell align="center" className={classes.Tabela}>
+                  <b>{i18n.t("queues.table.orderQueue")}</b>
+                  </TableCell>
+                <TableCell align="center" className={classes.Tabela}>
+                  <b>{i18n.t("queues.table.greeting")}</b>
                 </TableCell>
-                <TableCell align="center">
-                  <div className={classes.customTableCell}>
-                    <Typography
-                      style={{ width: 300, align: "center" }}
-                      noWrap
-                      variant="body2"
-                    >
-                      {queue.orderQueue}
-                    </Typography>
-                  </div>
-                </TableCell>
-                <TableCell align="center">
-                  <div className={classes.customTableCell}>
-                    <Typography
-                      style={{ width: 300, align: "center" }}
-                      noWrap
-                      variant="body2"
-                    >
-                      {queue.greeting}
-                    </Typography>
-                  </div>
-                </TableCell>
-                <TableCell align="center">
-                  <IconButton
-                    size="small"
-                    style={{
-                      color: "#0C2C54",
-                      "&:hover": {
-                        color: "#3c5676",
-                      },
-                    }}
-                    onClick={() => handleEditQueue(queue)}
-                  >
-                    <Edit />
-                  </IconButton>
-                  <IconButton
-                    size="small"
-                    style={{
-                      color: "#0C2C54",
-                      "&:hover": {
-                        color: "#3c5676",
-                      },
-                    }}
-                    onClick={() => {
-                      setSelectedQueue(queue);
-                      setConfirmModalOpen(true);
-                    }}
-                  >
-                    <DeleteOutline />
-                  </IconButton>
+                <TableCell align="center" className={classes.Tabela}>
+                  <b>{i18n.t("queues.table.actions")}</b>
                 </TableCell>
               </TableRow>
-            ))}
-            {loading && <TableRowSkeleton columns={4} />}
-          </TableBody>
-        </Table>
-      </Paper>
-    </div>
-  );
+            </TableHead>
+            {filteredQueues.length > 0 ? (
+              <>
+                <TableBody>
+                  {filteredQueues.map((queue) => (
+                    <TableRow key={queue.id}>
+                      <TableCell align="center">{queue.id}</TableCell>
+                      <TableCell align="center">{queue.name}</TableCell>
+                      <TableCell align="center">
+                        <div className={classes.customTableCell}>
+                          <span
+                            style={{
+                              backgroundColor: queue.color,
+                              width: 20,
+                              height: 20,
+                              borderRadius: "50%",
+                              alignSelf: "center",
+                            }}
+                          />
+                        </div>
+                      </TableCell>
+                      <TableCell align="center">
+                        <div className={classes.customTableCell}>
+                          <Typography
+                            style={{ width: 300, align: "center" }}
+                            noWrap
+                            variant="body2"
+                          >
+                            {queue.orderQueue}
+                          </Typography>
+                        </div>
+                      </TableCell>
+                      <TableCell align="center">
+                        <div className={classes.customTableCell}>
+                          <Typography
+                            style={{ width: 300, align: "center" }}
+                            noWrap
+                            variant="body2"
+                          >
+                            {queue.greeting}
+                          </Typography>
+                        </div>
+                      </TableCell>
+                      <TableCell align="center">
+                        <IconButton
+                          size="small"
+                          style={{
+                            color: "#0C2C54",
+                            "&:hover": {
+                              color: "#3c5676",
+                            },
+                          }}
+                          onClick={() => handleEditQueue(queue)}
+                        >
+                          <Edit />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          style={{
+                            color: "#0C2C54",
+                            "&:hover": {
+                              color: "#3c5676",
+                            },
+                          }}
+                          onClick={() => {
+                            setSelectedQueue(queue);
+                            setConfirmModalOpen(true);
+                          }}
+                        >
+                          <DeleteOutline />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  {loading && <TableRowSkeleton columns={4} />}
+                </TableBody>
+              </>
+            ) : (
+              <TableBody>
+                <TableRow>
+                  <TableCell colSpan="6" align="center">
+                    Nenhuma fila a ser carregada no momento
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            )}
+          </Table>
+        </Paper>
+      </div>
+      );
 };
 
-export default Queues;
+      export default Queues;
