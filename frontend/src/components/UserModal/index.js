@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	btnWrapper: {
-		borderRadius: 10,
+		borderRadius: "20px",
 		color: "#0c2c54",
 		backgroundColor: "#34d3a3",
 		marginRight: "37.5%",
