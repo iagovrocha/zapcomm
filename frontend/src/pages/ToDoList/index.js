@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from '@material-ui/icons/Edit';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from "@material-ui/core/Typography";
@@ -18,6 +18,7 @@ import InputAdornment from '@material-ui/core/InputAdornment'; // Importar Input
 import SearchIcon from '@material-ui/icons/Search'; // Importar o ícone de pesquisa
 import InputBase from "@material-ui/core/InputBase";
 import MainContainer from "../../components/MainContainer";
+import TaskModal from '../../components/TaskModal';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -75,27 +76,18 @@ const useStyles = makeStyles((theme) => ({
 
   table: { // Tabela das tarefas que serão adicionadas
     minWidth: 650,
-    marginTop: "10px",
-
+    marginTop: "7px",
   },
   tableHeader: { // Cabeçalho da tabela
     backgroundColor: '', // alterar a cor do fundo do cabeçalho dos resultados
     color: 'black',
   },
-  editButton: {
+  acoesButtons: {
     color: "#0C2C54",
     "&:hover": {
       color: "#3c5676",
     },
-    width: "35px", // Reduzido para o tamanho desejado
-    height: "30px",
-  },
-  deleteButton: {
-    color: "#0C2C54",
-    "&:hover": {
-      color: "#3c5676",
-    },
-    width: "35px", // Reduzido para o tamanho desejado
+    width: "35px", 
     height: "30px",
   },
   //taskText: { // Texto da tarefa
@@ -119,6 +111,9 @@ const ToDoList = () => {
   const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [initialTask, setInitialTask] = useState('');
 
   const loadMore = () => {
     setPageNumber((prevState) => prevState + 1);
@@ -154,30 +149,8 @@ const ToDoList = () => {
     setTask(inputValue);
   };
 
-  const handleAddTask = () => {
-    if (!task.trim()) {
-      // Impede que o usuário crie uma tarefa sem texto
-      return;
-    }
-
-    const now = new Date();
-    if (editIndex >= 0) {
-      // Editar tarefa existente
-      const newTasks = [...tasks];
-      newTasks[editIndex] = { text: task, updatedAt: now, createdAt: newTasks[editIndex].createdAt };
-      setTasks(newTasks);
-      setTask('');
-      setEditIndex(-1);
-    } else {
-      // Adicionar nova tarefa
-      setTasks([...tasks, { text: task, createdAt: now, updatedAt: now }]);
-      setTask('');
-    }
-  };
-
-  const handleEditTask = (index) => {
-    setTask(tasks[index].text);
-    setEditIndex(index);
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
   };
 
   const handleDeleteTask = (index) => {
@@ -185,6 +158,64 @@ const ToDoList = () => {
     newTasks.splice(index, 1);
     setTasks(newTasks);
   };
+
+  const openAddModal = () => {
+    setInitialTask('');
+    setEditIndex(-1);
+    setModalOpen(true);
+  };
+
+  const openEditModal = (index) => {
+    setInitialTask(tasks[index].text);
+    setEditIndex(index);
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+
+  const handleModalSubmit = (task) => {
+    if (editIndex >= 0) {
+      const newTasks = [...tasks];
+      newTasks[editIndex] = { text: task, updatedAt: new Date(), createdAt: newTasks[editIndex].createdAt };
+      setTasks(newTasks);
+    } else {
+      setTasks([...tasks, { text: task, createdAt: new Date(), updatedAt: new Date() }]);
+    }
+    setModalOpen(false);
+  };
+
+  const filteredTasks = tasks.filter(task => 
+    task.text.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  //const handleAddTask = () => {
+    //if (!task.trim()) {
+      // Impede que o usuário crie uma tarefa sem texto
+      //return;
+    //}
+
+    //const now = new Date();
+    //if (editIndex >= 0) {
+      // Editar tarefa existente
+      //const newTasks = [...tasks];
+      //newTasks[editIndex] = { text: task, updatedAt: now, createdAt: newTasks[editIndex].createdAt };
+      //setTasks(newTasks);
+      //setTask('');
+      //setEditIndex(-1);
+    //} else {
+      // Adicionar nova tarefa
+      //setTasks([...tasks, { text: task, createdAt: now, updatedAt: now }]);
+      //setTask('');
+    //}
+  //};
+
+  //const handleEditTask = (index) => {
+    //setTask(tasks[index].text);
+    //setEditIndex(index);
+  //};
+
+  
 
   return (
     <div className={classes.divBody}>
@@ -208,9 +239,9 @@ const ToDoList = () => {
             <SearchIcon className={classes.searchIcon} />
             <InputBase
               className={classes.input}
-              placeholder="Nova tarefa (Máx: 50 caracteres)"
-              value={task}
-              onChange={handleTaskChange}
+              placeholder="Pesquisar..."
+              value={searchTerm}
+              onChange={handleSearchChange}
               variant="outlined"
                 error={!!error} // irá mostrar um erro se houver
                 helperText={error} // Mostra a nebsagem de erro abaixo do campo
@@ -231,8 +262,8 @@ const ToDoList = () => {
             style={{width: '1px', height: "43px", background: '#BDBDBD', marginLeft: '50px', marginRight: '50px'}}>
           </div>
 
-          <Button className={classes.button} variant="contained" color="primary" onClick={handleAddTask}>
-            {editIndex >= 0 ? 'Salvar Alteração' : 'Adicionar Tarefa'}
+          <Button className={classes.button} variant="contained" color="primary" onClick={openAddModal}>
+            {"Adicionar Tarefa"}
           </Button>
 
         </div>
@@ -251,14 +282,14 @@ const ToDoList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {tasks.length === 0 ? ( // Verificar se não há tarefas
+              {filteredTasks.length === 0 ? ( // Verificar se não há tarefas
                 <TableRow>
                   <TableCell colSpan={3} align="center">
                     Nenhuma tarefa adicionada
                   </TableCell>
                 </TableRow>
               ) : (
-                tasks.map((task, index) => (
+                filteredTasks.map((task, index) => (
                   <TableRow key={index}>
                     <TableCell component="th" scope="row">
                       {task.text}
@@ -268,13 +299,13 @@ const ToDoList = () => {
                     </TableCell>
                     <TableCell align="right">
                       <Tooltip title="Editar Tarefa">
-                        <IconButton className={classes.editButton} onClick={() => handleEditTask(index)}>
+                        <IconButton className={classes.acoesButtons} onClick={() => openEditModal(index)}>
                           <EditIcon />
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Excluir Tarefa">
-                        <IconButton className={classes.deleteButton} onClick={() => handleDeleteTask(index)}>
-                          <DeleteIcon />
+                        <IconButton className={classes.acoesButtons} onClick={() => handleDeleteTask(index)}>
+                        <DeleteOutlineIcon />
                         </IconButton>
                       </Tooltip>
                     </TableCell>
@@ -284,6 +315,12 @@ const ToDoList = () => {
             </TableBody>
           </Table>
         </Paper>
+        <TaskModal
+        open={modalOpen}
+        onClose={handleModalClose}
+        onSubmit={handleModalSubmit}
+        initialTask={initialTask}
+      />
       {/* </MainContainer> */}
     </div>
   );

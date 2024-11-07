@@ -52,40 +52,48 @@ const useStyles = makeStyles(theme => ({
 		flex: 1,
 		padding: theme.spacing(1),
 		overflowY: "scroll",
-		...theme.scrollbarStyles,
+		marginTop: "7px",
+	},
+	table: {
+		minWidth: 650,
+		marginTop: "7px"
 	},
 	customTableCell: {
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "center",
 	},
-
 	searchInputWrapper: {
 		border: "solid 1px #828282",
 		//padding: 8, // Para um pouco de espaço interno
-        outline: "none", // Remove o contorno padrão
 		flex: 1,
 		display: "flex",
 		borderRadius: 40,
 		padding: 4,
 		marginRight: theme.spacing(1),
+		width: '70%',
+    	height: '48px',
 	},
-
 	searchIcon: {
 		color: "grey",
 		marginLeft: 6,
 		marginRight: 6,
 		alignSelf: "center",
 	},
-
+	acoesButtons: {
+		color: "#0C2C54",
+		"&:hover": {
+		  color: "#3c5676",
+		},
+		width: "35px", 
+		height: "30px",
+	  },
 	searchInput: {
 		flex: 1,
 		border: "none",
 		borderRadius: 30,
-		padding: 4, // Para um pouco de espaço interno
-        
+		
 	},
-
 	divBody: {
 		flex: 1,
 		padding: theme.spacing(1),
@@ -99,7 +107,6 @@ const useStyles = makeStyles(theme => ({
 		border: "1px solid #dadde9",
 		maxWidth: 450,
 	},
-
 	tooltipPopper: {
 		textAlign: "center",
 	},
@@ -112,7 +119,13 @@ const useStyles = makeStyles(theme => ({
 		justifyContent: "center",
 		alignItems: "center",
 		border: "1px solid var(--logo-bg, #001C27)"
-	  },
+	},
+	titleContainer: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'flex-start', // Alinha os itens à esquerda
+		marginBottom: '7px', // Espaçamento abaixo do contêiner
+	},
 
 }));
 
@@ -181,13 +194,13 @@ const Connections = () => {
 	//funçao para procurar
 	const handleSearch = (event) => {
 		setSearchParam(event.target.value.toLowerCase());
-	  };
+	};
 
 	const filteredWhatsApps = whatsApps ? (searchParam
-	? whatsApps.filter(whatsApp =>
-		whatsApp.name.toLowerCase().includes(searchParam)
-	)
-	: whatsApps) : [];
+		? whatsApps.filter(whatsApp =>
+			whatsApp.name.toLowerCase().includes(searchParam)
+		)
+		: whatsApps) : [];
 
 	const handleOpenWhatsAppModal = () => {
 		setSelectedWhatsApp(null);
@@ -292,17 +305,17 @@ const Connections = () => {
 				{(whatsApp.status === "CONNECTED" ||
 					whatsApp.status === "PAIRING" ||
 					whatsApp.status === "TIMEOUT") && (
-					<Button
-						size="small"
-						variant="outlined"
-						color="secondary"
-						onClick={() => {
-							handleOpenConfirmationModal("disconnect", whatsApp.id);
-						}}
-					>
-						{i18n.t("connections.buttons.disconnect")}
-					</Button>
-				)}
+						<Button
+							size="small"
+							variant="outlined"
+							color="secondary"
+							onClick={() => {
+								handleOpenConfirmationModal("disconnect", whatsApp.id);
+							}}
+						>
+							{i18n.t("connections.buttons.disconnect")}
+						</Button>
+					)}
 				{whatsApp.status === "OPENING" && (
 					<Button size="small" variant="outlined" disabled color="default">
 						{i18n.t("connections.buttons.connecting")}
@@ -353,14 +366,16 @@ const Connections = () => {
 
 	return (
 		<div className={classes.divBody}>
-			  <h1 style={{ margin: "0" }}><b>{i18n.t("connections.title")}</b></h1>
-			  <Typography
-				component="subtitle1"
-				variant="body1"
-				style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+			<div className={classes.titleContainer}>
+				<h1 style={{ margin: "0" }}><b>{i18n.t("connections.title")}</b></h1>
+				<Typography
+					component="subtitle1"
+					variant="body1"
+					style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
 				>
-				{"Adicione, edite e exclua seus bots e projetos."}
-			  </Typography>
+					{"Adicione, edite e exclua seus bots e projetos."}
+				</Typography>
+			</div>
 			<ConfirmationModal
 				title={confirmModalInfo.title}
 				open={confirmModalOpen}
@@ -379,46 +394,47 @@ const Connections = () => {
 				onClose={handleCloseWhatsAppModal}
 				whatsAppId={!qrModalOpen && selectedWhatsApp?.id}
 			/>
-			<MainHeader>
-				
-			<div className={classes.searchInputWrapper}>
-            	<SearchIcon className={classes.searchIcon} />
-				<InputBase
-				className={classes.searchInput}
-				placeholder={i18n.t("contacts.searchPlaceholder")}
-				type="search"
-				value={searchParam}
-				onChange={handleSearch}
-				
-              
-            ></InputBase>
-          </div>
-		  <div
-          style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
-          >
-          </div>
-				<MainHeaderButtonsWrapper>
-					<Can
-						role={user.profile}
-						perform="connections-page:addConnection"
-						
-						yes={() => (
-							
+			{/*<MainHeader>*/}
+
+				<div style={{display: "inline-flex", alignItems: 'center', width: "95%"}}>
+					<div className={classes.searchInputWrapper}>
+						<SearchIcon className={classes.searchIcon} />
+						<InputBase
+							className={classes.searchInput}
+							placeholder={i18n.t("contacts.searchPlaceholder")}
+							type="search"
+							value={searchParam}
+							onChange={handleSearch}
+						></InputBase>
+					</div>
+					<div
+						style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+					>
+					</div>
+					<div>
+						<Can
+							role={user.profile}
+							perform="connections-page:addConnection"
+							yes={() => (
 							<Button
-								variant="contained"
-								color="primary"
-								//adicionei a classe pro botao ficar padronizado 
+							variant="contained"
+							color="primary"
+							//adicionei a classe pro botao ficar padronizado
 								className={classes.BotaoAdicionar}
-								onClick={handleOpenWhatsAppModal}
-							>
-								{i18n.t("connections.buttons.add")}
-							</Button>
-						)}
-					/>
-				</MainHeaderButtonsWrapper>
-			</MainHeader>
+									onClick={handleOpenWhatsAppModal}
+								>
+									{i18n.t("connections.buttons.add")}
+								</Button>
+							)}
+						/>
+					</div>
+				</div>
+				{/*<MainHeaderButtonsWrapper>
+					
+				</MainHeaderButtonsWrapper>*/}
+			{/*</MainHeader>*/}
 			<Paper className={classes.mainPaper} variant="outlined">
-				<Table size="small">
+				<Table className={classes.table} aria-label="Lista de Tarefas" size="small">
 					<TableHead>
 						<TableRow>
 							<TableCell align="center">
@@ -455,50 +471,50 @@ const Connections = () => {
 					</TableHead>
 					<TableBody>
 						{loading ? (
-						 <TableRow><TableCell colSpan={5} align="center"><CircularProgress /></TableCell></TableRow>
-                        ) : (
-                            <>
-                                {filteredWhatsApps.length > 0 ? (
-                                    filteredWhatsApps.map(whatsApp => (
-                                        <TableRow key={whatsApp.id}>
-                                            <TableCell align="center">{whatsApp.name}</TableCell>
-                                            <TableCell align="center">{renderStatusToolTips(whatsApp)}</TableCell>
-                                            <Can
-                                                role={user.profile}
-                                                perform="connections-page:actionButtons"
-                                                yes={() => (
-                                                    <TableCell align="center">
-                                                        {renderActionButtons(whatsApp)}
-                                                    </TableCell>
-                                                )}
-                                            />
-                                            <TableCell align="center">
-                                                {format(parseISO(whatsApp.updatedAt), "dd/MM/yy HH:mm")}
-                                            </TableCell>
-                                            <TableCell align="center">
-                                                {whatsApp.isDefault && <CheckCircle style={{ color: green[500] }} />}
-                                            </TableCell>
-                                            <Can
-                                                role={user.profile}
-                                                perform="connections-page:editOrDeleteConnection"
-                                                yes={() => (
-                                                    <TableCell align="center">
-                                                        <IconButton size="small" onClick={() => handleEditWhatsApp(whatsApp)}><Edit /></IconButton>
-                                                        <IconButton size="small" onClick={() => handleOpenConfirmationModal("delete", whatsApp.id)}><DeleteOutline /></IconButton>
-                                                    </TableCell>
-                                                )}
-                                            />
-                                        </TableRow>
-                                    ))
-                                ) : (
-                                    <TableRow>
-                                        <TableCell colSpan={6} align="center">
-                                            <Typography variant="body1">Nenhuma conexão encontrada</Typography>
-                                        </TableCell>
-                                    </TableRow>
-                                )}
-                            </>
-                        )}
+							<TableRow><TableCell colSpan={5} align="center"><CircularProgress /></TableCell></TableRow>
+						) : (
+							<>
+								{filteredWhatsApps.length > 0 ? (
+									filteredWhatsApps.map(whatsApp => (
+										<TableRow key={whatsApp.id}>
+											<TableCell align="center">{whatsApp.name}</TableCell>
+											<TableCell align="center">{renderStatusToolTips(whatsApp)}</TableCell>
+											<Can
+												role={user.profile}
+												perform="connections-page:actionButtons"
+												yes={() => (
+													<TableCell align="center">
+														{renderActionButtons(whatsApp)}
+													</TableCell>
+												)}
+											/>
+											<TableCell align="center">
+												{format(parseISO(whatsApp.updatedAt), "dd/MM/yy HH:mm")}
+											</TableCell>
+											<TableCell align="center">
+												{whatsApp.isDefault && <CheckCircle style={{ color: green[500] }} />}
+											</TableCell>
+											<Can
+												role={user.profile}
+												perform="connections-page:editOrDeleteConnection"
+												yes={() => (
+													<TableCell align="center">
+														<IconButton size="small" onClick={() => handleEditWhatsApp(whatsApp)} className={classes.acoesButtons}><Edit /></IconButton>
+														<IconButton size="small" onClick={() => handleOpenConfirmationModal("delete", whatsApp.id)} className={classes.acoesButtons}><DeleteOutline /></IconButton>
+													</TableCell>
+												)}
+											/>
+										</TableRow>
+									))
+								) : (
+									<TableRow>
+										<TableCell colSpan={6} align="center">
+											<Typography variant="body1">Nenhuma conexão encontrada</Typography>
+										</TableCell>
+									</TableRow>
+								)}
+							</>
+						)}
 					</TableBody>
 				</Table>
 			</Paper>
