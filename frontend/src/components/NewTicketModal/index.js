@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#e1306c"
   },
   SvBtn: {
-    borderRadius: 10,
+    borderRadius: "20px",
     backgroundColor: "#34D3A3",
     color: "#0C2C54",
     "&:hover": {
