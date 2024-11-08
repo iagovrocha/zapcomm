@@ -78,7 +78,7 @@ export const ChartsDate = () => {
                 data: ticketsData?.data.length > 0 && ticketsData?.data.map((item, index) => {
                     return item.total
                 }),
-                backgroundColor: '#2DDD7F',
+                backgroundColor: '#0C2454',
             },
         ],
     };
@@ -95,7 +95,7 @@ export const ChartsDate = () => {
     return (
         <>
             <Typography component="h2" variant="h6" color="primary" gutterBottom>
-                Total ({ticketsData?.count})
+                Quantidade de Chamados ({ticketsData?.count})
             </Typography>
 
             <Stack direction={'row'} spacing={2} alignItems={'center'} sx={{ my: 2, }} >
