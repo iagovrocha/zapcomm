@@ -43,8 +43,18 @@ const useStyles = makeStyles((theme) => ({
 
   btnWrapper: {
     position: "relative",
-    color: "#0c2c54",
     backgroundColor: "#34d3a3",
+    color: "#0c2c54",
+    borderRadius: "20px",
+    padding: theme.spacing(1, 4),
+    "&:hover": {
+      backgroundColor: "#34d3a3",
+    },
+  },
+
+  dialogActions: {
+    justifyContent: "center",
+    paddingBottom: theme.spacing(2),
   },
 
   buttonProgress: {
@@ -472,7 +482,7 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                   </div>
                 </div>
               </DialogContent>
-              <DialogActions style={{ justifyContent: "center" }}>
+              <DialogActions className={classes.dialogActions}>
                 <Button
                   type="submit"
                   color="primary"
