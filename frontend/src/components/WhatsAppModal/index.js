@@ -43,6 +43,8 @@ const useStyles = makeStyles((theme) => ({
 
   btnWrapper: {
     position: "relative",
+    color: "#0c2c54",
+    backgroundColor: "#34d3a3",
   },
 
   buttonProgress: {
@@ -311,7 +313,7 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                     margin="dense"
                   />
                 </div>
-                <FormControl
+                <FormControl //Filas
                   margin="dense"
                   variant="outlined"
                   fullWidth
@@ -344,7 +346,7 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                   </Select>
                 </FormControl>
 
-                <FormControl
+                <FormControl //Prompt
                   margin="dense"
                   variant="outlined"
                   fullWidth
@@ -385,33 +387,56 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                 <div>
                   <h3>{i18n.t("whatsappModal.form.queueRedirection")}</h3>
                   <p>{i18n.t("whatsappModal.form.queueRedirectionDesc")}</p>
-                  <Grid container spacing={2}>
-                    <Grid item sm={6} >
+                  <Grid container spacing={2}> {/*Transferir após x minutos*/}
+                    <Grid item sm={6}>
                       <Field
                         fullWidth
                         type="number"
                         as={TextField}
-                        label='Transferir após x (minutos)'
+                        label="Transferir após x (minutos)"
                         name="timeToTransfer"
                         error={touched.timeToTransfer && Boolean(errors.timeToTransfer)}
                         helperText={touched.timeToTransfer && errors.timeToTransfer}
                         variant="outlined"
                         margin="dense"
                         className={classes.textField}
-                        InputLabelProps={{ shrink: values.timeToTransfer ? true : false }}
                       />
-
                     </Grid>
 
-                    <Grid item sm={6}>
-                      <QueueSelect
-                        selectedQueueIds={selectedQueueId}
-                        onChange={(selectedId) => {
-                          setSelectedQueueId(selectedId)
-                        }}
-                        multiple={false}
-                        title={'Fila de Transferência'}
-                      />
+                    <Grid item sm={6}> {/*Fila de Transferência*/}
+                      <FormControl
+                        margin="dense"
+                        variant="outlined"
+                        fullWidth
+                      >
+                        <InputLabel>{i18n.t("Fila de Transferência")}</InputLabel>
+                        <Select
+                          labelId="dialog-select-transfer-queue-label"
+                          id="dialog-select-transfer-queue"
+                          value={selectedQueueId || ""}
+                          onChange={(event) => setSelectedQueueId(event.target.value)}
+                          label={i18n.t("Fila de Transferência")}
+                          fullWidth
+                          MenuProps={{
+                            anchorOrigin: {
+                              vertical: "bottom",
+                              horizontal: "left",
+                            },
+                            transformOrigin: {
+                              vertical: "top",
+                              horizontal: "left",
+                            },
+                            getContentAnchorEl: null,
+                          }}
+                        >
+                          {queues.map((queue) => (
+                            <MenuItem key={queue.id} value={queue.id}>
+                              {queue.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+
                     </Grid>
 
                   </Grid>
@@ -447,7 +472,7 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                   </div>
                 </div>
               </DialogContent>
-              <DialogActions>
+              <DialogActions style={{ justifyContent: "center" }}>
                 <Button
                   type="submit"
                   color="primary"
