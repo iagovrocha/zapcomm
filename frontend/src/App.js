@@ -38,7 +38,7 @@ const App = () => {
                 },
                 "&::-webkit-scrollbar-thumb": {
                     boxShadow: 'inset 0 0 6px rgba(0, 0, 0, 0.3)',
-                    backgroundColor: "#682EE3",
+                    backgroundColor: "#6aac98",
                 },
             },
             scrollbarStylesSoft: {
@@ -58,26 +58,26 @@ const App = () => {
                 light: { main: mode === "light" ? "#F3F3F3" : "#333333" },
                 tabHeaderBackground: mode === "light" ? "#EEE" : "#666",
                 optionsBackground: mode === "light" ? "#fafafa" : "#333",
-				options: mode === "light" ? "#fafafa" : "#666",
-				fontecor: mode === "light" ? "#128c7e" : "#fff",
+                options: mode === "light" ? "#fafafa" : "#666",
+                fontecor: mode === "light" ? "#128c7e" : "#fff",
                 fancyBackground: mode === "light" ? "#fafafa" : "#333",
-				bordabox: mode === "light" ? "#eee" : "#333",
-				newmessagebox: mode === "light" ? "#eee" : "#333",
-				inputdigita: mode === "light" ? "#fff" : "#666",
-				contactdrawer: mode === "light" ? "#fff" : "#666",
-				announcements: mode === "light" ? "#ededed" : "#333",
-				login: mode === "light" ? "#fff" : "#1C1C1C",
-				announcementspopover: mode === "light" ? "#fff" : "#666",
-				chatlist: mode === "light" ? "#eee" : "#666",
-				boxlist: mode === "light" ? "#ededed" : "#666",
-				boxchatlist: mode === "light" ? "#ededed" : "#333",
+                bordabox: mode === "light" ? "#eee" : "#333",
+                newmessagebox: mode === "light" ? "#eee" : "#333",
+                inputdigita: mode === "light" ? "#fff" : "#666",
+                contactdrawer: mode === "light" ? "#fff" : "#666",
+                announcements: mode === "light" ? "#ededed" : "#333",
+                login: mode === "light" ? "#fff" : "#1C1C1C",
+                announcementspopover: mode === "light" ? "#fff" : "#666",
+                chatlist: mode === "light" ? "#eee" : "#666",
+                boxlist: mode === "light" ? "#ededed" : "#666",
+                boxchatlist: mode === "light" ? "#ededed" : "#333",
                 total: mode === "light" ? "#fff" : "#222",
                 messageIcons: mode === "light" ? "grey" : "#F3F3F3",
                 inputBackground: mode === "light" ? "#FFFFFF" : "#333",
                 barraSuperior: mode === "light" ? "#FFFFFF" : "#666",
-				boxticket: mode === "light" ? "#EEE" : "#666",
-				campaigntab: mode === "light" ? "#ededed" : "#666",
-				mediainput: mode === "light" ? "#ededed" : "#1c1c1c",
+                boxticket: mode === "light" ? "#EEE" : "#666",
+                campaigntab: mode === "light" ? "#ededed" : "#666",
+                mediainput: mode === "light" ? "#ededed" : "#1c1c1c",
             },
             mode,
         },
@@ -104,9 +104,9 @@ const App = () => {
         <ColorModeContext.Provider value={{ colorMode }}>
             <ThemeProvider theme={theme}>
                 <QueryClientProvider client={queryClient}>
-                  <SocketContext.Provider value={SocketManager}>
-                      <Routes />
-                  </SocketContext.Provider>
+                    <SocketContext.Provider value={SocketManager}>
+                        <Routes />
+                    </SocketContext.Provider>
                 </QueryClientProvider>
             </ThemeProvider>
         </ColorModeContext.Provider>
