@@ -51,12 +51,11 @@ const useStyles = makeStyles(theme => ({
 	mainPaper: {
 		flex: 1,
 		padding: theme.spacing(1),
-		overflowY: "scroll",
+		overflowY: "hidden",
 		marginTop: "7px",
 	},
 	table: {
 		minWidth: 650,
-		marginTop: "7px"
 	},
 	customTableCell: {
 		display: "flex",
@@ -433,8 +432,8 @@ const Connections = () => {
 					
 				</MainHeaderButtonsWrapper>*/}
 			{/*</MainHeader>*/}
-			<Paper className={classes.mainPaper} variant="outlined">
-				<Table className={classes.table} aria-label="Lista de Tarefas" size="small">
+			<Paper className={classes.mainPaper} >
+				<Table className={classes.table} aria-label="Lista de Conexões" size="small">
 					<TableHead>
 						<TableRow>
 							<TableCell align="center">
