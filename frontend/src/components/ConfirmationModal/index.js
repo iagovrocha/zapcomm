@@ -8,6 +8,9 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { i18n } from "../../translate/i18n";
+
+import IconButton from "@mui/material/IconButton";
+
 const useStyles = makeStyles((theme) => ({ 
 	background: {
 		backgroundColor: "#0c2c54",
@@ -19,9 +22,18 @@ const useStyles = makeStyles((theme) => ({
 	},
 
 	ok: {
+		borderRadius: "20px",
 		color: "#0c2c54",
 		backgroundColor: "#34d3a3",
+		"&:hover": {
+			backgroundColor: "#5cdbb5",
+		},
 	},
+	AlinhamentoBtn: {
+		display: "flex !important",
+		flexDirection: "row !important",
+		justifyItems: "right !important",
+	  },
 }));
 const ConfirmationModal = ({ title, children, open, onClose, onConfirm }) => {
 	const classes = useStyles();
@@ -31,19 +43,24 @@ const ConfirmationModal = ({ title, children, open, onClose, onConfirm }) => {
 			onClose={() => onClose(false)}
 			aria-labelledby="confirm-dialog"
 		>
-			<DialogTitle className={classes.background} id="confirm-dialog">{title}</DialogTitle>
-			<DialogContent dividers>
+			<DialogTitle className={classes.background}>
+				<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+					{title}
+					<IconButton onClick={() => onClose(false)} style={{ color: "white" }}>x</IconButton>
+				</div>
+				</DialogTitle>
+			<DialogContent>
 				<Typography>{children}</Typography>
 			</DialogContent>
-			<DialogActions>
-				<Button
+			<DialogActions className={classes.AlinhamentoBtn}>
+				{/* <Button
 					variant="contained"
 					onClick={() => onClose(false)}
 					color="default"
 					className={classes.cancelar}
 				>
 					{i18n.t("confirmationModal.buttons.cancel")}
-				</Button>
+				</Button> */}
 				<Button
 					variant="contained"
 					onClick={() => {
