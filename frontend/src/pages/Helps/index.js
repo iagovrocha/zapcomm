@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { makeStyles } from "@material-ui/core";
-import { Paper} from "@material-ui/core";
-import {Typography} from "@material-ui/core";
-import {Modal} from "@material-ui/core";
-import {InputBase} from "@material-ui/core";
-import {Table} from "@material-ui/core";
-import {TableBody} from "@material-ui/core";
-import {TableCell} from "@material-ui/core";
-import {TableContainer} from "@material-ui/core";
-import {TableHead} from "@material-ui/core";
-import {TableRow} from "@material-ui/core";
+import { Paper } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+import { Modal } from "@material-ui/core";
+import { InputBase } from "@material-ui/core";
+import { Table } from "@material-ui/core";
+import { TableBody } from "@material-ui/core";
+import { TableCell } from "@material-ui/core";
+import { TableContainer } from "@material-ui/core";
+import { TableHead } from "@material-ui/core";
+import { TableRow } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import useHelps from "../../hooks/useHelps";
 import YouTubeIcon from '@material-ui/icons/YouTube';
@@ -45,10 +45,10 @@ const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 650,
     backgroundColor: "#FFFFFF",
-    fontFamily: 'Inter Tight, sans-serif', 
+    fontFamily: 'Inter Tight, sans-serif',
     color: 'black'
   },
-  
+
   videoModal: {
     display: 'flex',
     alignItems: 'center',
@@ -132,38 +132,41 @@ const Helps = () => {
   );
 
   const renderHelps = () => (
-      <Paper className={classes.tableContainer}>
-        <Table className={classes.table} aria-label="Ajuda" size="small">
-          <TableHead className={classes.tableHeader}>
+    <Paper className={classes.tableContainer}>
+      <Table className={classes.table} aria-label="Ajuda" size="small">
+        <TableHead className={classes.tableHeader}>
+          <TableRow>
+            <TableCell><b>Tutorial</b></TableCell>
+            <TableCell align="left"><b>Descrição</b></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {filteredRecords.length === 0 ? (
             <TableRow>
-              <TableCell><b>Tutorial</b></TableCell>
-              <TableCell align="left"><b>Descrição</b></TableCell>
+              <TableCell colSpan={2} align="center">
+                <b>Não possui tutoriais</b>
+              </TableCell>
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredRecords.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={2} align="center">
-                  <b>Não possui tutoriais</b>
+          ) : (
+            filteredRecords.map((record, index) => (
+              <TableRow 
+                key={index} 
+                onClick={() => openVideoModal(record.video)} 
+                style={{ cursor: 'pointer' }}>
+                <TableCell component="th" scope="row">
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <YouTubeIcon style={{ color: 'red' }} />
+                    <Typography variant="body1">{record.title}</Typography>
+                  </span>
                 </TableCell>
+                <TableCell align="left">{record.description}</TableCell>
               </TableRow>
-            ) : (
-              filteredRecords.map((record, index) => (
-                <TableRow key={index} onClick={() => openVideoModal(record.video)} style={{ cursor: 'pointer' }}>
-                  <TableCell component="th" scope="row">
-                    <span style={{ display: 'flex', alignItems: 'center' }}>
-                      <YouTubeIcon style={{ marginLeft: 8, color: 'red' }} />
-                      {record.title}
-                    </span>
-                  </TableCell>
-                  <TableCell align="left">{record.description}</TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </Paper>
-   
+            ))
+          )}
+        </TableBody>
+      </Table>
+    </Paper>
+
   );
 
   return (
