@@ -346,7 +346,7 @@ const Announcements = () => {
         </div>
       {/* </MainHeader> */}
       <Paper
-        className={classes.mainPaper}
+        // className={classes.mainPaper}
         onScroll={handleScroll}
       >
         <Table size="small">
