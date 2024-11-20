@@ -2,6 +2,7 @@ import React, { useState, useCallback, useContext } from "react";
 import { toast } from "react-toastify";
 import { format, parseISO } from "date-fns";
 
+//Ícone da lupa importado 
 import SearchIcon from "@material-ui/icons/Search";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -62,8 +63,7 @@ const useStyles = makeStyles(theme => ({
 
 	searchInputWrapper: {
 		border: "solid 1px #828282",
-		//padding: 8, // Para um pouco de espaço interno
-        outline: "none", // Remove o contorno padrão
+        outline: "none", 
 		flex: 1,
 		display: "flex",
 		borderRadius: 40,
@@ -71,6 +71,7 @@ const useStyles = makeStyles(theme => ({
 		marginRight: theme.spacing(1),
 	},
 
+	//Ícone de busca usado dentro do input
 	searchIcon: {
 		color: "grey",
 		marginLeft: 6,
@@ -78,14 +79,16 @@ const useStyles = makeStyles(theme => ({
 		alignSelf: "center",
 	},
 
+	//Barra arredondada de busca do input
 	searchInput: {
 		flex: 1,
 		border: "none",
 		borderRadius: 30,
-		padding: 4, // Para um pouco de espaço interno
+		padding: 4, 
         
 	},
 
+	// CSS do divBody
 	divBody: {
 		flex: 1,
 		padding: theme.spacing(1),
@@ -106,6 +109,8 @@ const useStyles = makeStyles(theme => ({
 	buttonProgress: {
 		color: green[500],
 	},
+
+	//Classe nova adicionada para o botao "Adicionar Whatsapp"
 	BotaoAdicionar: {
 		borderRadius: "40px",
 		padding: "10px 32px",
@@ -150,7 +155,7 @@ const Connections = () => {
 	const [selectedWhatsApp, setSelectedWhatsApp] = useState(null);
 	const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 	const [searchParam, setSearchParam] = useState("");
-	//funcao para pesquizar parametros
+	
 	const confirmationModalInitialState = {
 		action: "",
 		title: "",
@@ -178,11 +183,12 @@ const Connections = () => {
 		}
 	};
 
-	//funçao para procurar
+	
 	const handleSearch = (event) => {
 		setSearchParam(event.target.value.toLowerCase());
 	  };
 
+	//Codigo usado para detectar a palavra a medida que é digitada
 	const filteredWhatsApps = whatsApps ? (searchParam
 	? whatsApps.filter(whatsApp =>
 		whatsApp.name.toLowerCase().includes(searchParam)
@@ -352,12 +358,13 @@ const Connections = () => {
 	};
 
 	return (
+		// div usada para padronizar as paginas e substituir o MainContainer
 		<div className={classes.divBody}>
 			  <h1 style={{ margin: "0" }}><b>{i18n.t("connections.title")}</b></h1>
 			  <Typography
 				component="subtitle1"
 				variant="body1"
-				style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+				style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}
 				>
 				{"Adicione, edite e exclua seus bots e projetos."}
 			  </Typography>
@@ -383,19 +390,20 @@ const Connections = () => {
 				
 			<div className={classes.searchInputWrapper}>
             	<SearchIcon className={classes.searchIcon} />
+
+				{/* Atributos do InputBase que servem para a busca de conexoes especificas  */}
 				<InputBase
-				className={classes.searchInput}
-				placeholder={i18n.t("contacts.searchPlaceholder")}
-				type="search"
-				value={searchParam}
-				onChange={handleSearch}
-				
-              
-            ></InputBase>
+					className={classes.searchInput}
+					placeholder={i18n.t("contacts.searchPlaceholder")}
+					type="search"
+					value={searchParam}
+					onChange={handleSearch}
+				></InputBase>
           </div>
-		  <div
-          style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
-          >
+		  {/* Traço vertical que divide o espaço entre o input de busca e o botao de adicionar */}
+		  <div 
+          		style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+          	>
           </div>
 				<MainHeaderButtonsWrapper>
 					<Can
@@ -407,7 +415,8 @@ const Connections = () => {
 							<Button
 								variant="contained"
 								color="primary"
-								//adicionei a classe pro botao ficar padronizado 
+						
+								//Adicionada a classe "BotaoAdicionar" pro botão ficar fiel ao figma
 								className={classes.BotaoAdicionar}
 								onClick={handleOpenWhatsAppModal}
 							>
@@ -458,6 +467,7 @@ const Connections = () => {
 						 <TableRow><TableCell colSpan={5} align="center"><CircularProgress /></TableCell></TableRow>
                         ) : (
                             <>
+							{/* filtra as conexoes existentes com base no nome da conexao digitada no input */}
                                 {filteredWhatsApps.length > 0 ? (
                                     filteredWhatsApps.map(whatsApp => (
                                         <TableRow key={whatsApp.id}>
@@ -492,6 +502,7 @@ const Connections = () => {
                                     ))
                                 ) : (
                                     <TableRow>
+										{/* Caso nao tenha sido encontrada nenhuma conexao o texto "Nenhuma conexão encontrada" será mostrado*/}
                                         <TableCell colSpan={6} align="center">
                                             <Typography variant="body1">Nenhuma conexão encontrada</Typography>
                                         </TableCell>
