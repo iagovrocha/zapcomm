@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
-    AreaChart,
-    Area,
+    LineChart,
+    Line,
     XAxis,
     YAxis,
     CartesianGrid,
@@ -45,6 +45,8 @@ export const ChartsDate = () => {
         total: item.total,
     })) || [];
 
+    const maxValue = Math.max(...dataCharts.map(item => item.total), 0);
+
     return (
         <>
             <Typography component="h2" variant="h6" color="primary" gutterBottom>
@@ -76,20 +78,19 @@ export const ChartsDate = () => {
             </Stack>
 
             <ResponsiveContainer width="100%" height={280}>
-                <AreaChart data={dataCharts}>
+                <LineChart data={dataCharts}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="date" />
-                    <YAxis />
+                    <YAxis domain={[0, maxValue]} />
                     <Tooltip />
                     <Legend />
-                    <Area
+                    <Line
                         type="monotone"
                         dataKey="total"
                         stroke="#0C2454"
-                        fill="#0C2454"
-                        fillOpacity={0.3}
+                        strokeWidth={3}
                     />
-                </AreaChart>
+                </LineChart>
             </ResponsiveContainer>
         </>
     );
