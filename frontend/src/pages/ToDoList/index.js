@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
@@ -10,23 +9,14 @@ import Typography from "@material-ui/core/Typography";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import InputAdornment from '@material-ui/core/InputAdornment'; // Importar InputAdornment
 import SearchIcon from '@material-ui/icons/Search'; // Importar o ícone de pesquisa
 import InputBase from "@material-ui/core/InputBase";
-import MainContainer from "../../components/MainContainer";
 import TaskModal from '../../components/TaskModal';
 
 const useStyles = makeStyles((theme) => ({
-
-  // root: {
-  //   display: 'flex',
-  //   flexDirection: 'column',
-  //  // margin: '2rem'
-  // },
   Tabela: {
     backgroundColor: "#FFFFFF",
     fontFamily: 'Inter Tight, sans-serif', 
@@ -45,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-start', // Alinha os itens à esquerda
     marginBottom: '7px', // Espaçamento abaixo do contêiner
   },
-  serachInputWrapper: {
+  serachInputWrapper: { //Conjunto do input de pesquisa com o icone da lupa
     border: "solid 1px #828282",
 		flex: 1,
 		display: "flex",
@@ -60,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 		border: "none",
 		borderRadius: 30,
   },
-  searchIcon: {
+  searchIcon: { //icon da lupa
 		color: "grey",
 		marginLeft: 6,
 		marginRight: 6,
@@ -90,15 +80,6 @@ const useStyles = makeStyles((theme) => ({
     width: "35px", 
     height: "30px",
   },
-  //taskText: { // Texto da tarefa
-    //maxWidth: '300px',
-    //overflow: 'hidden',
-    //textOverflow: 'ellipsis',
-  //},
-  //dateText: { // Data de criação e atualização da tarefa
-    //textAlign: 'center',
-  //},
-
 }));
 
 const ToDoList = () => {
@@ -109,11 +90,11 @@ const ToDoList = () => {
   const [editIndex, setEditIndex] = useState(-1);
   const [error, setError] = useState(''); // Estado para armazenar a mensagem de erro
   const [hasMore, setHasMore] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); //Estado de carregamento
   const [pageNumber, setPageNumber] = useState(1);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [modalOpen, setModalOpen] = useState(false);
-  const [initialTask, setInitialTask] = useState('');
+  const [searchTerm, setSearchTerm] = useState(''); //Termo de pesquisa
+  const [modalOpen, setModalOpen] = useState(false); //Controla a abertura do modal
+  const [initialTask, setInitialTask] = useState(''); //Armazena o valor inicial da tarefa no modal
 
   const loadMore = () => {
     setPageNumber((prevState) => prevState + 1);
@@ -138,39 +119,33 @@ const ToDoList = () => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-  const handleTaskChange = (event) => {
-    const inputValue = event.target.value;
-    if (inputValue.length > 50) {
-      setError('A tarefa não pode exceder 50 caracteres.');
-      return;
-    } else {
-      setError(''); // Limpa o erro se estiver dentro do limite
-    }
-    setTask(inputValue);
-  };
-
+  //Função chamada quando o termo de pesquisa muda
   const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
+    setSearchTerm(event.target.value); // Atualiza o estado do termo de pesquisa
   };
 
+  //Função para excluir uma tarefa
   const handleDeleteTask = (index) => {
     const newTasks = [...tasks];
     newTasks.splice(index, 1);
     setTasks(newTasks);
   };
 
+  //Função para abrir o modal de adição de tarefa
   const openAddModal = () => {
     setInitialTask('');
     setEditIndex(-1);
     setModalOpen(true);
   };
 
+  //Função para abrir o modal de edição de tarefa
   const openEditModal = (index) => {
     setInitialTask(tasks[index].text);
     setEditIndex(index);
     setModalOpen(true);
   };
 
+  //Função para fechar o modal
   const handleModalClose = () => {
     setModalOpen(false);
   };
@@ -186,41 +161,14 @@ const ToDoList = () => {
     setModalOpen(false);
   };
 
+  //Filtra as tarefas com base no termo de pesquisa
   const filteredTasks = tasks.filter(task => 
     task.text.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  //const handleAddTask = () => {
-    //if (!task.trim()) {
-      // Impede que o usuário crie uma tarefa sem texto
-      //return;
-    //}
-
-    //const now = new Date();
-    //if (editIndex >= 0) {
-      // Editar tarefa existente
-      //const newTasks = [...tasks];
-      //newTasks[editIndex] = { text: task, updatedAt: now, createdAt: newTasks[editIndex].createdAt };
-      //setTasks(newTasks);
-      //setTask('');
-      //setEditIndex(-1);
-    //} else {
-      // Adicionar nova tarefa
-      //setTasks([...tasks, { text: task, createdAt: now, updatedAt: now }]);
-      //setTask('');
-    //}
-  //};
-
-  //const handleEditTask = (index) => {
-    //setTask(tasks[index].text);
-    //setEditIndex(index);
-  //};
-
   
-
   return (
-    <div className={classes.divBody}>
-      {/* <div className={classes.root}> */}
-        <div className={classes.titleContainer}>
+    <div className={classes.divBody}> {/*Div com todos os elementos da página*/}   
+        <div className={classes.titleContainer}> {/*Cabeçalho*/}
           <h1 style={{margin: '0'}}>Tarefas</h1> {/*Titulo tarefas*/}
           <Typography
             className={classes.info}
@@ -231,10 +179,7 @@ const ToDoList = () => {
               {'Adicione suas tarefas'}
           </Typography>
         </div>
-
-      {/* <MainContainer className={classes.mainContainer}> */}
-
-        <div style={{display: "inline-flex", alignItems: 'center', width: "95%"}}> 
+        <div style={{display: "inline-flex", alignItems: 'center', width: "95%"}}> {/*Engloba o input de pesquisa e botão de adicionar*/} 
           <div className={classes.serachInputWrapper}>
             <SearchIcon className={classes.searchIcon} />
             <InputBase
@@ -244,35 +189,19 @@ const ToDoList = () => {
               onChange={handleSearchChange}
               variant="outlined"
                 error={!!error} // irá mostrar um erro se houver
-                helperText={error} // Mostra a nebsagem de erro abaixo do campo
-              //   InputProps={{
-              //     startAdornment: (
-              //       <InputAdornment position="start">
-              //         <SearchIcon style={{ color: "gray" }} />
-              //       </InputAdornment>
-              //     ),
-              //   style: {
-              //       borderRadius: '40px',
-              //   }
-              // }}
+                helperText={error} // Mostra a nebsagem de erro abaixo do campo 
             />
           </div>
-
           <div 
             style={{width: '1px', height: "43px", background: '#BDBDBD', marginLeft: '50px', marginRight: '50px'}}>
           </div>
-
           <Button className={classes.button} variant="contained" color="primary" onClick={openAddModal}>
             {"Adicionar Tarefa"}
           </Button>
-
         </div>
-
         <Paper 
           className={classes.mainPaper} 
-          // variant="outlined"
           onScroll={handleScroll}>
-
           <Table className={classes.table} aria-label="Lista de Tarefas" size="small">
             <TableHead className={classes.tableHeader}>
               <TableRow>
@@ -282,14 +211,14 @@ const ToDoList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredTasks.length === 0 ? ( // Verificar se não há tarefas
+              {filteredTasks.length === 0 ? ( //Verificar se não há tarefas
                 <TableRow>
                   <TableCell colSpan={3} align="center">
                     Nenhuma tarefa adicionada
                   </TableCell>
                 </TableRow>
               ) : (
-                filteredTasks.map((task, index) => (
+                filteredTasks.map((task, index) => ( //Mapeia a lista de tarefas filtradas
                   <TableRow key={index}>
                     <TableCell component="th" scope="row">
                       {task.text}
@@ -316,12 +245,11 @@ const ToDoList = () => {
           </Table>
         </Paper>
         <TaskModal
-        open={modalOpen}
-        onClose={handleModalClose}
-        onSubmit={handleModalSubmit}
-        initialTask={initialTask}
-      />
-      {/* </MainContainer> */}
+        open={modalOpen} //Controla a abertura do modal
+        onClose={handleModalClose} //Fecha o modal
+        onSubmit={handleModalSubmit} //Função para enviar o formulário do moda
+        initialTask={initialTask} //Muda a tarefa inicial para edição
+      />     
     </div>
   );
 }
