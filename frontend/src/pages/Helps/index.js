@@ -7,14 +7,11 @@ import { InputBase } from "@material-ui/core";
 import { Table } from "@material-ui/core";
 import { TableBody } from "@material-ui/core";
 import { TableCell } from "@material-ui/core";
-import { TableContainer } from "@material-ui/core";
 import { TableHead } from "@material-ui/core";
 import { TableRow } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import useHelps from "../../hooks/useHelps";
 import YouTubeIcon from '@material-ui/icons/YouTube';
-
-
 
 const useStyles = makeStyles((theme) => ({
   divBody: {
@@ -48,7 +45,16 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Inter Tight, sans-serif',
     color: 'black'
   },
-
+  helps: {
+    textDecoration: 'none',
+    transition: 'text-decoration-color 0.3s ease',
+    "&:hover": {
+      textDecoration: 'underline',  //sublinhado no hover
+      textDecorationColor: 'blue',  //cor do sublinhado
+      textDecorationThickness: '2px',  //espessura do sublinhado
+      textDecorationStyle: 'solid',  //estilo do sublinhado
+    }
+  },
   videoModal: {
     display: 'flex',
     alignItems: 'center',
@@ -69,8 +75,8 @@ const useStyles = makeStyles((theme) => ({
 const Helps = () => {
   const classes = useStyles();
   const [records, setRecords] = useState([]);
-  const [search, setSearch] = useState('');
-  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [search, setSearch] = useState(''); //Estado para armazenar o termo de busca
+  const [selectedVideo, setSelectedVideo] = useState(null); 
   const { list } = useHelps();
 
   useEffect(() => {
@@ -89,6 +95,7 @@ const Helps = () => {
     setSelectedVideo(null); // Fecha o modal
   };
 
+  // Função para atualizar o valor do campo de busca
   const handleSearchChange = (event) => {
     setSearch(event.target.value); // Atualiza o termo de busca
   };
@@ -133,7 +140,7 @@ const Helps = () => {
 
   const renderHelps = () => (
     <Paper className={classes.tableContainer}>
-      <Table className={classes.table} aria-label="Ajuda" size="small">
+      <Table className={classes.table} aria-label="Ajuda" size="small"> {/*Tabela que contém os tutoriais*/}
         <TableHead className={classes.tableHeader}>
           <TableRow>
             <TableCell><b>Tutorial</b></TableCell>
@@ -141,25 +148,25 @@ const Helps = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {filteredRecords.length === 0 ? (
+          {filteredRecords.length === 0 ? ( //Verificar se não há tutoriais
             <TableRow>
               <TableCell colSpan={2} align="center">
                 <b>Não possui tutoriais</b>
               </TableCell>
             </TableRow>
           ) : (
-            filteredRecords.map((record, index) => (
-              <TableRow 
-                key={index} 
-                onClick={() => openVideoModal(record.video)} 
-                style={{ cursor: 'pointer' }}>
+            filteredRecords.map((record, index) => ( //Mapeia a lista de tutoriais filtrados
+              <TableRow className={classes.helps}
+              key={index} 
+              onClick={() => openVideoModal(record.video)} 
+              style={{ cursor: 'pointer' }}>
                 <TableCell component="th" scope="row">
                   <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <YouTubeIcon style={{ color: 'red' }} />
-                    <Typography variant="body1">{record.title}</Typography>
+                    <YouTubeIcon style={{ color: 'red' }} /> {/*icone do youtube ao lado do nome do tutorial*/}
+                    <Typography variant="body1">{record.title}</Typography> {/* Titulo do tutorial */}
                   </span>
                 </TableCell>
-                <TableCell align="left">{record.description}</TableCell>
+                <TableCell align="left">{record.description}</TableCell> {/* Descrição do tutorial */}
               </TableRow>
             ))
           )}
@@ -170,14 +177,14 @@ const Helps = () => {
   );
 
   return (
-    <div className={classes.divBody}>
-      <div className={classes.titleContainer}>
+    <div className={classes.divBody}> {/*Div com todos os elementos da página*/}
+      <div className={classes.titleContainer}> {/*Cabeçalho*/}
         <h1 style={{ margin: '0' }}>Ajuda</h1>
         <Typography component="subtitle1" variant="body1" style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}>
           {'Assista aos tutoriais sobre como usar as ferramentas do Zapcomm'}
         </Typography>
       </div>
-      <div className={classes.searchInputWrapper}>
+      <div className={classes.searchInputWrapper}>{/*Engloba o input de pesquisa e botão de adicionar*/} 
         <SearchIcon style={{ color: "grey", marginLeft: 6, marginRight: 6, alignSelf: 'center' }} />
         <InputBase
           className={classes.input}
