@@ -31,11 +31,10 @@ import {
 	DeleteOutline,
 } from "@material-ui/icons";
 
-import MainContainer from "../../components/MainContainer";
+
 import MainHeader from "../../components/MainHeader";
 import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
-import Title from "../../components/Title";
-import TableRowSkeleton from "../../components/TableRowSkeleton";
+
 
 import api from "../../services/api";
 import WhatsAppModal from "../../components/WhatsAppModal";
@@ -110,7 +109,7 @@ const useStyles = makeStyles(theme => ({
 		color: green[500],
 	},
 
-	//Classe nova adicionada para o botao "Adicionar Whatsapp"
+	//Estilização da classe nova adicionada para o botao "Adicionar Whatsapp"
 	BotaoAdicionar: {
 		borderRadius: "40px",
 		padding: "10px 32px",
