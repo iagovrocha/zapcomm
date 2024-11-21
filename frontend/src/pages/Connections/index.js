@@ -2,7 +2,6 @@ import React, { useState, useCallback, useContext } from "react";
 import { toast } from "react-toastify";
 import { format, parseISO } from "date-fns";
 
-//Ícone da lupa importado 
 import SearchIcon from "@material-ui/icons/Search";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -31,10 +30,11 @@ import {
 	DeleteOutline,
 } from "@material-ui/icons";
 
-
+import MainContainer from "../../components/MainContainer";
 import MainHeader from "../../components/MainHeader";
 import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
-
+import Title from "../../components/Title";
+import TableRowSkeleton from "../../components/TableRowSkeleton";
 
 import api from "../../services/api";
 import WhatsAppModal from "../../components/WhatsAppModal";
@@ -64,32 +64,34 @@ const useStyles = makeStyles(theme => ({
 	},
 	serachInputWrapper: {
 		border: "solid 1px #828282",
-        outline: "none", 
-		flex: 1,
-		display: "flex",
-		borderRadius: 40,
-		padding: 4,
-		marginRight: theme.spacing(1),
-	},
-
-	//Ícone de busca usado dentro do input
+			flex: 1,
+			display: "flex",
+			borderRadius: 40,
+			padding: 4,
+			marginRight: theme.spacing(1),
+				width: '70%',
+				height: '48px',
+		},
 	searchIcon: {
 		color: "grey",
 		marginLeft: 6,
 		marginRight: 6,
 		alignSelf: "center",
 	},
-
-	//Barra arredondada de busca do input
+	acoesButtons: {
+		color: "#0C2C54",
+		"&:hover": {
+			color: "#3c5676",
+		},
+		width: "35px",
+		height: "30px",
+	},
 	searchInput: {
 		flex: 1,
 		border: "none",
 		borderRadius: 30,
-		padding: 4, 
-        
-	},
 
-	// CSS do divBody
+	},
 	divBody: {
 		flex: 1,
 		padding: theme.spacing(1),
@@ -109,8 +111,6 @@ const useStyles = makeStyles(theme => ({
 	buttonProgress: {
 		color: green[500],
 	},
-
-	//Estilização da classe nova adicionada para o botao "Adicionar Whatsapp"
 	BotaoAdicionar: {
 		borderRadius: "40px",
 		padding: "10px 32px",
@@ -161,7 +161,7 @@ const Connections = () => {
 	const [selectedWhatsApp, setSelectedWhatsApp] = useState(null);
 	const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 	const [searchParam, setSearchParam] = useState("");
-	
+	//funcao para pesquizar parametros
 	const confirmationModalInitialState = {
 		action: "",
 		title: "",
@@ -189,12 +189,11 @@ const Connections = () => {
 		}
 	};
 
-	
+	//funçao para procurar
 	const handleSearch = (event) => {
 		setSearchParam(event.target.value.toLowerCase());
 	};
 
-	//Codigo usado para detectar a palavra a medida que é digitada
 	const filteredWhatsApps = whatsApps ? (searchParam
 		? whatsApps.filter(whatsApp =>
 			whatsApp.name.toLowerCase().includes(searchParam)
@@ -364,14 +363,13 @@ const Connections = () => {
 	};
 
 	return (
-		// div usada para padronizar as paginas e substituir o MainContainer
 		<div className={classes.divBody}>
 			<h1 style={{ margin: "0" }}><b>{i18n.t("connections.title")}</b></h1>
 			<Typography
 				component="subtitle1"
 				variant="body1"
-				style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}
-				>
+				style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+			>
 				{"Adicione, edite e exclua seus bots e projetos."}
 			</Typography>
 			<ConfirmationModal
@@ -392,26 +390,24 @@ const Connections = () => {
 				onClose={handleCloseWhatsAppModal}
 				whatsAppId={!qrModalOpen && selectedWhatsApp?.id}
 			/>
-			<MainHeader>
-				
-			<div className={classes.searchInputWrapper}>
-            	<SearchIcon className={classes.searchIcon} />
+			{/*<MainHeader>*/}
 
-				{/* Atributos do InputBase que servem para a busca de conexoes especificas  */}
-				<InputBase
-					className={classes.searchInput}
-					placeholder={i18n.t("contacts.searchPlaceholder")}
-					type="search"
-					value={searchParam}
-					onChange={handleSearch}
-				></InputBase>
-          </div>
-		  {/* Traço vertical que divide o espaço entre o input de busca e o botao de adicionar */}
-		  <div 
-          		style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
-          	>
-          </div>
-				<MainHeaderButtonsWrapper>
+			<div style={{ display: "inline-flex", alignItems: 'center', width: "95%" }}>
+				<div className={classes.serachInputWrapper}>
+					<SearchIcon className={classes.searchIcon} />
+					<InputBase
+						className={classes.searchInput}
+						placeholder={i18n.t("contacts.searchPlaceholder")}
+						type="search"
+						value={searchParam}
+						onChange={handleSearch}
+					></InputBase>
+				</div>
+				<div
+					style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+				>
+				</div>
+				<MainHeaderButtonsWrapper style={{}}>
 					<Can
 						role={user.profile}
 						perform="connections-page:addConnection"
@@ -419,8 +415,7 @@ const Connections = () => {
 							<Button
 								variant="contained"
 								color="primary"
-						
-								//Adicionada a classe "BotaoAdicionar" pro botão ficar fiel ao figma
+								//adicionei a classe pro botao ficar padronizado
 								className={classes.BotaoAdicionar}
 								onClick={handleOpenWhatsAppModal}
 							>
@@ -429,8 +424,14 @@ const Connections = () => {
 						)}
 					/>
 				</MainHeaderButtonsWrapper>
-			</MainHeader>
-			<Paper className={classes.mainPaper} variant="outlined">
+			</div>
+			{/*<MainHeaderButtonsWrapper>
+					
+				</MainHeaderButtonsWrapper>*/}
+			{/*</MainHeader>*/}
+			<Paper
+			// className={classes.mainPaper} 
+			>
 				<Table size="small">
 					<TableHead>
 						<TableRow>
@@ -468,52 +469,50 @@ const Connections = () => {
 					</TableHead>
 					<TableBody>
 						{loading ? (
-						 <TableRow><TableCell colSpan={5} align="center"><CircularProgress /></TableCell></TableRow>
-                        ) : (
-                            <>
-							{/* filtra as conexoes existentes com base no nome da conexao digitada no input */}
-                                {filteredWhatsApps.length > 0 ? (
-                                    filteredWhatsApps.map(whatsApp => (
-                                        <TableRow key={whatsApp.id}>
-                                            <TableCell align="center">{whatsApp.name}</TableCell>
-                                            <TableCell align="center">{renderStatusToolTips(whatsApp)}</TableCell>
-                                            <Can
-                                                role={user.profile}
-                                                perform="connections-page:actionButtons"
-                                                yes={() => (
-                                                    <TableCell align="center">
-                                                        {renderActionButtons(whatsApp)}
-                                                    </TableCell>
-                                                )}
-                                            />
-                                            <TableCell align="center">
-                                                {format(parseISO(whatsApp.updatedAt), "dd/MM/yy HH:mm")}
-                                            </TableCell>
-                                            <TableCell align="center">
-                                                {whatsApp.isDefault && <CheckCircle style={{ color: green[500] }} />}
-                                            </TableCell>
-                                            <Can
-                                                role={user.profile}
-                                                perform="connections-page:editOrDeleteConnection"
-                                                yes={() => (
-                                                    <TableCell align="center">
-                                                        <IconButton size="small" onClick={() => handleEditWhatsApp(whatsApp)}><Edit /></IconButton>
-                                                        <IconButton size="small" onClick={() => handleOpenConfirmationModal("delete", whatsApp.id)}><DeleteOutline /></IconButton>
-                                                    </TableCell>
-                                                )}
-                                            />
-                                        </TableRow>
-                                    ))
-                                ) : (
-                                    <TableRow>
-										{/* Caso nao tenha sido encontrada nenhuma conexao o texto "Nenhuma conexão encontrada" será mostrado*/}
-                                        <TableCell colSpan={6} align="center">
-                                            <Typography variant="body1">Nenhuma conexão encontrada</Typography>
-                                        </TableCell>
-                                    </TableRow>
-                                )}
-                            </>
-                        )}
+							<TableRow><TableCell colSpan={5} align="center"><CircularProgress /></TableCell></TableRow>
+						) : (
+							<>
+								{filteredWhatsApps.length > 0 ? (
+									filteredWhatsApps.map(whatsApp => (
+										<TableRow key={whatsApp.id}>
+											<TableCell align="center">{whatsApp.name}</TableCell>
+											<TableCell align="center">{renderStatusToolTips(whatsApp)}</TableCell>
+											<Can
+												role={user.profile}
+												perform="connections-page:actionButtons"
+												yes={() => (
+													<TableCell align="center">
+														{renderActionButtons(whatsApp)}
+													</TableCell>
+												)}
+											/>
+											<TableCell align="center">
+												{format(parseISO(whatsApp.updatedAt), "dd/MM/yy HH:mm")}
+											</TableCell>
+											<TableCell align="center">
+												{whatsApp.isDefault && <CheckCircle style={{ color: green[500] }} />}
+											</TableCell>
+											<Can
+												role={user.profile}
+												perform="connections-page:editOrDeleteConnection"
+												yes={() => (
+													<TableCell align="center">
+														<IconButton size="small" onClick={() => handleEditWhatsApp(whatsApp)} className={classes.acoesButtons}><Edit /></IconButton>
+														<IconButton size="small" onClick={() => handleOpenConfirmationModal("delete", whatsApp.id)} className={classes.acoesButtons}><DeleteOutline /></IconButton>
+													</TableCell>
+												)}
+											/>
+										</TableRow>
+									))
+								) : (
+									<TableRow>
+										<TableCell colSpan={6} align="center">
+											<Typography variant="body1">Nenhuma conexão encontrada</Typography>
+										</TableCell>
+									</TableRow>
+								)}
+							</>
+						)}
 					</TableBody>
 				</Table>
 			</Paper>
