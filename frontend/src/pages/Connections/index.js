@@ -51,16 +51,18 @@ const useStyles = makeStyles(theme => ({
 	mainPaper: {
 		flex: 1,
 		padding: theme.spacing(1),
-		overflowY: "scroll",
-		...theme.scrollbarStyles,
+		overflowY: "hidden",
+		marginTop: "7px",
+	},
+	table: {
+		minWidth: 650,
 	},
 	customTableCell: {
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "center",
 	},
-
-	searchInputWrapper: {
+	serachInputWrapper: {
 		border: "solid 1px #828282",
         outline: "none", 
 		flex: 1,
@@ -101,7 +103,6 @@ const useStyles = makeStyles(theme => ({
 		border: "1px solid #dadde9",
 		maxWidth: 450,
 	},
-
 	tooltipPopper: {
 		textAlign: "center",
 	},
@@ -116,7 +117,13 @@ const useStyles = makeStyles(theme => ({
 		justifyContent: "center",
 		alignItems: "center",
 		border: "1px solid var(--logo-bg, #001C27)"
-	  },
+	},
+	titleContainer: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'flex-start', // Alinha os itens à esquerda
+		marginBottom: '7px', // Espaçamento abaixo do contêiner
+	},
 
 }));
 
@@ -185,14 +192,14 @@ const Connections = () => {
 	
 	const handleSearch = (event) => {
 		setSearchParam(event.target.value.toLowerCase());
-	  };
+	};
 
 	//Codigo usado para detectar a palavra a medida que é digitada
 	const filteredWhatsApps = whatsApps ? (searchParam
-	? whatsApps.filter(whatsApp =>
-		whatsApp.name.toLowerCase().includes(searchParam)
-	)
-	: whatsApps) : [];
+		? whatsApps.filter(whatsApp =>
+			whatsApp.name.toLowerCase().includes(searchParam)
+		)
+		: whatsApps) : [];
 
 	const handleOpenWhatsAppModal = () => {
 		setSelectedWhatsApp(null);
@@ -297,17 +304,17 @@ const Connections = () => {
 				{(whatsApp.status === "CONNECTED" ||
 					whatsApp.status === "PAIRING" ||
 					whatsApp.status === "TIMEOUT") && (
-					<Button
-						size="small"
-						variant="outlined"
-						color="secondary"
-						onClick={() => {
-							handleOpenConfirmationModal("disconnect", whatsApp.id);
-						}}
-					>
-						{i18n.t("connections.buttons.disconnect")}
-					</Button>
-				)}
+						<Button
+							size="small"
+							variant="outlined"
+							color="secondary"
+							onClick={() => {
+								handleOpenConfirmationModal("disconnect", whatsApp.id);
+							}}
+						>
+							{i18n.t("connections.buttons.disconnect")}
+						</Button>
+					)}
 				{whatsApp.status === "OPENING" && (
 					<Button size="small" variant="outlined" disabled color="default">
 						{i18n.t("connections.buttons.connecting")}
@@ -359,14 +366,14 @@ const Connections = () => {
 	return (
 		// div usada para padronizar as paginas e substituir o MainContainer
 		<div className={classes.divBody}>
-			  <h1 style={{ margin: "0" }}><b>{i18n.t("connections.title")}</b></h1>
-			  <Typography
+			<h1 style={{ margin: "0" }}><b>{i18n.t("connections.title")}</b></h1>
+			<Typography
 				component="subtitle1"
 				variant="body1"
 				style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}
 				>
 				{"Adicione, edite e exclua seus bots e projetos."}
-			  </Typography>
+			</Typography>
 			<ConfirmationModal
 				title={confirmModalInfo.title}
 				open={confirmModalOpen}
@@ -408,9 +415,7 @@ const Connections = () => {
 					<Can
 						role={user.profile}
 						perform="connections-page:addConnection"
-						
 						yes={() => (
-							
 							<Button
 								variant="contained"
 								color="primary"
@@ -430,10 +435,10 @@ const Connections = () => {
 					<TableHead>
 						<TableRow>
 							<TableCell align="center">
-								{i18n.t("connections.table.name")}
+								<b>{i18n.t("connections.table.name")}</b>
 							</TableCell>
 							<TableCell align="center">
-								{i18n.t("connections.table.status")}
+								<b>{i18n.t("connections.table.status")}</b>
 							</TableCell>
 							<Can
 								role={user.profile}

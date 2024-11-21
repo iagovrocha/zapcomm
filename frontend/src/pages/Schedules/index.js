@@ -321,6 +321,10 @@ const Schedules = () => {
           />
         </div>
 
+        <div
+          style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+        ></div>
+
         <MainHeaderButtonsWrapper>
           <Button
             className = {classes.Botoes}

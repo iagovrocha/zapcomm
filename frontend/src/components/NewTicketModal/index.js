@@ -8,7 +8,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Autocomplete, {
-	createFilterOptions,
+  createFilterOptions,
 } from "@material-ui/lab/Autocomplete";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -19,12 +19,12 @@ import ContactModal from "../ContactModal";
 import toastError from "../../errors/toastError";
 import { makeStyles } from "@material-ui/core/styles";
 import { AuthContext } from "../../context/Auth/AuthContext";
-import {  WhatsApp } from "@material-ui/icons";
+import { WhatsApp } from "@material-ui/icons";
 import { Grid, ListItemText, MenuItem, Select } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { toast } from "react-toastify";
 //import ShowTicketOpen from "../ShowTicketOpenModal";
-
+import IconButton from "@mui/material/IconButton";
 const useStyles = makeStyles((theme) => ({
   online: {
     fontSize: 11,
@@ -33,7 +33,19 @@ const useStyles = makeStyles((theme) => ({
   offline: {
     fontSize: 11,
     color: "#e1306c"
-  }
+  },
+  SvBtn: {
+    borderRadius: "20px",
+    backgroundColor: "#34D3A3",
+    color: "#0C2C54",
+    "&:hover": {
+      backgroundColor: "#5cdbb5",
+    },
+  },
+  sectionBtn: {
+    display: "flex !important",
+    justifyContent: "center !important"
+  },
 }));
 
 const filter = createFilterOptions({
@@ -55,9 +67,9 @@ const NewTicketModal = ({ modalOpen, onClose, initialContact }) => {
   const { user } = useContext(AuthContext);
   const { companyId, whatsappId } = user;
 
-  const [ openAlert, setOpenAlert ] = useState(false);
-	const [ userTicketOpen, setUserTicketOpen] = useState("");
-	const [ queueTicketOpen, setQueueTicketOpen] = useState("");
+  const [openAlert, setOpenAlert] = useState(false);
+  const [userTicketOpen, setUserTicketOpen] = useState("");
+  const [queueTicketOpen, setQueueTicketOpen] = useState("");
 
   useEffect(() => {
     if (initialContact?.id !== undefined) {
@@ -75,7 +87,7 @@ const NewTicketModal = ({ modalOpen, onClose, initialContact }) => {
           .then(({ data }) => setWhatsapps(data));
       };
 
-      if (whatsappId !== null && whatsappId!== undefined) {
+      if (whatsappId !== null && whatsappId !== undefined) {
         setSelectedWhatsapp(whatsappId)
       }
 
@@ -148,7 +160,7 @@ const NewTicketModal = ({ modalOpen, onClose, initialContact }) => {
       toast.error("Selecione uma fila");
       return;
     }
-    
+
     setLoading(true);
     try {
       const queueId = selectedQueue !== "" ? selectedQueue : null;
@@ -159,12 +171,12 @@ const NewTicketModal = ({ modalOpen, onClose, initialContact }) => {
         whatsappId,
         userId: user.id,
         status: "open",
-      });      
+      });
 
       onClose(ticket);
     } catch (err) {
-      
-      const ticket  = JSON.parse(err.response.data.error);
+
+      const ticket = JSON.parse(err.response.data.error);
 
       if (ticket.userId !== user?.id) {
         setOpenAlert(true);
@@ -177,7 +189,7 @@ const NewTicketModal = ({ modalOpen, onClose, initialContact }) => {
         setLoading(false);
         onClose(ticket);
       }
-    }  
+    }
     setLoading(false);
   };
 
@@ -191,7 +203,7 @@ const NewTicketModal = ({ modalOpen, onClose, initialContact }) => {
   };
 
   const handleCloseContactModal = () => {
-    setContactModalOpen(false);    
+    setContactModalOpen(false);
   };
 
   const handleAddNewContactTicket = contact => {
@@ -287,8 +299,11 @@ const NewTicketModal = ({ modalOpen, onClose, initialContact }) => {
         onSave={handleAddNewContactTicket}
       ></ContactModal>
       <Dialog open={modalOpen} onClose={handleClose}>
-        <DialogTitle id="form-dialog-title" style={{backgroundColor: "#0C2C54", color: "#FFFFFF"}}>
-          {i18n.t("newTicketModal.title")}
+        <DialogTitle id="form-dialog-title" style={{ backgroundColor: "#0C2C54", color: "#FFFFFF" }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            {i18n.t("newTicketModal.title")}
+            <IconButton onClick={handleClose} style={{ color: "white" }} disabled={loading}>x</IconButton>
+          </div>
         </DialogTitle>
         <DialogContent dividers>
           <Grid style={{ width: 300 }} container spacing={2}>
@@ -382,20 +397,21 @@ const NewTicketModal = ({ modalOpen, onClose, initialContact }) => {
             </Grid>
           </Grid>
         </DialogContent>
-        <DialogActions>
-          <Button
+        <DialogActions className={classes.sectionBtn}>
+          {/* <Button
             onClick={handleClose}
             color="secondary"
             disabled={loading}
             variant="outlined"
           >
             {i18n.t("newTicketModal.buttons.cancel")}
-          </Button>
+          </Button> */}
           <ButtonWithSpinner
             variant="contained"
             type="button"
             disabled={!selectedContact}
             onClick={() => handleSaveTicket(selectedContact.id)}
+            className={classes.SvBtn}
             color="primary"
             loading={loading}
           >

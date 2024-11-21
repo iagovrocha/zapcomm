@@ -35,11 +35,6 @@ const useStyles = makeStyles(theme => ({
 		flexWrap: "wrap",
 	},
 
-	head: {
-		display: "flex",
-		flexDirection: "row",
-		backgroundColor: "#0c2c54"
-	},
 
 	multFieldLine: {
 		display: "flex",
@@ -49,18 +44,18 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	titulo: {
-		color:"white",
-		backgroundColor:"#0c2c54",
+		color: "white",
+		backgroundColor: "#0c2c54",
 	},
 
 	btnWrapper: {
-		borderRadius:"0.6rem",	
-		color:"#0c2c54",	
-		backgroundColor:"#34d3a3",
+		borderRadius: "20px",
+		color: "#0c2c54",
+		backgroundColor: "#34d3a3",
 		marginRight: "37.5%",
 		"&:hover": {
 			backgroundColor: "#5cdbb5",
-		  },
+		},
 	},
 
 	buttonProgress: {
@@ -99,7 +94,7 @@ const TagModal = ({ open, onClose, tagId, reload }) => {
 	};
 
 	const [tag, setTag] = useState(initialState);
-	const [ kanban, setKanban] = useState(0);
+	const [kanban, setKanban] = useState(0);
 
 	useEffect(() => {
 		try {
@@ -124,7 +119,7 @@ const TagModal = ({ open, onClose, tagId, reload }) => {
 	};
 
 	const handleKanbanChange = (e) => {
-		setKanban( e.target.checked ? 1 : 0);
+		setKanban(e.target.checked ? 1 : 0);
 	};
 
 	const handleSaveTag = async values => {
@@ -154,19 +149,12 @@ const TagModal = ({ open, onClose, tagId, reload }) => {
 				fullWidth
 				scroll="paper"
 			>
-				<div className={classes.head}>
-					<DialogTitle id="form-dialog-title" className={classes.titulo}>
-						{(tagId ? `${i18n.t("tagModal.title.edit")}` : `${i18n.t("tagModal.title.add")}`)}
-
-						{/* <Button
-							onClick={handleClose}
-							color="secondary"
-							disabled={isSubmitting}
-						>
-							{i18n.t("tagModal.buttons.cancel")}
-						</Button> */}
-					</DialogTitle>
-				</div>
+				<DialogTitle className={classes.titulo}>
+					<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+						<div>{(tagId ? `${i18n.t("tagModal.title.edit")}` : `${i18n.t("tagModal.title.add")}`)}</div>
+						<IconButton onClick={handleClose} style={{ color: "white" }}>x</IconButton>
+					</div>
+				</DialogTitle>
 				<Formik
 					initialValues={tag}
 					enableReinitialize={true}
@@ -228,23 +216,23 @@ const TagModal = ({ open, onClose, tagId, reload }) => {
 									/>
 								</div>
 								{(user.profile === "admin" || user.profile === "supervisor") && (
-                                <>
-								<div className={classes.multFieldLine}>
-        							<FormControlLabel
-          								control={
-            								<Checkbox
-             									checked={kanban === 1}
-             									onChange={handleKanbanChange}
-              									value={kanban}
-              									color="primary"
-            								/>
-          								}
-          								label="Kanban"
-          								labelPlacement="start"
-        							/>
-      							</div>
-      							<br />
-                                </>
+									<>
+										<div className={classes.multFieldLine}>
+											<FormControlLabel
+												control={
+													<Checkbox
+														checked={kanban === 1}
+														onChange={handleKanbanChange}
+														value={kanban}
+														color="primary"
+													/>
+												}
+												label="Kanban"
+												labelPlacement="start"
+											/>
+										</div>
+										<br />
+									</>
 								)}
 								{colorPickerModalOpen && (
 									<div>

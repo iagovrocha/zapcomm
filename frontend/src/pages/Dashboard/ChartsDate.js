@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
+    LineChart,
+    Line,
+    XAxis,
+    YAxis,
+    CartesianGrid,
     Tooltip,
     Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+    ResponsiveContainer,
+} from 'recharts';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import brLocale from 'date-fns/locale/pt-BR';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
@@ -18,44 +18,6 @@ import api from '../../services/api';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
 import './button.css';
-
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-);
-
-export const options = {
-    responsive: true,
-    plugins: {
-        legend: {
-            position: 'top',
-            display: false,
-        },
-        title: {
-            display: true,
-            text: 'Gráfico de Conversas',
-            position: 'left',
-        },
-        datalabels: {
-            display: true,
-            anchor: 'start',
-            offset: -30,
-            align: "start",
-            color: "#fff",
-            textStrokeColor: "#000",
-            textStrokeWidth: 2,
-            font: {
-                size: 20,
-                weight: "bold"
-
-            },
-        }
-    },
-};
 
 export const ChartsDate = () => {
 
@@ -69,20 +31,6 @@ export const ChartsDate = () => {
         handleGetTicketsInformation();
     }, []);
 
-    const dataCharts = {
-
-        labels: ticketsData && ticketsData?.data.length > 0 && ticketsData?.data.map((item) => (item.hasOwnProperty('horario') ? `Das ${item.horario}:00 as ${item.horario}:59` : item.data)),
-        datasets: [
-            {
-                // label: 'Dataset 1',
-                data: ticketsData?.data.length > 0 && ticketsData?.data.map((item, index) => {
-                    return item.total
-                }),
-                backgroundColor: '#2DDD7F',
-            },
-        ],
-    };
-
     const handleGetTicketsInformation = async () => {
         try {
             const { data } = await api.get(`/dashboard/ticketsDay?initialDate=${format(initialDate, 'yyyy-MM-dd')}&finalDate=${format(finalDate, 'yyyy-MM-dd')}&companyId=${companyId}`);
@@ -90,39 +38,60 @@ export const ChartsDate = () => {
         } catch (error) {
             toast.error('Erro ao buscar informações dos tickets');
         }
-    }
+    };
+
+    const dataCharts = ticketsData?.data?.map((item) => ({
+        date: item.hasOwnProperty('horario') ? `Das ${item.horario}:00 as ${item.horario}:59` : item.data,
+        total: item.total,
+    })) || [];
+
+    const maxValue = Math.max(...dataCharts.map(item => item.total), 0);
 
     return (
         <>
             <Typography component="h2" variant="h6" color="primary" gutterBottom>
-                Total ({ticketsData?.count})
+                Quantidade de Chamados ({ticketsData?.count})
             </Typography>
 
-            <Stack direction={'row'} spacing={2} alignItems={'center'} sx={{ my: 2, }} >
-
+            <Stack direction={'row'} spacing={2} alignItems={'center'} sx={{ my: 2 }}>
                 <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={brLocale}>
                     <DatePicker
                         value={initialDate}
-                        onChange={(newValue) => { setInitialDate(newValue) }}
+                        onChange={(newValue) => { setInitialDate(newValue); }}
                         label="Inicio"
                         renderInput={(params) => <TextField fullWidth {...params} sx={{ width: '20ch' }} />}
-
                     />
                 </LocalizationProvider>
 
                 <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={brLocale}>
                     <DatePicker
                         value={finalDate}
-                        onChange={(newValue) => { setFinalDate(newValue) }}
+                        onChange={(newValue) => { setFinalDate(newValue); }}
                         label="Fim"
                         renderInput={(params) => <TextField fullWidth {...params} sx={{ width: '20ch' }} />}
                     />
                 </LocalizationProvider>
 
-                <Button className="buttonHover" onClick={handleGetTicketsInformation} variant='contained' >Filtrar</Button>
-
+                <Button className="buttonHover" onClick={handleGetTicketsInformation} variant='contained'>
+                    Filtrar
+                </Button>
             </Stack>
-            <Bar options={options} data={dataCharts} style={{ maxWidth: '100%', maxHeight: '280px', }} />
+
+            <ResponsiveContainer width="100%" height={280}>
+                <LineChart data={dataCharts}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" />
+                    <YAxis domain={[0, maxValue]} />
+                    <Tooltip />
+                    <Legend />
+                    <Line
+                        type="monotone"
+                        dataKey="total"
+                        stroke="#0C2454"
+                        strokeWidth={3}
+                    />
+                </LineChart>
+            </ResponsiveContainer>
         </>
     );
-}
+};

@@ -47,7 +47,14 @@ const useStyles = makeStyles((theme) => ({
 
   btnWrapper: {
     position: "relative",
-  },
+    backgroundColor: "#34d3a3", 
+    color: "#0c2c54",
+    borderRadius: "20px", 
+    padding: theme.spacing(1, 4),
+    "&:hover": {
+        backgroundColor: "#34d3a3",
+    },
+}, 
 
   buttonProgress: {
     color: green[500],
@@ -212,10 +219,14 @@ const QueueModal = ({ open, onClose, queueId }) => {
         onClose={handleClose}
         scroll="paper"
       >
-        <DialogTitle>
-          {queueId
+        <DialogTitle style={{ backgroundColor: "#0c2c4c", color: "white"}}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span> {queueId
             ? `${i18n.t("queueModal.title.edit")}`
             : `${i18n.t("queueModal.title.add")}`}
+            </span>
+            <IconButton onClick={handleClose} style={{ color: "white" }}>x</IconButton>
+          </div>
         </DialogTitle>
         <Tabs
           value={tab}
@@ -225,7 +236,7 @@ const QueueModal = ({ open, onClose, queueId }) => {
           aria-label="disabled tabs example"
         >
           <Tab label="Dados da Fila" />
-          {schedulesEnabled && <Tab label="Horários de Atendimento" />}
+          {schedulesEnabled && <Tab label="Horários de Atendimento"/>}
         </Tabs>
         {tab === 0 && (
           <Paper>
@@ -422,19 +433,12 @@ const QueueModal = ({ open, onClose, queueId }) => {
                   </DialogContent>
                   <DialogActions>
                     <Button
-                      onClick={handleClose}
-                      color="secondary"
-                      disabled={isSubmitting}
-                      variant="outlined"
-                    >
-                      {i18n.t("queueModal.buttons.cancel")}
-                    </Button>
-                    <Button
                       type="submit"
                       color="primary"
                       disabled={isSubmitting}
                       variant="contained"
                       className={classes.btnWrapper}
+                      style={{ display: 'block', margin: 'auto' }}
                     >
                       {queueId
                         ? `${i18n.t("queueModal.buttons.okEdit")}`

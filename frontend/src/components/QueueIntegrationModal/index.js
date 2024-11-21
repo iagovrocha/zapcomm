@@ -27,7 +27,7 @@ import { i18n } from "../../translate/i18n";
 
 import api from "../../services/api";
 import toastError from "../../errors/toastError";
-
+import IconButton from "@mui/material/IconButton";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -40,7 +40,12 @@ const useStyles = makeStyles((theme) => ({
   },
 
   btnWrapper: {
-    position: "relative",
+    borderRadius: "20px",
+    color: "#0c2c54",
+    backgroundColor: "#34d3a3",
+    "&:hover": {
+      backgroundColor: "#5cdbb5",
+    },
   },
 
   buttonProgress: {
@@ -52,13 +57,19 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: -12,
   },
   btnLeft: {
+    borderRadius: "20px",
     display: "flex",
-    marginRight: "auto",
+    marginRight: "1%",
     marginLeft: 12,
   },
   colorAdorment: {
     width: 20,
     height: 20,
+  },
+  AlinhamentoBtn: {
+    display: "flex !important",
+    flexDirection: "row !important",
+    justifyItems: "right !important",
   },
 }));
 
@@ -166,10 +177,13 @@ const QueueIntegration = ({ open, onClose, integrationId }) => {
   return (
     <div className={classes.root}>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md" scroll="paper">
-        <DialogTitle>
-          {integrationId
-            ? `${i18n.t("queueIntegrationModal.title.edit")}`
-            : `${i18n.t("queueIntegrationModal.title.add")}`}
+        <DialogTitle style={{ backgroundColor: "#0c2c54", color: "white" }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            {integrationId
+              ? `${i18n.t("queueIntegrationModal.title.edit")}`
+              : `${i18n.t("queueIntegrationModal.title.add")}`}
+            <IconButton onClick={handleClose} style={{ color: "white" }}>x</IconButton>
+          </div>
         </DialogTitle>
         <Formik
           initialValues={integration}
@@ -447,14 +461,14 @@ const QueueIntegration = ({ open, onClose, integrationId }) => {
                             className={classes.textField}
                           />
                         </Grid>
-                        
+
                       </>
                     )}
                   </Grid>
                 </DialogContent>
               </Paper>
 
-              <DialogActions>
+              <DialogActions className={classes.AlinhamentoBtn}>
                 {values.type === "dialogflow" && (
                   <Button
                     //type="submit"
@@ -468,14 +482,14 @@ const QueueIntegration = ({ open, onClose, integrationId }) => {
                     {i18n.t("queueIntegrationModal.buttons.test")}
                   </Button>
                 )}
-                <Button
+                {/* <Button
                   onClick={handleClose}
                   color="secondary"
                   disabled={isSubmitting}
                   variant="outlined"
                 >
                   {i18n.t("queueIntegrationModal.buttons.cancel")}
-                </Button>
+                </Button> */}
                 <Button
                   type="submit"
                   color="primary"
