@@ -13,6 +13,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import IconButton from "@material-ui/core/IconButton";
 
 import { i18n } from "../../translate/i18n";
 
@@ -33,8 +34,23 @@ const useStyles = makeStyles((theme) => ({
 
   btnWrapper: {
     position: "relative",
-  },
-
+    backgroundColor: "#34d3a3", // Cor verde para o botão
+    color: "#0c2c54",
+    borderRadius: "20px", // Botão com bordas arredondadas
+    padding: theme.spacing(1, 4),
+    "&:hover": {
+        backgroundColor: "#34d3a3",
+    },
+},
+btnWrapper2: {
+    position: "relative",
+    borderRadius: "20px",
+    padding: theme.spacing(1, 2),
+},
+dialogActions: {
+    justifyContent: "center",
+    paddingBottom: theme.spacing(2),
+},
   buttonProgress: {
     color: green[500],
     position: "absolute",
@@ -102,7 +118,7 @@ const ContactListModal = ({ open, onClose, contactListId }) => {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} >
       <Dialog
         open={open}
         onClose={handleClose}
@@ -110,11 +126,38 @@ const ContactListModal = ({ open, onClose, contactListId }) => {
         fullWidth
         scroll="paper"
       >
-        <DialogTitle id="form-dialog-title">
+         <DialogTitle
+                    id="form-dialog-title"
+                    style={{
+                        color: "#fff",
+                        backgroundColor: "#0C2C54",
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        position: 'relative'
+                    }}
+                >
+                    <span>
+                        {(contactListId ? `${i18n.t("contactLists.dialog.edit")}` : `${i18n.t("contactLists.dialog.add")}`)}
+                    </span>
+                    <IconButton
+                        onClick={handleClose}
+                        style={{
+                            color: "white",
+                            position: "absolute",
+                            right: "10px",
+                            top: '50%',
+                            transform: 'translateY(-50%)'
+                        }}
+                    >
+                        x
+                    </IconButton>
+                </DialogTitle>
+        {/* <DialogTitle id="form-dialog-title">
           {contactListId
             ? `${i18n.t("contactLists.dialog.edit")}`
             : `${i18n.t("contactLists.dialog.add")}`}
-        </DialogTitle>
+        </DialogTitle> */}
         <Formik
           initialValues={contactList}
           enableReinitialize={true}
@@ -143,15 +186,15 @@ const ContactListModal = ({ open, onClose, contactListId }) => {
                   />
                 </div>
               </DialogContent>
-              <DialogActions>
-                <Button
+              <DialogActions className={classes.dialogActions}>
+                {/* <Button
                   onClick={handleClose}
                   color="secondary"
                   disabled={isSubmitting}
                   variant="outlined"
                 >
                   {i18n.t("contactLists.dialog.cancel")}
-                </Button>
+                </Button> */}
                 <Button
                   type="submit"
                   color="primary"

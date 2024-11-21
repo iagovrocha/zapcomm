@@ -33,15 +33,12 @@ const useStyles = makeStyles((theme) => ({
   tab: {
     backgroundColor: theme.palette.options,  //DARK MODE PLW DESIGN//
     borderRadius: 4,
-    width: "100%",
-    "& .MuiTab-wrapper": {
-      color: theme.palette.fontecor,
-    },   //DARK MODE PLW DESIGN//
+    width: "30%",
     "& .MuiTabs-flexContainer": {
       justifyContent: "center"
-    }
-
-
+    },
+    border: "solid #34D3A3 2px",
+    margin: "0 auto",
   },
   paper: {
     padding: theme.spacing(2),
@@ -538,183 +535,44 @@ export default function Options(props) {
         </Grid>
 		
       </Grid>
-      <Grid spacing={3} container>
-        <Tabs
-          indicatorColor="primary"
-          textColor="primary"
-          scrollButtons="on"
-          variant="scrollable"
-          className={classes.tab}
-          style={{
-            marginBottom: 20,
-            marginTop: 20
-          }}
-        >
-          <Tab
-
-            label="INTEGRAÇÕES" />
-
-        </Tabs>
-
-      </Grid>
-      {/*-----------------IXC DESATIVADO 4.6.5-----------------*/}
-      {/*<Grid spacing={3} container
-        style={{ marginBottom: 10 }}>
-        <Tabs
-          indicatorColor="primary"
-          textColor="primary"
-          scrollButtons="on"
-          variant="scrollable"
-          className={classes.tab}
-        >
-          <Tab
-
-            label="IXC" />
-
-        </Tabs>
-        <Grid xs={12} sm={6} md={6} item>
-          <FormControl className={classes.selectContainer}>
-            <TextField
-              id="ipixc"
-              name="ipixc"
-              margin="dense"
-              label="IP do IXC"
-              variant="outlined"
-              value={ipixcType}
-              onChange={async (e) => {
-                handleChangeIPIxc(e.target.value);
-              }}
-            >
-            </TextField>
-            <FormHelperText>
-              {loadingIpIxcType && "Atualizando..."}
-            </FormHelperText>
-          </FormControl>
+    <Grid container spacing={3} style={{ marginBottom: 20, marginTop: 20 }}>
+    {/* Tab INTEGRAÇÕES */}
+        <Grid item xs={12} sm={6} md={6}>
+          <Tabs
+            className={classes.tab}
+          >
+            <Tab label="INTEGRAÇÕES" />
+          </Tabs>
         </Grid>
-        <Grid xs={12} sm={6} md={6} item>
-          <FormControl className={classes.selectContainer}>
-            <TextField
-              id="tokenixc"
-              name="tokenixc"
-              margin="dense"
-              label="Token do IXC"
-              variant="outlined"
-              value={tokenixcType}
-              onChange={async (e) => {
-                handleChangeTokenIxc(e.target.value);
-              }}
-            >
-            </TextField>
-            <FormHelperText>
-              {loadingTokenIxcType && "Atualizando..."}
-            </FormHelperText>
-          </FormControl>
-        </Grid>
-      </Grid>*/}
-      {/*-----------------MK-AUTH DESATIVADO 4.6.5-----------------*/}
-      {/*<Grid spacing={3} container
-        style={{ marginBottom: 10 }}>
-        <Tabs
-          indicatorColor="primary"
-          textColor="primary"
-          scrollButtons="on"
-          variant="scrollable"
-          className={classes.tab}
-        >
-          <Tab label="MK-AUTH" />
 
-        </Tabs>
-        <Grid xs={12} sm={12} md={4} item>
-          <FormControl className={classes.selectContainer}>
-            <TextField
-              id="ipmkauth"
-              name="ipmkauth"
-              margin="dense"
-              label="Ip Mk-Auth"
-              variant="outlined"
-              value={ipmkauthType}
-              onChange={async (e) => {
-                handleChangeIpMkauth(e.target.value);
-              }}
-            >
-            </TextField>
-            <FormHelperText>
-              {loadingIpMkauthType && "Atualizando..."}
-            </FormHelperText>
-          </FormControl>
+        {/* Tab ASAAS */}
+        <Grid item xs={12} sm={6} md={6}>
+          <Tabs
+            indicatorColor="primary"
+            textColor="primary"
+            className={classes.tab}
+          >
+            <Tab label="ASAAS" />
+          </Tabs>
         </Grid>
-        <Grid xs={12} sm={12} md={4} item>
-          <FormControl className={classes.selectContainer}>
-            <TextField
-              id="clientidmkauth"
-              name="clientidmkauth"
-              margin="dense"
-              label="Client Id"
-              variant="outlined"
-              value={clientidmkauthType}
-              onChange={async (e) => {
-                handleChangeClientIdMkauth(e.target.value);
-              }}
-            >
-            </TextField>
-            <FormHelperText>
-              {loadingClientIdMkauthType && "Atualizando..."}
-            </FormHelperText>
-          </FormControl>
-        </Grid>
-        <Grid xs={12} sm={12} md={4} item>
-          <FormControl className={classes.selectContainer}>
-            <TextField
-              id="clientsecretmkauth"
-              name="clientsecretmkauth"
-              margin="dense"
-              label="Client Secret"
-              variant="outlined"
-              value={clientsecretmkauthType}
-              onChange={async (e) => {
-                handleChangeClientSecrectMkauth(e.target.value);
-              }}
-            >
-            </TextField>
-            <FormHelperText>
-              {loadingClientSecrectMkauthType && "Atualizando..."}
-            </FormHelperText>
-          </FormControl>
-        </Grid>
-      </Grid>*/}
-      {/*-----------------ASAAS-----------------*/}
-      <Grid spacing={3} container
-        style={{ marginBottom: 10 }}>
-        <Tabs
-          indicatorColor="primary"
-          textColor="primary"
-          scrollButtons="on"
-          variant="scrollable"
-          className={classes.tab}
-        >
-          <Tab label="ASAAS" />
 
-        </Tabs>
-        <Grid xs={12} sm={12} md={12} item>
+        {/* Campo Token Asaas */}
+        <Grid item xs={12} style={{ marginTop: 10 }}>
           <FormControl className={classes.selectContainer}>
             <TextField
               id="asaas"
               name="asaas"
               margin="dense"
               label="Token Asaas"
-              variant="outlined"
               value={asaasType}
-              onChange={async (e) => {
-                handleChangeAsaas(e.target.value);
-              }}
-            >
-            </TextField>
+              onChange={async (e) => handleChangeAsaas(e.target.value)}
+            />
             <FormHelperText>
               {loadingAsaasType && "Atualizando..."}
             </FormHelperText>
           </FormControl>
         </Grid>
-      </Grid>
-    </>
+    </Grid>
+  </>
   );
 }

@@ -206,7 +206,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     overflow: "auto",
     flexDirection: "column",
-  },
+    height: "100%", 
+    justifyContent: "space-between",
+},
   divBody: {
     flex: '1',
     padding: theme.spacing(1),
@@ -401,17 +403,17 @@ const Dashboard = () => {
   return (
     <div className={classes.divBody}>
 
-        <div className={classes.titleContainer}>
-          <h1 style={{margin: '0'}}>Dashboard</h1> {/*Titulo tarefas*/}
-          <Typography
-            className={classes.info}
-            component="subtitle1"
-            variant="body1"
-            style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}
-            >
-              {'Visualize seus chamados, tempo de espera médio e gráfico acerca dos chamados no mês e na semana'}
-          </Typography>
-        </div>
+      <div className={classes.titleContainer}>
+        <h1 style={{ margin: '0' }}>Dashboard</h1> {/*Titulo tarefas*/}
+        <Typography
+          className={classes.info}
+          component="subtitle1"
+          variant="body1"
+          style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}
+        >
+          {'Visualize seus chamados, tempo de espera médio e gráfico acerca dos chamados no mês e na semana'}
+        </Typography>
+      </div>
 
       <Container maxWidth="95%" className={classes.container}>
         <Grid container spacing={3} justifyContent="flex-end">
@@ -482,7 +484,7 @@ const Dashboard = () => {
                     Chamados em Andamento
                   </Typography>
                   <Grid item>
-                  <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
                       {/* Outros componentes do conteúdo aqui */}
 
                       <div style={{ marginTop: 'auto' }}> {/* Isso empurra o Typography para o fundo */}
@@ -570,7 +572,7 @@ const Dashboard = () => {
                     Chamados Finalizados
                   </Typography>
                   <Grid item>
-                  <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
                       {/* Outros componentes do conteúdo aqui */}
 
                       <div style={{ marginTop: 'auto' }}> {/* Isso empurra o Typography para o fundo */}
@@ -616,7 +618,7 @@ const Dashboard = () => {
                     Novos Chamados
                   </Typography>
                   <Grid item>
-                  <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
                       {/* Outros componentes do conteúdo aqui */}
 
                       <div style={{ marginTop: 'auto' }}> {/* Isso empurra o Typography para o fundo */}
@@ -663,7 +665,7 @@ const Dashboard = () => {
                     T.M. de Atendimento
                   </Typography>
                   <Grid item>
-                  <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
                       {/* Outros componentes do conteúdo aqui */}
 
                       <div style={{ marginTop: 'auto' }}> {/* Isso empurra o Typography para o fundo */}
@@ -709,7 +711,7 @@ const Dashboard = () => {
                     T.M. de Espera
                   </Typography>
                   <Grid item>
-                  <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '8vh' }}>
                       {/* Outros componentes do conteúdo aqui */}
 
                       <div style={{ marginTop: 'auto' }}> {/* Isso empurra o Typography para o fundo */}
@@ -736,59 +738,18 @@ const Dashboard = () => {
             </Paper>
           </Grid>
 
-          {/* FILTROS */}
-          <Grid item xs={12} sm={6} md={4}>
-            <FormControl className={classes.selectContainer}>
-              <InputLabel id="period-selector-label">Tipo de Filtro</InputLabel>
-              <Select
-                labelId="period-selector-label"
-                value={filterType}
-                onChange={(e) => handleChangeFilterType(e.target.value)}
-              >
-                <MenuItem value={1}>Filtro por Data</MenuItem>
-                <MenuItem value={2}>Filtro por Período</MenuItem>
-              </Select>
-              <FormHelperText>Selecione o período desejado</FormHelperText>
-            </FormControl>
-          </Grid>
-
-          {renderFilters()}
-
-          {/* BOTAO FILTRAR */}
-          <Grid item xs={12} className={classes.alignRight}>
-            <ButtonWithSpinner
-              loading={loading}
-              onClick={() => fetchData()}
-              variant="contained"
-              color="primary"
-            >
-              Filtrar
-            </ButtonWithSpinner>
-          </Grid>
-
-          {/* USUARIOS ONLINE */}
-          <Grid item xs={12}>
-            {attendants.length ? (
-              <TableAttendantsStatus
-                attendants={attendants}
-                loading={loading}
-              />
-            ) : null}
-          </Grid>
-
           {/* TOTAL DE ATENDIMENTOS POR USUARIO */}
-          <Grid item xs={12}>
-            <Paper className={classes.fixedHeightPaper2}>
-              <ChatsUser />
-            </Paper>
-          </Grid>
-
-          {/* TOTAL DE ATENDIMENTOS */}
-          <Grid item xs={12}>
-            <Paper className={classes.fixedHeightPaper2}>
-              <ChartsDate />
-            </Paper>
-          </Grid>
+          <Grid item xs={8}>
+              <Paper className={classes.fixedHeightPaper2}>
+                <ChartsDate />
+              </Paper>
+            </Grid>
+          
+            <Grid item xs={4}>
+              <Paper className={classes.fixedHeightPaper2}>
+                <ChatsUser />
+              </Paper>
+            </Grid>
 
         </Grid>
       </Container >

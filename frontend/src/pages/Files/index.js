@@ -27,6 +27,8 @@ import MainContainer from "../../components/MainContainer";
 import MainHeader from "../../components/MainHeader";
 import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
 import Title from "../../components/Title";
+import Typography from "@material-ui/core/Typography";
+import InputBase from "@material-ui/core/InputBase";
 
 import api from "../../services/api";
 import { i18n } from "../../translate/i18n";
@@ -84,10 +86,63 @@ const reducer = (state, action) => {
 const useStyles = makeStyles((theme) => ({
     mainPaper: {
         flex: 1,
-        padding: theme.spacing(1),
+        // padding: theme.spacing(1),
         overflowY: "scroll",
         ...theme.scrollbarStyles,
     },
+
+    divBody: {
+        flex: 1,
+        padding: theme.spacing(1),
+        height: `calc(100% - 48px)`,
+        backgroundColor: "#FFFFFF",
+      },
+    
+      Botoes: {
+        borderRadius: "40px",
+        padding: "10px 32px",
+        justifyContent: "center",
+        alignItems: "center",
+        border: "1px solid var(--logo-bg, #001C27)"
+      },
+
+      Tabela: {
+        fontFamily: 'Inter Tight, sans-serif', 
+        color: 'black'
+      },
+    
+      serachInputWrapper: {
+        border: "solid 1px #828282",
+        flex: 1,
+        display: "flex",
+        borderRadius: 40,
+        padding: 4,
+        marginRight: theme.spacing(1),
+        width: '70%',
+        height: '48px',
+        },
+    
+        searchIcon: {
+            color: "grey",
+            marginLeft: 6,
+            marginRight: 6,
+            alignSelf: "center",
+        },
+    
+        searchInput: {
+            flex: 1,
+            border: "none",
+            borderRadius: 30,
+        },
+    
+      acoes: {
+        color: "#0C2C54",
+        "&:hover": {
+          color: "#3c5676",
+        },
+        width: "35px", // Reduzido para o tamanho desejado
+        height: "30px",
+      }
 }));
 
 const FileLists = () => {
@@ -199,7 +254,16 @@ const FileLists = () => {
     };
 
     return (
-        <MainContainer>
+    <div className={classes.divBody}>
+      <h1 style={{ margin: "0" }}><b>Lista de Arquivos</b></h1>
+      <Typography
+        component="subtitle1"
+        variant="body1"
+        style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+      >
+        {"Adicione, edite e exclua os arquivos que serão enviado aos clientes dos chamados abertos."}
+      </Typography>
+        {/* <MainContainer> */}
             <ConfirmationModal
                 title={deletingFileList && `${i18n.t("files.confirmationModal.deleteTitle")}`}
                 open={confirmModalOpen}
@@ -215,45 +279,55 @@ const FileLists = () => {
                 aria-labelledby="form-dialog-title"
                 fileListId={selectedFileList && selectedFileList.id}
             />
-            <MainHeader>
-                <Title>{i18n.t("files.title")} ({files.length})</Title>
-                <MainHeaderButtonsWrapper>
-                    <TextField
-                        placeholder={i18n.t("contacts.searchPlaceholder")}
-                        type="search"
-                        value={searchParam}
-                        onChange={handleSearch}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <SearchIcon style={{ color: "gray" }} />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleOpenFileListModal}
-                    >
-                        {i18n.t("files.buttons.add")}
-                    </Button>
-                </MainHeaderButtonsWrapper>
-            </MainHeader>
+            {/* <MainHeader> */}
+                {/* <Title>{i18n.t("files.title")} ({files.length})</Title> */}
+
+                <div style={{display: "inline-flex", alignItems: 'center', width:"95%"}}> 
+                <div className={classes.serachInputWrapper}>
+                    <SearchIcon className={classes.searchIcon} />
+                        <InputBase
+                            className={classes.searchInput}
+                            placeholder={i18n.t("contacts.searchPlaceholder")}
+                            type="search"
+                            value={searchParam}
+                            onChange={handleSearch}
+                        />
+                </div>
+
+                <div
+                    style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+                ></div>
+
+                    <MainHeaderButtonsWrapper>
+                        <Button
+                            className={classes.Botoes}
+                            variant="contained"
+                            color="primary"
+                            onClick={handleOpenFileListModal}
+                        >
+                            {i18n.t("files.buttons.add")}
+                        </Button>
+                    </MainHeaderButtonsWrapper>
+            {/* </MainHeader> */}
+                </div>
             <Paper
                 className={classes.mainPaper}
-                variant="outlined"
+                // variant="outlined"
                 onScroll={handleScroll}
             >
                 <Table size="small">
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center">{i18n.t("files.table.name")}</TableCell>
-                            <TableCell align="center">
-                                {i18n.t("files.table.actions")}
+                            <TableCell align="center" className={classes.Tabela}>
+                                <b>{i18n.t("files.table.name")}</b>
+                                </TableCell>
+                            <TableCell align="center"className={classes.Tabela}>
+                                <b>{i18n.t("files.table.actions")}</b>
                             </TableCell>
                         </TableRow>
                     </TableHead>
+                    {files.length > 0 ? (
+                        <>
                     <TableBody>
                         <>
                             {files.map((fileList) => (
@@ -262,16 +336,17 @@ const FileLists = () => {
                                         {fileList.name}
                                     </TableCell>
                                     <TableCell align="center">
-                                        <IconButton size="small" onClick={() => handleEditFileList(fileList)}>
+                                        <IconButton size="small" onClick={() => handleEditFileList(fileList)} className={classes.acoes}>
                                             <EditIcon />
                                         </IconButton>
 
-                                        <IconButton
+                                        <IconButton 
                                             size="small"
                                             onClick={(e) => {
                                                 setConfirmModalOpen(true);
                                                 setDeletingFileList(fileList);
                                             }}
+                                            className={classes.acoes}
                                         >
                                             <DeleteOutlineIcon />
                                         </IconButton>
@@ -281,9 +356,20 @@ const FileLists = () => {
                             {loading && <TableRowSkeleton columns={4} />}
                         </>
                     </TableBody>
+                        </>
+                        ) : (
+                    <TableBody>
+                        <TableRow>
+                        <TableCell colSpan="4" align="center">
+                            Nenhuma lista a ser carregada no momento
+                        </TableCell>
+                        </TableRow>
+                    </TableBody>
+                    )}
                 </Table>
             </Paper>
-        </MainContainer>
+        {/* </MainContainer> */}
+    </div>
     );
 };
 

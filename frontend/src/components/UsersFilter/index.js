@@ -1,10 +1,19 @@
-import { Box, Chip, TextField } from "@material-ui/core";
+import { Box, Chip, Select, TextField } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import React, { useEffect, useState } from "react";
 import toastError from "../../errors/toastError";
 import api from "../../services/api";
 
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  lista: {
+    borderRadius: 10,
+  }
+}));
+
 export function UsersFilter({ onFiltered, initialUsers }) {
+  const classes = useStyles();
   const [users, setUsers] = useState([]);
   const [selecteds, setSelecteds] = useState([]);
 
@@ -62,6 +71,7 @@ export function UsersFilter({ onFiltered, initialUsers }) {
             <Chip
               variant="outlined"
               style={{
+                borderRadius: "10px",
                 backgroundColor: "#bfbfbf",
                 textShadow: "1px 1px 1px #000",
                 color: "white",
@@ -77,6 +87,11 @@ export function UsersFilter({ onFiltered, initialUsers }) {
             {...params}
             variant="outlined"
             placeholder="Filtro por Users"
+            InputProps={{
+              ...params.InputProps,
+              style: { borderRadius: 10 }, // Define o borderRadius do input
+            }}
+            style={{ borderRadius: 10 }} // Define o borderRadius do TextField
           />
         )}
       />

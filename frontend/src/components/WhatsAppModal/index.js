@@ -43,9 +43,24 @@ const useStyles = makeStyles((theme) => ({
 
   btnWrapper: {
     position: "relative",
+ Ericf
     color: "#0c2c54", //Padronização de cores do botão
     backgroundColor: "#34d3a3", //Padronização de cores do botão
     borderRadius: '40px', //Caracterisca adicionada para padronizar os botoes dos modais
+
+    backgroundColor: "#34d3a3",
+    color: "#0c2c54",
+    borderRadius: "20px",
+    padding: theme.spacing(1, 4),
+    "&:hover": {
+      backgroundColor: "#34d3a3",
+    },
+  },
+
+  dialogActions: {
+    justifyContent: "center",
+    paddingBottom: theme.spacing(2),
+ main
   },
 
   buttonProgress: {
@@ -227,11 +242,16 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                     </Grid>
                   </Grid>
                 </div>
+ Ericf
                 
                 {/* Serve para deixar as caixas de texto na mesma fileira */}
                 <div className={classes.linha2}>
 
                   <Field //Mensagem de Saudação
+
+                <div className={classes.linha2}>
+                  <Field
+ main
                     as={TextField}
                     label={i18n.t("queueModal.form.greetingMessage")}
                     type="greetingMessage"
@@ -248,7 +268,11 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                     variant="outlined"
                     margin="dense"
                   />
+ Ericf
                   <Field //mensagem de Conclusão
+
+                  <Field
+ main
                     as={TextField}
                     label={i18n.t("queueModal.form.complationMessage")}
                     type="complationMessage"
@@ -267,9 +291,14 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                     margin="dense"
                   />
                 </div>
+ Ericf
                 {/* Serve para deixar as caixas de texto na mesma fileira */}
                 <div className={classes.linha3}>
                   <Field //Mensagem de Fora de Expediente
+
+                <div className={classes.linha3}>
+                  <Field
+ main
                     as={TextField}
                     label={i18n.t("queueModal.form.outOfHoursMessage")}
                     type="outOfHoursMessage"
@@ -288,7 +317,11 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                     variant="outlined"
                     margin="dense"
                   />
+ Ericf
                   <Field //Mensagem de Avaliação
+
+                  <Field
+ main
                     as={TextField}
                     label={i18n.t("queueModal.form.ratingMessage")}
                     type="ratingMessage"
@@ -475,7 +508,11 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                   </div>
                 </div>
               </DialogContent>
+ Ericf
               <DialogActions style={{ justifyContent: "center" }}>
+
+              <DialogActions className={classes.dialogActions}>
+main
                 <Button
                   type="submit"
                   color="primary"

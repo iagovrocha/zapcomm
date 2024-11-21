@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   menuButton: {
-    marginRight: 36,
+    marginRight: 0,
   },
   menuButtonHidden: {
     display: "none",
@@ -383,7 +383,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
           >
             <MenuIcon />
           </IconButton>
-          <img src={logo} className={classes.logo} alt="logo" style={{ marginRight: 16 }} />
+          <img src={logo} className={classes.logo} alt="logo" style={{ marginRight: 16}} />
           <Typography
             component="h2"
             variant="h6"

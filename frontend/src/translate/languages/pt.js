@@ -773,6 +773,7 @@ const messages = {
       },
       users: {
         title: "Usuários",
+        subtitulo: "Adicione, edite e exclua os usuários.",
         table: {
 		  id: "ID",
           name: "Nome",
@@ -882,7 +883,7 @@ const messages = {
           edit: "Editar lista de arquivos",
         },
         buttons: {
-          okAdd: "Salvar",
+          okAdd: "Adicionar",
           okEdit: "Editar",
           cancel: "Cancelar",
           fileOptions: "Adicionar arquivo",

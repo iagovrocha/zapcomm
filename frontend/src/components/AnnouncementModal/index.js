@@ -45,6 +45,24 @@ const useStyles = makeStyles((theme) => ({
 
   btnWrapper: {
     position: "relative",
+    backgroundColor: "#34d3a3", // Cor verde para o botão
+    color: "#0c2c54",
+    borderRadius: "20px", // Botão com bordas arredondadas
+    padding: theme.spacing(1, 4),
+    "&:hover": {
+      backgroundColor: "#34d3a3",
+    },
+  },
+
+  btnWrapper2: {
+    position: "relative",
+    borderRadius: "20px",
+    padding: theme.spacing(1, 2),
+  },
+
+  dialogActions: {
+    justifyContent: "center", 
+    paddingBottom: theme.spacing(2),
   },
 
   buttonProgress: {
@@ -180,11 +198,35 @@ const AnnouncementModal = ({ open, onClose, announcementId, reload }) => {
         fullWidth
         scroll="paper"
       >
-        <DialogTitle id="form-dialog-title" style={{color: "#fff", backgroundColor: "#0C2C54"}}>
-          {announcementId
-            ? `${i18n.t("announcements.dialog.edit")}`
-            : `${i18n.t("announcements.dialog.add")}`}
-        </DialogTitle>
+        <DialogTitle
+                    id="form-dialog-title"
+                    style={{
+                        color: "#fff",
+                        backgroundColor: "#0C2C54",
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        position: 'relative'
+                    }}
+                >
+                    <span>
+                    {announcementId
+                      ? `${i18n.t("announcements.dialog.edit")}`
+                      : `${i18n.t("announcements.dialog.add")}`}
+                    </span>
+                    <IconButton
+                        onClick={handleClose}
+                        style={{
+                            color: "white",
+                            position: "absolute",
+                            right: "10px",
+                            top: '50%',
+                            transform: 'translateY(-50%)'
+                        }}
+                    >
+                        x
+                    </IconButton>
+                </DialogTitle>
         <div style={{ display: "none" }}>
           <input
             type="file"
@@ -290,25 +332,26 @@ const AnnouncementModal = ({ open, onClose, announcementId, reload }) => {
                   )}
                 </Grid>
               </DialogContent>
-              <DialogActions>
+              <DialogActions className={classes.dialogActions}>
                 {!attachment && !announcement.mediaPath && (
                   <Button
                     color="primary"
                     onClick={() => attachmentFile.current.click()}
                     disabled={isSubmitting}
                     variant="outlined"
+                    className={classes.btnWrapper2}
                   >
                     {i18n.t("announcements.dialog.buttons.attach")}
                   </Button>
                 )}
-                <Button
+                {/* <Button
                   onClick={handleClose}
                   color="secondary"
                   disabled={isSubmitting}
                   variant="outlined"
                 >
                   {i18n.t("announcements.dialog.buttons.cancel")}
-                </Button>
+                </Button> */}
                 <Button
                   type="submit"
                   color="primary"

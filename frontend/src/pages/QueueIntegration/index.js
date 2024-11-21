@@ -133,8 +133,8 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: 30,
 	},
   AgrupamentoDoPesquisarENovo: {
-    paddingTop: "10px",
-    paddingBottom: "12px",
+    paddingTop: "7px",
+    paddingBottom: "8px",
     display: "inline-flex",
     width: "95%"
   },
@@ -375,6 +375,8 @@ const QueueIntegration = () => {
               <TableCell align="center"><b>{"Ações"}</b></TableCell>
             </TableRow>
           </TableHead>
+          {queueIntegration.length > 0 ? (
+              <>
           <TableBody>
             <>
               {queueIntegration.map((integration) => (
@@ -417,6 +419,16 @@ const QueueIntegration = () => {
               {loading && <TableRowSkeleton columns={7} />}
             </>
           </TableBody>
+              </>
+              ) : (
+                <TableBody>
+                  <TableRow>
+                    <TableCell colSpan="7" align="center">
+                      Nenhuma integração a ser carregada no momento
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+                )}
         </Table>
       </Paper>
     {/* </MainContainer> */}
