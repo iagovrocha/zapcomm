@@ -1,67 +1,52 @@
 import React, { useContext, useState } from "react";
 import {
-  Card,
-  CardContent,
-  CardActions,
   Chip,
   IconButton,
-  Typography,
-  Avatar,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
   makeStyles,
-  Grid,
 } from "@material-ui/core";
+
 import { useHistory, useParams } from "react-router-dom";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import { useDate } from "../../hooks/useDate";
+
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+
 import ConfirmationModal from "../../components/ConfirmationModal";
 import api from "../../services/api";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
-    overflow: "hidden",
+    display: "flex",
     flexDirection: "column",
     position: "relative",
     flex: 1,
-    height: "calc(100% - 58px)",
-    borderRadius: 10,
-    backgroundColor: theme.palette.boxlist,
-    paddingBottom: theme.spacing(2),
-    display: "flex",
+    height: "calc(100%)", //Retirei - 58px do calc
+    // overflow: "hidden",
+    borderRadius: 0,
+    // backgroundColor: theme.palette.boxlist, //DARK MODE PLW DESIGN//
   },
   chatList: {
-    position: "relative",
-    flex: 1,
-    overflowY: "auto",
-    padding: theme.spacing(1),
-  },
-  chatCard: {
-    margin: theme.spacing(1),
-    cursor: "pointer",
-    transition: "0.3s",
-    borderRadius: 10,
-    position: "relative",
-    height: 150,
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardContent: {
-    flex: 1,
-  },
-  participants: {
-    marginTop: theme.spacing(1),
     display: "flex",
-    alignItems: "center",
-    flexWrap: "wrap",
+    flexDirection: "column",
+    position: "relative",
+    flex: 1,
+    overflowY: "scroll",
+    ...theme.scrollbarStyles,
   },
-  profileAvatar: {
-    position: "absolute",
-    top: theme.spacing(1),
-    right: theme.spacing(1),
-    width: 30,
-    height: 30,
+  listItem: {
+    cursor: "pointer",
   },
+  acoes: {
+    color: "#0C2C54",
+    "&:hover": {
+      color: "#3c5676",
+    },
+  }
 }));
 
 export default function ChatList({
@@ -69,6 +54,8 @@ export default function ChatList({
   handleSelectChat,
   handleDeleteChat,
   handleEditChat,
+  pageInfo,
+  loading,
 }) {
   const classes = useStyles();
   const history = useHistory();
@@ -77,6 +64,7 @@ export default function ChatList({
 
   const [confirmationModal, setConfirmModalOpen] = useState(false);
   const [selectedChat, setSelectedChat] = useState({});
+
   const { id } = useParams();
 
   const goToMessages = async (chat) => {
@@ -98,7 +86,7 @@ export default function ChatList({
 
   const unreadMessages = (chat) => {
     const currentUser = chat.users.find((u) => u.userId === user.id);
-    return currentUser ? currentUser.unreads : 0;
+    return currentUser.unreads;
   };
 
   const getPrimaryText = (chat) => {
@@ -125,22 +113,11 @@ export default function ChatList({
       : "";
   };
 
-  const getParticipantsAvatar = (chat) => {
-    return chat.users.length > 0 ? (
-      <Avatar
-        alt="Participantes"
-        src={chat.users[0].photoUrl} // Verifique se o URL da foto está correto
-        className={classes.profileAvatar}
-      />
-    ) : null; // Retorne null se não houver usuários
-  };
-
-  const getParticipantsNames = (chat) => {
-    return chat.users.map((user) => (
-      <Typography key={user.userId} variant="body2">
-        {user.name}
-      </Typography>
-    ));
+  const getItemStyle = (chat) => {
+    return {
+      borderLeft: chat.uuid === id ? "6px solid #002d6e" : null,
+      backgroundColor: chat.uuid === id ? "theme.palette.chatlist" : null,
+    };
   };
 
   return (
@@ -155,64 +132,54 @@ export default function ChatList({
       </ConfirmationModal>
       <div className={classes.mainContainer}>
         <div className={classes.chatList}>
-          <Grid container spacing={2}>
+          <List>
             {Array.isArray(chats) &&
               chats.length > 0 &&
               chats.map((chat, key) => (
-                <Grid item xs={6} key={key}>
-                  <Card
-                    className={classes.chatCard}
-                    onClick={() => goToMessages(chat)}
-                  >
-                    {getParticipantsAvatar(chat)}
-                    <CardContent className={classes.cardContent}>
-                      <Typography variant="h6">{getPrimaryText(chat)}</Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        {getSecondaryText(chat)}
-                      </Typography>
-                      <div className={classes.participants}>
-                        {getParticipantsNames(chat)}
-                      </div>
-                    </CardContent>
-                    {chat.ownerId === user.id && (
-                      <CardActions>
-                        <IconButton 
-                          onClick={() => {
-                            goToMessages(chat).then(() => {
-                              handleEditChat(chat);
-                            });
-                          }}
-                          size="small"
-                          style={{
-                            color: "#0C2C54",
-                            "&:hover": {
-                              color: "#3c5676",
-                            },
-                          }}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton
-                          onClick={() => {
-                            setSelectedChat(chat);
-                            setConfirmModalOpen(true);
-                          }}
-                          size="small"
-                          style={{
-                            color: "#0C2C54",
-                            "&:hover": {
-                              color: "#3c5676",
-                            },
-                          }}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </CardActions>
-                    )}
-                  </Card>
-                </Grid>
+                <ListItem
+                  onClick={() => goToMessages(chat)}
+                  key={key}
+                  className={classes.listItem}
+                  style={getItemStyle(chat)}
+                  button
+                >
+                  <ListItemText
+                    primary={getPrimaryText(chat)}
+                    secondary={getSecondaryText(chat)}
+                  />
+                  {chat.ownerId === user.id && (
+                    <ListItemSecondaryAction>
+                      <IconButton
+                        onClick={() => {
+                          goToMessages(chat).then(() => {
+                            handleEditChat(chat);
+                          });
+                        }}
+                        edge="end"
+                        aria-label="delete"
+                        size="small"
+                        style={{ marginRight: 5 }}
+                        className={classes.acoes}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        onClick={() => {
+                          setSelectedChat(chat);
+                          setConfirmModalOpen(true);
+                        }}
+                        edge="end"
+                        aria-label="delete"
+                        size="small"
+                        className={classes.acoes}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </ListItemSecondaryAction>
+                  )}
+                </ListItem>
               ))}
-          </Grid>
+          </List>
         </div>
       </div>
     </>
