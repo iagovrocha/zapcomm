@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: 24, // keep right padding when drawer closed
     color: theme.palette.dark.main,
     background: theme.palette.barraSuperior,
-    borderBottom: "1px solid #0C2C54", 
+    borderBottom: "1px solid #0C2C54",
   },
   toolbarIcon: {
     display: "flex",
@@ -87,11 +87,11 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    borderBottom: "1px solid #0C2C54", 
+    borderBottom: "1px solid #0C2C54",
   },
   appBarShift: {
     marginLeft: drawerWidth,
-    width: "100%",//`calc(100% - ${drawerWidth}px)`,
+    width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -112,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
   },
   drawerPaper: {
-    backgroundColor: "#34D3A3",   //Cor do Background do MainListItems
+    backgroundColor: "#34D3A3",
     position: "relative",
     whiteSpace: "nowrap",
     width: drawerWidth,
@@ -126,6 +126,7 @@ const useStyles = makeStyles((theme) => ({
     ...theme.scrollbarStylesSoft
   },
   drawerPaperClose: {
+    backgroundColor: "#34D3A3",
     overflowX: "hidden",
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
@@ -311,31 +312,31 @@ const LoggedInLayout = ({ children, themeToggle }) => {
 
   const drawerClose = () => {
     if (document.body.offsetWidth < 600) {
-      setDrawerOpen(true);
+      setDrawerOpen(false);
     }
   };
 
-  // const handleRefreshPage = () => {
-  //   window.location.reload(false);
-  // }
+  const handleRefreshPage = () => {
+    window.location.reload(false);
+  }
 
-  // const handleMenuItemClick = () => {
-  //   const { innerWidth: width } = window;
-  //   if (width <= 600) {
-  //     setDrawerOpen(false);
-  //   }
-  // };
+  const handleMenuItemClick = () => {
+    const { innerWidth: width } = window;
+    if (width <= 600) {
+      setDrawerOpen(false);
+    }
+  };
 
-  // const toggleColorMode = () => {
-  //   colorMode.toggleColorMode();
-  // }
+  const toggleColorMode = () => {
+    colorMode.toggleColorMode();
+  }
 
   if (loading) {
     return <BackdropLoading />;
   }
 
   return (
-    <div className={classes.root} style={{backgroundColor: "#FFFFFF"}}>
+    <div className={classes.root} style={{ backgroundColor: "#FFFFFF" }}>
       <Drawer
         variant={drawerVariant}
         className={drawerOpen ? classes.drawerPaper : classes.drawerPaperClose}
@@ -347,12 +348,16 @@ const LoggedInLayout = ({ children, themeToggle }) => {
         }}
         open={drawerOpen}
       >
-        <div className={classes.toolbarIcon}>
-          {/* <img src={logo} className={classes.logo} alt="logo" />
-           <IconButton onClick={() => setDrawerOpen(!drawerOpen)}>
+        {/* <div className={classes.toolbarIcon}>
+          <img src={logo} className={classes.logo} alt="logo" />
+          <IconButton onClick={() => setDrawerOpen(!drawerOpen)}>
             <ChevronLeftIcon />
-          </IconButton> */}
-        </div>
+          </IconButton>
+        </div> */}
+        <div style={{
+          padding: "0 1px",
+          minHeight: `${drawerOpen ? '0px' : '48px'}`,
+        }}></div>
         <Divider />
         <List className={classes.containerWithScroll}>
           <MainListItems drawerClose={drawerClose} collapsed={!drawerOpen} />
@@ -368,7 +373,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
         position="absolute"
         className={clsx(classes.appBar, drawerOpen && classes.appBarShift)}
         color="primary"
-        style={{boxShadow: "none"}}
+        style={{ boxShadow: "none" }}
       >
         <Toolbar variant="dense" className={classes.toolbar}>
           <IconButton
@@ -378,28 +383,27 @@ const LoggedInLayout = ({ children, themeToggle }) => {
             onClick={() => setDrawerOpen(!drawerOpen)}
             className={clsx(
               classes.menuButton,
-              // drawerOpen && classes.menuButtonHidden
+              drawerOpen
             )}
           >
             <MenuIcon />
           </IconButton>
-          <img src={logo} className={classes.logo} alt="logo" style={{ marginRight: 16}} />
+          <img src={logo} className={classes.logo} alt="logo" style={{ marginRight: 16 }} />
           <Typography
             component="h2"
             variant="h6"
             color="inherit"
             noWrap
             className={classes.title}
-            style={{ textAlign: "right", color: "black"}} // Adicione esta linha para alinhar o texto à direita
+            style={{ textAlign: "right", color: "black" }}  // Aplicando cor preta
           >
-            {/* {greaterThenSm && user?.profile === "admin" && getDateAndDifDays(user?.company?.dueDate).difData < 7 ? ( */}
             {greaterThenSm && user?.profile === "admin" && user?.company?.dueDate ? (
               <>
-                Olá <b>{user.name}</b>, Bem vindo ao Zapcomm <b>{user?.company?.name}</b>!
+                Olá <b>{user.name}</b>, Bem vindo a Zapcomm <b>{user?.company?.name}</b>!
               </>
             ) : (
               <>
-                Olá <b>{user.name}</b>, Bem vindo ao Zapcomm <b>{user?.company?.name}</b>!
+                Olá  <b>{user.name}</b>, Bem vindo a Zapcomm <b>{user?.company?.name}</b>!
               </>
             )}
           </Typography>
@@ -425,7 +429,6 @@ const LoggedInLayout = ({ children, themeToggle }) => {
           {/* {user.id && <NotificationsPopOver volume={volume} />} */}
 
           {/* <AnnouncementsPopover />
-
           <ChatPopover /> */}
 
           <div>
@@ -435,7 +438,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
               aria-haspopup="true"
               onClick={handleMenu}
               variant="contained"
-              style={{ color: "rgb(12, 36, 84)" }}
+              style={{ color: "black" }}
             >
               <AccountCircle />
             </IconButton>
