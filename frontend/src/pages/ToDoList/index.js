@@ -19,6 +19,7 @@ import SearchIcon from '@material-ui/icons/Search'; // Importar o ícone de pesq
 import InputBase from "@material-ui/core/InputBase";
 import MainContainer from "../../components/MainContainer";
 import TaskModal from '../../components/TaskModal';
+import MainHeaderButtonsWrapper from '../../components/MainHeaderButtonsWrapper';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -29,14 +30,14 @@ const useStyles = makeStyles((theme) => ({
   // },
   Tabela: {
     backgroundColor: "#FFFFFF",
-    fontFamily: 'Inter Tight, sans-serif', 
+    fontFamily: 'Inter Tight, sans-serif',
     color: 'black'
   },
 
   divBody: {
     flex: '1',
     padding: theme.spacing(1),
-    height: 'calc(100% - 98px)', 
+    height: 'calc(100% - 98px)',
     background: "#FFFFFF"
   },
   titleContainer: {
@@ -47,28 +48,28 @@ const useStyles = makeStyles((theme) => ({
   },
   serachInputWrapper: {
     border: "solid 1px #828282",
-		flex: 1,
-		display: "flex",
-		borderRadius: 40,
-		padding: 4,
-		marginRight: theme.spacing(1),
-    		width: '70%',
-    		height: '48px',
-	},
+    flex: 1,
+    display: "flex",
+    borderRadius: 40,
+    padding: 4,
+    marginRight: theme.spacing(1),
+    width: '70%',
+    height: '48px',
+  },
   input: { // Área de inserir texto
-		flex: 1,
-		border: "none",
-		borderRadius: 30,
+    flex: 1,
+    border: "none",
+    borderRadius: 30,
   },
   searchIcon: {
-		color: "grey",
-		marginLeft: 6,
-		marginRight: 6,
-		alignSelf: "center",
-	},
+    color: "grey",
+    marginLeft: 6,
+    marginRight: 6,
+    alignSelf: "center",
+  },
   button: { // botão de adicionar ou salvar
     borderRadius: "40px",
-    padding: "10px 32px",
+    padding: "10px 20px",
     justifyContent: "center",
     alignItems: "center",
     border: "1px solid var(--logo-bg, #001C27)"
@@ -87,16 +88,16 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       color: "#3c5676",
     },
-    width: "35px", 
+    width: "35px",
     height: "30px",
   },
   //taskText: { // Texto da tarefa
-    //maxWidth: '300px',
-    //overflow: 'hidden',
-    //textOverflow: 'ellipsis',
+  //maxWidth: '300px',
+  //overflow: 'hidden',
+  //textOverflow: 'ellipsis',
   //},
   //dateText: { // Data de criação e atualização da tarefa
-    //textAlign: 'center',
+  //textAlign: 'center',
   //},
 
 }));
@@ -186,136 +187,165 @@ const ToDoList = () => {
     setModalOpen(false);
   };
 
-  const filteredTasks = tasks.filter(task => 
+  const filteredTasks = tasks.filter(task =>
     task.text.toLowerCase().includes(searchTerm.toLowerCase())
   );
   //const handleAddTask = () => {
-    //if (!task.trim()) {
-      // Impede que o usuário crie uma tarefa sem texto
-      //return;
-    //}
+  //if (!task.trim()) {
+  // Impede que o usuário crie uma tarefa sem texto
+  //return;
+  //}
 
-    //const now = new Date();
-    //if (editIndex >= 0) {
-      // Editar tarefa existente
-      //const newTasks = [...tasks];
-      //newTasks[editIndex] = { text: task, updatedAt: now, createdAt: newTasks[editIndex].createdAt };
-      //setTasks(newTasks);
-      //setTask('');
-      //setEditIndex(-1);
-    //} else {
-      // Adicionar nova tarefa
-      //setTasks([...tasks, { text: task, createdAt: now, updatedAt: now }]);
-      //setTask('');
-    //}
+  //const now = new Date();
+  //if (editIndex >= 0) {
+  // Editar tarefa existente
+  //const newTasks = [...tasks];
+  //newTasks[editIndex] = { text: task, updatedAt: now, createdAt: newTasks[editIndex].createdAt };
+  //setTasks(newTasks);
+  //setTask('');
+  //setEditIndex(-1);
+  //} else {
+  // Adicionar nova tarefa
+  //setTasks([...tasks, { text: task, createdAt: now, updatedAt: now }]);
+  //setTask('');
+  //}
   //};
 
   //const handleEditTask = (index) => {
-    //setTask(tasks[index].text);
-    //setEditIndex(index);
+  //setTask(tasks[index].text);
+  //setEditIndex(index);
   //};
 
-  
+
 
   return (
     <div className={classes.divBody}>
       {/* <div className={classes.root}> */}
-        <div className={classes.titleContainer}>
-          <h1 style={{margin: '0'}}>Tarefas</h1> {/*Titulo tarefas*/}
-          <Typography
-            className={classes.info}
-            component="subtitle1"
-            variant="body1"
-            style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}
-            >
-              {'Adicione suas tarefas'}
-          </Typography>
-        </div>
+      <div className={classes.titleContainer}>
+        <h1 style={{ margin: '0' }}>Tarefas</h1> {/*Titulo tarefas*/}
+        <Typography
+          className={classes.info}
+          component="subtitle1"
+          variant="body1"
+          style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}
+        >
+          {'Adicione suas tarefas'}
+        </Typography>
+      </div>
 
       {/* <MainContainer className={classes.mainContainer}> */}
 
-        <div style={{display: "inline-flex", alignItems: 'center', width: "95%"}}> 
-          <div className={classes.serachInputWrapper}>
-            <SearchIcon className={classes.searchIcon} />
-            <InputBase
-              className={classes.input}
-              placeholder="Pesquisar..."
-              value={searchTerm}
-              onChange={handleSearchChange}
-              variant="outlined"
-                error={!!error} // irá mostrar um erro se houver
-                helperText={error} // Mostra a nebsagem de erro abaixo do campo
-              //   InputProps={{
-              //     startAdornment: (
-              //       <InputAdornment position="start">
-              //         <SearchIcon style={{ color: "gray" }} />
-              //       </InputAdornment>
-              //     ),
-              //   style: {
-              //       borderRadius: '40px',
-              //   }
-              // }}
-            />
-          </div>
-
-          <div 
-            style={{width: '1px', height: "43px", background: '#BDBDBD', marginLeft: '50px', marginRight: '50px'}}>
-          </div>
-
-          <Button className={classes.button} variant="contained" color="primary" onClick={openAddModal}>
-            {"Adicionar Tarefa"}
-          </Button>
-
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "100%",
+          flexWrap: "nowrap",
+        }}
+      >
+        {/* Barra de pesquisa */}
+        <div
+          style={{
+            flex: "1 1 auto",
+            display: "flex",
+            alignItems: "center",
+            maxWidth: "80%",
+          }}
+          className={classes.serachInputWrapper}
+        >
+          <SearchIcon className={classes.searchIcon} />
+          <InputBase
+            className={classes.searchInput}
+            placeholder={("Pesquisar...")}
+            type="search"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            variant="outlined"
+            error={!!error}
+            helperText={error}
+          />
         </div>
 
-        <Paper 
-          className={classes.mainPaper} 
-          // variant="outlined"
-          onScroll={handleScroll}>
+        {/* Linha divisória */}
+        <div
+          style={{
+            width: "1px",
+            height: "43px",
+            background: "#BDBDBD",
+          }}
+        ></div>
 
-          <Table className={classes.table} aria-label="Lista de Tarefas" size="small">
-            <TableHead className={classes.tableHeader}>
+        {/* Botão */}
+        <div
+          style={{
+            flex: "0 0 auto", // O botão não vai crescer nem encolher
+          }}
+        >
+          <MainHeaderButtonsWrapper>
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              onClick={openAddModal}
+              style={{
+                whiteSpace: "nowrap", // Impede o texto de quebrar
+              }}
+            >
+              {"Adicionar Tarefa"}
+            </Button>
+          </MainHeaderButtonsWrapper>
+        </div>
+      </div>
+
+      <Paper
+        className={classes.mainPaper}
+        // variant="outlined"
+        onScroll={handleScroll}>
+
+        <Table className={classes.table} aria-label="Lista de Tarefas" size="small">
+          <TableHead className={classes.tableHeader}>
+            <TableRow>
+              <TableCell><b>Tarefas</b></TableCell> {/* Nome da coluna de Tarefas */}
+              <TableCell align="center"><b>Data</b></TableCell> {/* Nome da coluna de Data */}
+              <TableCell align="right"><b>Ações</b></TableCell> {/* Nome da coluna de Ações */}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredTasks.length === 0 ? ( // Verificar se não há tarefas
               <TableRow>
-                <TableCell><b>Tarefas</b></TableCell> {/* Nome da coluna de Tarefas */}
-                <TableCell align="center"><b>Data</b></TableCell> {/* Nome da coluna de Data */}
-                <TableCell align="right"><b>Ações</b></TableCell> {/* Nome da coluna de Ações */}
+                <TableCell colSpan={3} align="center">
+                  Nenhuma tarefa adicionada
+                </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredTasks.length === 0 ? ( // Verificar se não há tarefas
-                <TableRow>
-                  <TableCell colSpan={3} align="center">
-                    Nenhuma tarefa adicionada
+            ) : (
+              filteredTasks.map((task, index) => (
+                <TableRow key={index}>
+                  <TableCell component="th" scope="row">
+                    {task.text}
+                  </TableCell>
+                  <TableCell align="center">
+                    {new Date(task.updatedAt).toLocaleDateString('pt-BR')}
+                  </TableCell>
+                  <TableCell align="right">
+                    <Tooltip title="Editar Tarefa">
+                      <IconButton className={classes.acoesButtons} onClick={() => openEditModal(index)}>
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Excluir Tarefa">
+                      <IconButton className={classes.acoesButtons} onClick={() => handleDeleteTask(index)}>
+                        <DeleteOutlineIcon />
+                      </IconButton>
+                    </Tooltip>
                   </TableCell>
                 </TableRow>
-              ) : (
-                filteredTasks.map((task, index) => (
-                  <TableRow key={index}>
-                    <TableCell component="th" scope="row">
-                      {task.text}
-                    </TableCell>
-                    <TableCell align="center">
-                      {new Date(task.updatedAt).toLocaleDateString('pt-BR')}
-                    </TableCell>
-                    <TableCell align="right">
-                      <Tooltip title="Editar Tarefa">
-                        <IconButton className={classes.acoesButtons} onClick={() => openEditModal(index)}>
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Excluir Tarefa">
-                        <IconButton className={classes.acoesButtons} onClick={() => handleDeleteTask(index)}>
-                        <DeleteOutlineIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </Paper>
-        <TaskModal
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </Paper>
+      <TaskModal
         open={modalOpen}
         onClose={handleModalClose}
         onSubmit={handleModalSubmit}
