@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start', // Alinha os itens à esquerda
-    marginBottom: '7px', // Espaçamento abaixo do contêiner
   },
   serachInputWrapper: {
     border: "solid 1px #828282",
