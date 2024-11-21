@@ -47,7 +47,14 @@ const useStyles = makeStyles((theme) => ({
 
   btnWrapper: {
     position: "relative",
-  },
+    backgroundColor: "#34d3a3", 
+    color: "#0c2c54",
+    borderRadius: "20px", 
+    padding: theme.spacing(1, 4),
+    "&:hover": {
+        backgroundColor: "#34d3a3",
+    },
+}, 
 
   buttonProgress: {
     color: green[500],

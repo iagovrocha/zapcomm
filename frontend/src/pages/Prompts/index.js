@@ -306,7 +306,9 @@ const Prompts = () => {
       </div>
       {/* </MainHeader> */}
 
-      <Paper className={classes.mainPaper}>
+      <Paper 
+      // className={classes.mainPaper}
+      >
 
         <Table size="small">
           <TableHead>

@@ -336,16 +336,17 @@ const FileLists = () => {
                                         {fileList.name}
                                     </TableCell>
                                     <TableCell align="center">
-                                        <IconButton size="small" onClick={() => handleEditFileList(fileList)}>
+                                        <IconButton size="small" onClick={() => handleEditFileList(fileList)} className={classes.acoes}>
                                             <EditIcon />
                                         </IconButton>
 
-                                        <IconButton
+                                        <IconButton 
                                             size="small"
                                             onClick={(e) => {
                                                 setConfirmModalOpen(true);
                                                 setDeletingFileList(fileList);
                                             }}
+                                            className={classes.acoes}
                                         >
                                             <DeleteOutlineIcon />
                                         </IconButton>

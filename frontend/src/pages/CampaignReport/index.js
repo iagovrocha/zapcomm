@@ -37,6 +37,12 @@ const useStyles = makeStyles((theme) => ({
   tabPanelsContainer: {
     padding: theme.spacing(2),
   },
+  divBody: {
+    flex: 1,
+    padding: theme.spacing(1),
+    height: `calc(100% - 48px)`,
+    backgroundColor: "#FFFFFF",
+  },
 }));
 
 const CampaignReport = () => {
@@ -102,7 +108,7 @@ const CampaignReport = () => {
     const socket = socketManager.getSocket(companyId);
 
     socket.on(`company-${companyId}-campaign`, (data) => {
-     
+
       if (data.record.id === +campaignId) {
         setCampaign(data.record);
 
@@ -145,12 +151,21 @@ const CampaignReport = () => {
   };
 
   return (
-    <MainContainer>
+    <div className={classes.divBody}>
+      <h1 style={{ margin: "0" }}><b>Relatório da {campaign.name || "Campanha"}</b></h1>
+      <Typography
+        component="subtitle1"
+        variant="body1"
+        style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+      >
+        {"Analise as configurações do relatório"}
+      </Typography>
+      {/* <MainContainer> */}
       <MainHeader>
         <Grid style={{ width: "99.6%" }} container>
-          <Grid xs={12} item>
+          {/* <Grid xs={12} item>
             <Title>Relatório da {campaign.name || "Campanha"}</Title>
-          </Grid>
+          </Grid> */}
         </Grid>
       </MainHeader>
       <Paper className={classes.mainPaper} variant="outlined">
@@ -161,13 +176,13 @@ const CampaignReport = () => {
           <Grid xs={12} item>
             <LinearProgress
               variant="determinate"
-              style={{ height: 15, borderRadius: 3, margin: "20px 0" }}
+              style={{ height: 15, borderRadius: 5, margin: "20px 0", backgroundColor: "#0C2C54", color: "#fff"}}
               value={percent}
             />
           </Grid>
           <Grid xs={12} md={4} item>
             <CardCounter
-              icon={<GroupIcon fontSize="inherit" />}
+              icon={<GroupIcon fontSize="inherit" style={{color: "#0C2C54"}}/>}
               title="Contatos Válidos"
               value={validContacts}
               loading={loading}
@@ -177,7 +192,7 @@ const CampaignReport = () => {
             <>
               <Grid xs={12} md={4} item>
                 <CardCounter
-                  icon={<DoneIcon fontSize="inherit" />}
+                  icon={<DoneIcon fontSize="inherit" style={{color: "#0C2C54"}}/>}
                   title="Confirmações Solicitadas"
                   value={confirmationRequested}
                   loading={loading}
@@ -185,7 +200,7 @@ const CampaignReport = () => {
               </Grid>
               <Grid xs={12} md={4} item>
                 <CardCounter
-                  icon={<DoneAllIcon fontSize="inherit" />}
+                  icon={<DoneAllIcon fontSize="inherit" style={{color: "#0C2C54"}}/>}
                   title="Confirmações"
                   value={confirmed}
                   loading={loading}
@@ -195,7 +210,7 @@ const CampaignReport = () => {
           )}
           <Grid xs={12} md={4} item>
             <CardCounter
-              icon={<CheckCircleIcon fontSize="inherit" />}
+              icon={<CheckCircleIcon fontSize="inherit" style={{color: "#0C2C54"}}/>}
               title="Entregues"
               value={delivered}
               loading={loading}
@@ -204,7 +219,7 @@ const CampaignReport = () => {
           {campaign.whatsappId && (
             <Grid xs={12} md={4} item>
               <CardCounter
-                icon={<WhatsAppIcon fontSize="inherit" />}
+                icon={<WhatsAppIcon fontSize="inherit" style={{color: "#0C2C54"}}/>}
                 title="Conexão"
                 value={campaign.whatsapp.name}
                 loading={loading}
@@ -214,7 +229,7 @@ const CampaignReport = () => {
           {campaign.contactListId && (
             <Grid xs={12} md={4} item>
               <CardCounter
-                icon={<ListAltIcon fontSize="inherit" />}
+                icon={<ListAltIcon fontSize="inherit" style={{color: "#0C2C54"}}/>}
                 title="Lista de Contatos"
                 value={campaign.contactList.name}
                 loading={loading}
@@ -223,7 +238,7 @@ const CampaignReport = () => {
           )}
           <Grid xs={12} md={4} item>
             <CardCounter
-              icon={<ScheduleIcon fontSize="inherit" />}
+              icon={<ScheduleIcon fontSize="inherit" style={{color: "#0C2C54"}}/>}
               title="Agendamento"
               value={datetimeToClient(campaign.scheduledAt)}
               loading={loading}
@@ -231,7 +246,7 @@ const CampaignReport = () => {
           </Grid>
           <Grid xs={12} md={4} item>
             <CardCounter
-              icon={<EventAvailableIcon fontSize="inherit" />}
+              icon={<EventAvailableIcon fontSize="inherit" style={{color: "#0C2C54"}}/>}
               title="Conclusão"
               value={datetimeToClient(campaign.completedAt)}
               loading={loading}
@@ -239,7 +254,8 @@ const CampaignReport = () => {
           </Grid>
         </Grid>
       </Paper>
-    </MainContainer>
+      {/* </MainContainer> */}
+    </div>
   );
 };
 
