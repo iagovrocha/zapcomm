@@ -62,17 +62,16 @@ const useStyles = makeStyles(theme => ({
 		alignItems: "center",
 		justifyContent: "center",
 	},
-	searchInputWrapper: {
+	serachInputWrapper: {
 		border: "solid 1px #828282",
-		//padding: 8, // Para um pouco de espaço interno
-		flex: 1,
-		display: "flex",
-		borderRadius: 40,
-		padding: 4,
-		marginRight: theme.spacing(1),
-		width: '70%',
-    	height: '48px',
-	},
+			flex: 1,
+			display: "flex",
+			borderRadius: 40,
+			padding: 4,
+			marginRight: theme.spacing(1),
+				width: '70%',
+				height: '48px',
+		},
 	searchIcon: {
 		color: "grey",
 		marginLeft: 6,
@@ -82,16 +81,16 @@ const useStyles = makeStyles(theme => ({
 	acoesButtons: {
 		color: "#0C2C54",
 		"&:hover": {
-		  color: "#3c5676",
+			color: "#3c5676",
 		},
-		width: "35px", 
+		width: "35px",
 		height: "30px",
-	  },
+	},
 	searchInput: {
 		flex: 1,
 		border: "none",
 		borderRadius: 30,
-		
+
 	},
 	divBody: {
 		flex: 1,
@@ -365,16 +364,14 @@ const Connections = () => {
 
 	return (
 		<div className={classes.divBody}>
-			<div className={classes.titleContainer}>
-				<h1 style={{ margin: "0" }}><b>{i18n.t("connections.title")}</b></h1>
-				<Typography
-					component="subtitle1"
-					variant="body1"
-					style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
-				>
-					{"Adicione, edite e exclua seus bots e projetos."}
-				</Typography>
-			</div>
+			<h1 style={{ margin: "0" }}><b>{i18n.t("connections.title")}</b></h1>
+			<Typography
+				component="subtitle1"
+				variant="body1"
+				style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+			>
+				{"Adicione, edite e exclua seus bots e projetos."}
+			</Typography>
 			<ConfirmationModal
 				title={confirmModalInfo.title}
 				open={confirmModalOpen}
@@ -395,52 +392,54 @@ const Connections = () => {
 			/>
 			{/*<MainHeader>*/}
 
-				<div style={{display: "inline-flex", alignItems: 'center', width: "95%"}}>
-					<div className={classes.searchInputWrapper}>
-						<SearchIcon className={classes.searchIcon} />
-						<InputBase
-							className={classes.searchInput}
-							placeholder={i18n.t("contacts.searchPlaceholder")}
-							type="search"
-							value={searchParam}
-							onChange={handleSearch}
-						></InputBase>
-					</div>
-					<div
-						style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
-					>
-					</div>
-					<div>
-						<Can
-							role={user.profile}
-							perform="connections-page:addConnection"
-							yes={() => (
-							<Button
-							variant="contained"
-							color="primary"
-							//adicionei a classe pro botao ficar padronizado
-								className={classes.BotaoAdicionar}
-									onClick={handleOpenWhatsAppModal}
-								>
-									{i18n.t("connections.buttons.add")}
-								</Button>
-							)}
-						/>
-					</div>
+			<div style={{ display: "inline-flex", alignItems: 'center', width: "95%" }}>
+				<div className={classes.serachInputWrapper}>
+					<SearchIcon className={classes.searchIcon} />
+					<InputBase
+						className={classes.searchInput}
+						placeholder={i18n.t("contacts.searchPlaceholder")}
+						type="search"
+						value={searchParam}
+						onChange={handleSearch}
+					></InputBase>
 				</div>
-				{/*<MainHeaderButtonsWrapper>
+				<div
+					style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+				>
+				</div>
+				<MainHeaderButtonsWrapper style={{}}>
+					<Can
+						role={user.profile}
+						perform="connections-page:addConnection"
+						yes={() => (
+							<Button
+								variant="contained"
+								color="primary"
+								//adicionei a classe pro botao ficar padronizado
+								className={classes.BotaoAdicionar}
+								onClick={handleOpenWhatsAppModal}
+							>
+								{i18n.t("connections.buttons.add")}
+							</Button>
+						)}
+					/>
+				</MainHeaderButtonsWrapper>
+			</div>
+			{/*<MainHeaderButtonsWrapper>
 					
 				</MainHeaderButtonsWrapper>*/}
 			{/*</MainHeader>*/}
-			<Paper className={classes.mainPaper} >
-				<Table className={classes.table} aria-label="Lista de Conexões" size="small">
+			<Paper
+			// className={classes.mainPaper} 
+			>
+				<Table size="small">
 					<TableHead>
 						<TableRow>
 							<TableCell align="center">
-								{i18n.t("connections.table.name")}
+								<b>{i18n.t("connections.table.name")}</b>
 							</TableCell>
 							<TableCell align="center">
-								{i18n.t("connections.table.status")}
+								<b>{i18n.t("connections.table.status")}</b>
 							</TableCell>
 							<Can
 								role={user.profile}
