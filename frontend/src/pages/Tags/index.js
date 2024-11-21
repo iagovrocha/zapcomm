@@ -95,25 +95,25 @@ const useStyles = makeStyles((theme) => ({
   },
   serachInputWrapper: {
     border: "solid 1px #828282",
-		flex: 1,
-		display: "flex",
-		borderRadius: 40,
-		padding: 4,
-		marginRight: theme.spacing(1),
-	},
+    flex: 1,
+    display: "flex",
+    borderRadius: 40,
+    padding: 4,
+    marginRight: theme.spacing(1),
+  },
 
-	searchIcon: {
-		color: "grey",
-		marginLeft: 6,
-		marginRight: 6,
-		alignSelf: "center",
-	},
+  searchIcon: {
+    color: "grey",
+    marginLeft: 6,
+    marginRight: 6,
+    alignSelf: "center",
+  },
 
-	searchInput: {
-		flex: 1,
-		border: "none",
-		borderRadius: 30,
-	},
+  searchInput: {
+    flex: 1,
+    border: "none",
+    borderRadius: 30,
+  },
   AgrupamentoDoPesquisarENovo: {
     paddingTop: "7px",
     paddingBottom: "8px",
@@ -132,6 +132,18 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     height: `calc(100% - 48px)`,
     backgroundColor: "#FFFFFF",
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+    },
+    [theme.breakpoints.down('lg')]: {
+      width: '100%',
+    },
+    [theme.breakpoints.down('xl')]: {
+      width: '100%',
+    },
   },
   acoes: {
     color: "#0C2C54",
@@ -251,25 +263,25 @@ const Tags = () => {
   function hexToRgb(hex) {
     // Remove o símbolo "#" se ele estiver presente
     hex = hex.replace('#', '');
-  
+
     // Converter os valores hexadecimais em valores RGB
     const r = parseInt(hex.substring(0, 2), 16);
     const g = parseInt(hex.substring(2, 4), 16);
     const b = parseInt(hex.substring(4, 6), 16);
-  
+
     return `${r}, ${g}, ${b}`;
   };
   return (
-  <div className={classes.divBody}>
-    <h1 style={{ margin: "0" }}><b>{i18n.t("tags.title")}</b></h1>
-    <Typography
-      component="subtitle1"
-      variant="body1"
-      style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
-    >
-    {"Adicione e edite as tags utilizadas."}
-    </Typography>
-    {/* <MainContainer style={{backgroundColor: "#FFFFFF"}}> */}
+    <div className={classes.divBody}>
+      <h1 style={{ margin: "0" }}><b>{i18n.t("tags.title")}</b></h1>
+      <Typography
+        component="subtitle1"
+        variant="body1"
+        style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+      >
+        {"Adicione e edite as tags utilizadas."}
+      </Typography>
+      {/* <MainContainer style={{backgroundColor: "#FFFFFF"}}> */}
       {/* Componete do Botão de Deletar */}
       <ConfirmationModal
         title={deletingTag && `${i18n.t("tags.confirmationModal.deleteTitle")}`}
@@ -298,17 +310,17 @@ const Tags = () => {
               type="search"
               value={searchParam}
               onChange={handleSearch}
-              // InputProps={{
-              //   startAdornment: (
-              //     <InputAdornment position="start">
-              //       <SearchIcon style={{ color: "gray" }} />
-              //     </InputAdornment>
-              //   ),
-              // }}
+            // InputProps={{
+            //   startAdornment: (
+            //     <InputAdornment position="start">
+            //       <SearchIcon style={{ color: "gray" }} />
+            //     </InputAdornment>
+            //   ),
+            // }}
             />
           </div>
           <div
-          style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+            style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
           >
           </div>
           <Button
@@ -318,15 +330,15 @@ const Tags = () => {
             onClick={handleOpenTagModal}
           >
             {i18n.t("tags.buttons.add")}
-          </Button>	  
+          </Button>
         </div>
-      </div>  
+      </div>
       <Paper
         // className={classes.mainPaper}
         // variant="outlined"
         onScroll={handleScroll}
       >
-        <Table size="small" style={{backgroundColor: "#FFFFFF"}}>
+        <Table size="small" style={{ backgroundColor: "#FFFFFF" }}>
           <TableHead>
             <TableRow>
               <TableCell align="left">
@@ -341,63 +353,63 @@ const Tags = () => {
             </TableRow>
           </TableHead>
           {tags.length > 0 ? (
-              <>
-          <TableBody>
             <>
-              {tags.map((tag) => (
-                <TableRow key={tag.id}>
-                  <TableCell align="left">
-                    <Chip
-                      // variant="outlined"
-                      style={{
-                        borderRadius: "4px",
-                        backgroundColor: `rgba(${hexToRgb(tag.color)}, 0.2)`,
-                        color: tag.color,
-                        fontFamily: 'Inter Regular, sans-serif',
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: "500",
-                        lineHeight: "normal",
-                      }}
-                      label={<b>{tag.name}</b>}
-                      size="small"
-                    />
-                  </TableCell>
-                  <TableCell align="center">{tag.ticketsCount}</TableCell>
-                  <TableCell align="center">
-                    <IconButton size="small" onClick={() => handleEditTag(tag)} className={classes.acoes}>
-                      <EditIcon />
-                    </IconButton>
-
-                    <IconButton
-                      size="small"
-                      onClick={(e) => {
-                        setConfirmModalOpen(true);
-                        setDeletingTag(tag);
-                      }}
-                      className={classes.acoes}
-                      >
-                      <DeleteOutlineIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-              {loading && <TableRowSkeleton columns={4} />}
-            </>
-          </TableBody>
-          </>
-            ) : (
               <TableBody>
-                <TableRow>
-                  <TableCell colSpan="4" align="center">
-                    Nenhuma tag a ser carregada no momento
-                  </TableCell>
-                </TableRow>
+                <>
+                  {tags.map((tag) => (
+                    <TableRow key={tag.id}>
+                      <TableCell align="left">
+                        <Chip
+                          // variant="outlined"
+                          style={{
+                            borderRadius: "4px",
+                            backgroundColor: `rgba(${hexToRgb(tag.color)}, 0.2)`,
+                            color: tag.color,
+                            fontFamily: 'Inter Regular, sans-serif',
+                            fontSize: "14px",
+                            fontStyle: "normal",
+                            fontWeight: "500",
+                            lineHeight: "normal",
+                          }}
+                          label={<b>{tag.name}</b>}
+                          size="small"
+                        />
+                      </TableCell>
+                      <TableCell align="center">{tag.ticketsCount}</TableCell>
+                      <TableCell align="center">
+                        <IconButton size="small" onClick={() => handleEditTag(tag)} className={classes.acoes}>
+                          <EditIcon />
+                        </IconButton>
+
+                        <IconButton
+                          size="small"
+                          onClick={(e) => {
+                            setConfirmModalOpen(true);
+                            setDeletingTag(tag);
+                          }}
+                          className={classes.acoes}
+                        >
+                          <DeleteOutlineIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  {loading && <TableRowSkeleton columns={4} />}
+                </>
               </TableBody>
-              )}
+            </>
+          ) : (
+            <TableBody>
+              <TableRow>
+                <TableCell colSpan="4" align="center">
+                  Nenhuma tag a ser carregada no momento
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
         </Table>
       </Paper>
-    {/* </MainContainer> */}
+      {/* </MainContainer> */}
     </div>
   );
 };
