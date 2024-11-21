@@ -43,14 +43,12 @@ const useStyles = makeStyles((theme) => ({
 
   btnWrapper: {
     position: "relative",
-    backgroundColor: "#34d3a3",
-    color: "#0c2c54",
-    borderRadius: "20px",
-    padding: theme.spacing(1, 4),
-    "&:hover": {
-      backgroundColor: "#34d3a3",
+    color: "#0c2c54", //Padronização de cores do botão
+    backgroundColor: "#34d3a3", //Padronização de cores do botão
+    borderRadius: '40px', //Caracterisca adicionada para padronizar os botoes dos modais
+
     },
-  },
+  
 
   dialogActions: {
     justifyContent: "center",
@@ -85,8 +83,6 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
     isDefault: false,
     token: "",
     provider: "beta",
-    //timeSendQueue: 0,
-    //sendIdQueue: 0,
     expiresInactiveMessage: "",
     expiresTicket: 0,
     timeUseBotQueues: 0,
@@ -211,7 +207,7 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                 <div className={classes.multFieldLine}>
                   <Grid spacing={2} container>
                     <Grid item>
-                      <Field
+                      <Field //Nome
                         as={TextField}
                         label={i18n.t("whatsappModal.form.name")}
                         autoFocus
@@ -238,8 +234,11 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                     </Grid>
                   </Grid>
                 </div>
+                
+                {/* Serve para deixar as caixas de texto na mesma fileira */}
                 <div className={classes.linha2}>
-                  <Field
+
+                  <Field //Mensagem de Saudação
                     as={TextField}
                     label={i18n.t("queueModal.form.greetingMessage")}
                     type="greetingMessage"
@@ -256,7 +255,7 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                     variant="outlined"
                     margin="dense"
                   />
-                  <Field
+                  <Field //mensagem de Conclusão
                     as={TextField}
                     label={i18n.t("queueModal.form.complationMessage")}
                     type="complationMessage"
@@ -275,8 +274,9 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                     margin="dense"
                   />
                 </div>
+                {/* Serve para deixar as caixas de texto na mesma fileira */}
                 <div className={classes.linha3}>
-                  <Field
+                  <Field //Mensagem de Fora de Expediente
                     as={TextField}
                     label={i18n.t("queueModal.form.outOfHoursMessage")}
                     type="outOfHoursMessage"
@@ -295,7 +295,7 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                     variant="outlined"
                     margin="dense"
                   />
-                  <Field
+                  <Field //Mensagem de Avaliação
                     as={TextField}
                     label={i18n.t("queueModal.form.ratingMessage")}
                     type="ratingMessage"
@@ -313,7 +313,7 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                   />
                 </div>
                 <div>
-                  <Field
+                  <Field //Token
                     as={TextField}
                     label={i18n.t("queueModal.form.token")}
                     type="token"
@@ -451,7 +451,7 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
 
                   </Grid>
                   <Grid spacing={2} container>
-                    {/* ENCERRAR CHATS ABERTOS APÓS X HORAS */}
+                    {/* Encerrar chats abertos após x horas */}
                     <Grid xs={12} md={12} item>
                       <Field
                         as={TextField}
@@ -465,7 +465,7 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                       />
                     </Grid>
                   </Grid>
-                  {/* MENSAGEM POR INATIVIDADE*/}
+                  {/* Mensagem por inatividade*/}
                   <div>
                     <Field
                       as={TextField}
@@ -482,7 +482,7 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
                   </div>
                 </div>
               </DialogContent>
-              <DialogActions className={classes.dialogActions}>
+              <DialogActions style={{ justifyContent: "center" }}>
                 <Button
                   type="submit"
                   color="primary"
