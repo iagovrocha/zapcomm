@@ -46,6 +46,13 @@ const useStyles = makeStyles((theme) => ({
     color: "#0c2c54", //Padronização de cores do botão
     backgroundColor: "#34d3a3", //Padronização de cores do botão
     borderRadius: '40px', //Caracterisca adicionada para padronizar os botoes dos modais
+
+    },
+  
+
+  dialogActions: {
+    justifyContent: "center",
+    paddingBottom: theme.spacing(2),
   },
 
   buttonProgress: {
