@@ -319,7 +319,7 @@ const Announcements = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          width: "95%",
+          width: "97%",
           flexWrap: "nowrap",
         }}
       >
