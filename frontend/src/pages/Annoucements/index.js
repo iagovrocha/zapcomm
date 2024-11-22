@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       color: "#3c5676",
     },
-    width: "35px", 
+    width: "35px",
     height: "30px",
   },
   searchInput: {
@@ -105,25 +105,25 @@ const useStyles = makeStyles((theme) => ({
   },
   serachInputWrapper: {
     border: "solid 1px #828282",
-		flex: 1,
-		display: "flex",
-		borderRadius: 40,
-		padding: 4,
-		marginRight: theme.spacing(1),
+    flex: 1,
+    display: "flex",
+    borderRadius: 40,
+    padding: 4,
+    marginRight: theme.spacing(1),
     width: '70%',
     height: '48px',
-	},
-	searchIcon: {
-		color: "grey",
-		marginLeft: 6,
-		marginRight: 6,
-		alignSelf: "center",
-	},
-	searchInput: {
-		flex: 1,
-		border: "none",
-		borderRadius: 30,
-	},
+  },
+  searchIcon: {
+    color: "grey",
+    marginLeft: 6,
+    marginRight: 6,
+    alignSelf: "center",
+  },
+  searchInput: {
+    flex: 1,
+    border: "none",
+    borderRadius: 30,
+  },
   divBody: {
     flex: 1,
     padding: theme.spacing(1),
@@ -140,7 +140,7 @@ const useStyles = makeStyles((theme) => ({
   },
   Tabela: {
     backgroundColor: "#FFFFFF",
-    fontFamily: 'Inter Tight, sans-serif', 
+    fontFamily: 'Inter Tight, sans-serif',
     color: 'black'
   },
 }));
@@ -243,10 +243,10 @@ const Announcements = () => {
   const handleDeleteAnnouncement = async (announcement) => {
     try {
       if (announcement.mediaName)
-      await api.delete(`/announcements/${announcement.id}/media-upload`);
+        await api.delete(`/announcements/${announcement.id}/media-upload`);
 
       await api.delete(`/announcements/${announcement.id}`);
-      
+
       toast.success(i18n.t("announcements.toasts.deleted"));
     } catch (err) {
       toastError(err);
@@ -314,36 +314,60 @@ const Announcements = () => {
         announcementId={selectedAnnouncement && selectedAnnouncement.id}
       />
       {/* <MainHeader> */}
-        <div style={{display: "inline-flex", alignItems: 'center', width: "95%",}}> 
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "95%",
+          flexWrap: "nowrap",
+        }}
+      >
 
-          <div className={classes.serachInputWrapper}>
-                <SearchIcon className={classes.searchIcon} />
-                <InputBase
-                  className={classes.searchInput}
-                  placeholder={i18n.t("announcements.searchPlaceholder")}
-                  type="search"
-                  value={searchParam}
-                  onChange={handleSearch}
-                />
-          </div>
-
-          <div
-                style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
-          ></div>
-
-          <MainHeaderButtonsWrapper style={{}}>
-                <Button
-                  className={classes.Botoes}
-                  fullWidth
-                  variant="contained"
-                  onClick={handleOpenAnnouncementModal}
-                  color="primary"
-                >
-                  {i18n.t("announcements.buttons.add")}
-                </Button>
-          </MainHeaderButtonsWrapper>
-
+        <div
+          style={{
+            flex: "1 1 auto",
+            display: "flex",
+            alignItems: "center",
+            maxWidth: "80%",
+          }}
+          className={classes.serachInputWrapper}>
+          <SearchIcon className={classes.searchIcon} />
+          <InputBase
+            className={classes.searchInput}
+            placeholder={i18n.t("announcements.searchPlaceholder")}
+            type="search"
+            value={searchParam}
+            onChange={handleSearch}
+          />
         </div>
+
+        <div
+          style={{
+            width: "1px",
+            height: "43px",
+            background: "#BDBDBD",
+          }}
+        ></div>
+
+        <div
+          style={{
+            flex: "0 0 auto",
+          }}
+        >
+          <MainHeaderButtonsWrapper style={{}}>
+            <Button
+              className={classes.Botoes}
+              fullWidth
+              variant="contained"
+              onClick={handleOpenAnnouncementModal}
+              color="primary"
+            >
+              {i18n.t("announcements.buttons.add")}
+            </Button>
+          </MainHeaderButtonsWrapper>
+        </div>
+      </div>
       {/* </MainHeader> */}
       <Paper
         // className={classes.mainPaper}
@@ -370,54 +394,54 @@ const Announcements = () => {
             </TableRow>
           </TableHead>
           {announcements.length > 0 ? (
-              <>
-          <TableBody>
-              <>
-              {announcements.map((announcement) => (
-                <TableRow key={announcement.id}>
-                  <TableCell align="center">{announcement.title}</TableCell>
-                  <TableCell align="center">
-                    {translatePriority(announcement.priority)}
-                  </TableCell>
-                  <TableCell align="center">
-                    {announcement.mediaName ?? i18n.t("quickMessages.noAttachment")}
-                  </TableCell>
-                  <TableCell align="center">
-                    {announcement.status ? i18n.t("announcements.active") : i18n.t("announcements.inactive")}
-                  </TableCell>
-                  <TableCell align="center">
-                    <IconButton
-                      className={classes.acoesButtons}
-                      onClick={() => handleEditAnnouncement(announcement)}
-                    >
-                      <EditIcon />
-                    </IconButton>
-
-                    <IconButton
-                      className={classes.acoesButtons}
-                      onClick={(e) => {
-                        setConfirmModalOpen(true);
-                        setDeletingAnnouncement(announcement);
-                      }}
-                    >
-                      <DeleteOutlineIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-              {loading && <TableRowSkeleton columns={5} />}
-            </>
-          </TableBody>
-          </>
-            ) : (
+            <>
               <TableBody>
-                <TableRow>
-                  <TableCell colSpan="5" align="center">
-                    Nenhum informativo a ser carregado no momento
-                  </TableCell>
-                </TableRow>
+                <>
+                  {announcements.map((announcement) => (
+                    <TableRow key={announcement.id}>
+                      <TableCell align="center">{announcement.title}</TableCell>
+                      <TableCell align="center">
+                        {translatePriority(announcement.priority)}
+                      </TableCell>
+                      <TableCell align="center">
+                        {announcement.mediaName ?? i18n.t("quickMessages.noAttachment")}
+                      </TableCell>
+                      <TableCell align="center">
+                        {announcement.status ? i18n.t("announcements.active") : i18n.t("announcements.inactive")}
+                      </TableCell>
+                      <TableCell align="center">
+                        <IconButton
+                          className={classes.acoesButtons}
+                          onClick={() => handleEditAnnouncement(announcement)}
+                        >
+                          <EditIcon />
+                        </IconButton>
+
+                        <IconButton
+                          className={classes.acoesButtons}
+                          onClick={(e) => {
+                            setConfirmModalOpen(true);
+                            setDeletingAnnouncement(announcement);
+                          }}
+                        >
+                          <DeleteOutlineIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  {loading && <TableRowSkeleton columns={5} />}
+                </>
               </TableBody>
-              )}
+            </>
+          ) : (
+            <TableBody>
+              <TableRow>
+                <TableCell colSpan="5" align="center">
+                  Nenhum informativo a ser carregado no momento
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
         </Table>
       </Paper>
       {/* </MainContainer> */}
