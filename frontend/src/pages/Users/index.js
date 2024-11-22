@@ -245,8 +245,23 @@ const Users = () => {
       >
         {i18n.t("users.subtitulo")}
       </Typography>
-      <div className={classes.AgrupamentoDoPesquisarENovo}>
-        <div className={classes.serachInputWrapper}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "100%",
+          flexWrap: "nowrap",
+        }}
+      >
+        <div
+          style={{
+            flex: "1 1 auto",
+            display: "flex",
+            alignItems: "center",
+            maxWidth: "80%",
+          }}
+          className={classes.serachInputWrapper}>
           <SearchIcon className={classes.searchIcon} />
           <InputBase
             placeholder={i18n.t("contacts.searchPlaceholder")}
@@ -264,17 +279,30 @@ const Users = () => {
           />
         </div>
         <div
-          style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+          style={{
+            width: "1px",
+            height: "43px",
+            background: "#BDBDBD",
+          }}
+        ></div>
+
+        <div
+          style={{
+            flex: "0 0 auto",
+          }}
         >
+
+          <MainHeaderButtonsWrapper>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleOpenUserModal}
+              className={classes.BotaoAdicionar}
+            >
+              +   {i18n.t("users.buttons.add")}
+            </Button>
+          </MainHeaderButtonsWrapper>
         </div>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleOpenUserModal}
-          className={classes.BotaoAdicionar}
-        >
-          +   {i18n.t("users.buttons.add")}
-        </Button>
       </div>
       {/* <MainContainer> */}
       <ConfirmationModal
