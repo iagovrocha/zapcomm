@@ -90,6 +90,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 40,
     padding: 4,
     marginRight: theme.spacing(1),
+    width: '70%',
+    height: '48px',
   },
 
   searchIcon: {
@@ -354,7 +356,6 @@ const Users = () => {
       </MainHeader> */}
       <Paper
         className={classes.mainPaper}
-        variant="outlined"
         onScroll={handleScroll}
       >
         <Table size="small">
