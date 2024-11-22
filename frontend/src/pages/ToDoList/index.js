@@ -74,10 +74,10 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid var(--logo-bg, #001C27)"
   },
 
-  table: { // Tabela das tarefas que serão adicionadas
-    minWidth: 650,
-    marginTop: "7px",
-  },
+  // table: { // Tabela das tarefas que serão adicionadas
+  //   minWidth: 650,
+  //   marginTop: "7px",
+  // },
   tableHeader: { // Cabeçalho da tabela
     backgroundColor: '', // alterar a cor do fundo do cabeçalho dos resultados
     color: 'black',
