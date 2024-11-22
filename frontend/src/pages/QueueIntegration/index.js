@@ -113,25 +113,25 @@ const useStyles = makeStyles((theme) => ({
   },
   serachInputWrapper: {
     border: "solid 1px #828282",
-		flex: 1,
-		display: "flex",
-		borderRadius: 40,
-		padding: 4,
-		marginRight: theme.spacing(1),
-	},
+    flex: 1,
+    display: "flex",
+    borderRadius: 40,
+    padding: 4,
+    marginRight: theme.spacing(1),
+  },
 
-	searchIcon: {
-		color: "grey",
-		marginLeft: 6,
-		marginRight: 6,
-		alignSelf: "center",
-	},
+  searchIcon: {
+    color: "grey",
+    marginLeft: 6,
+    marginRight: 6,
+    alignSelf: "center",
+  },
 
-	searchInput: {
-		flex: 1,
-		border: "none",
-		borderRadius: 30,
-	},
+  searchInput: {
+    flex: 1,
+    border: "none",
+    borderRadius: 30,
+  },
   AgrupamentoDoPesquisarENovo: {
     paddingTop: "7px",
     paddingBottom: "8px",
@@ -281,43 +281,70 @@ const QueueIntegration = () => {
         variant="body1"
         style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
       >
-      {"Adicione, edite e exclua seus bots e projetos."}
+        {"Adicione, edite e exclua seus bots e projetos."}
       </Typography>
       <div>
 
-        <div className={classes.AgrupamentoDoPesquisarENovo}>
-          <div className={classes.serachInputWrapper}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+            flexWrap: "nowrap",
+          }}
+        >
+          <div
+            style={{
+              flex: "1 1 auto",
+              display: "flex",
+              alignItems: "center",
+              maxWidth: "80%",
+            }}
+            className={classes.serachInputWrapper}>
             <SearchIcon className={classes.searchIcon} />
             <InputBase
-            className={classes.searchInput}
+              className={classes.searchInput}
               placeholder={i18n.t("queueIntegration.searchPlaceholder")}
               type="search"
               value={searchParam}
               onChange={handleSearch}
-              // InputProps={{
-              //   startAdornment: (
-              //     <InputAdornment position="start">
-              //       <SearchIcon color="secondary" />
-              //     </InputAdornment>
-              //   ),
-              // }}
+            // InputProps={{
+            //   startAdornment: (
+            //     <InputAdornment position="start">
+            //       <SearchIcon color="secondary" />
+            //     </InputAdornment>
+            //   ),
+            // }}
             />
           </div>
           <div
-          style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+            style={{
+              width: "1px",
+              height: "43px",
+              background: "#BDBDBD",
+            }}
+          ></div>
+
+          <div
+            style={{
+              flex: "0 0 auto",
+            }}
           >
+            <MainHeaderButtonsWrapper>
+              <Button
+                className={classes.BotaoAdicionar}
+                variant="contained"
+                color="primary"
+                onClick={handleOpenUserModal}
+              >
+                + {i18n.t("queueIntegration.buttons.add")}
+              </Button>
+            </MainHeaderButtonsWrapper>
           </div>
-          <Button
-            className={classes.BotaoAdicionar}
-            variant="contained"
-            color="primary"
-            onClick={handleOpenUserModal}
-            >
-            + {i18n.t("queueIntegration.buttons.add")}
-          </Button>
-        </div>  
+        </div>
       </div>
-    {/* <MainContainer> */}
+      {/* <MainContainer> */}
       <ConfirmationModal
         title={
           deletingUser &&
@@ -376,62 +403,62 @@ const QueueIntegration = () => {
             </TableRow>
           </TableHead>
           {queueIntegration.length > 0 ? (
-              <>
-          <TableBody>
             <>
-              {queueIntegration.map((integration) => (
-                <TableRow key={integration.id}>
-                  <TableCell >
-                    {integration.type === "dialogflow" && (<Avatar 
-                      src={dialogflow} className={classes.avatar} />)}
-                    {integration.type === "n8n" && (<Avatar
-                      src={n8n} className={classes.avatar} />)}
-                    {integration.type === "webhook" && (<Avatar
-                      src={webhooks} className={classes.avatar} />)}
-                    {integration.type === "typebot" && (<Avatar
-                      src={typebot} className={classes.avatar} />)}
-                  </TableCell>
+              <TableBody>
+                <>
+                  {queueIntegration.map((integration) => (
+                    <TableRow key={integration.id}>
+                      <TableCell >
+                        {integration.type === "dialogflow" && (<Avatar
+                          src={dialogflow} className={classes.avatar} />)}
+                        {integration.type === "n8n" && (<Avatar
+                          src={n8n} className={classes.avatar} />)}
+                        {integration.type === "webhook" && (<Avatar
+                          src={webhooks} className={classes.avatar} />)}
+                        {integration.type === "typebot" && (<Avatar
+                          src={typebot} className={classes.avatar} />)}
+                      </TableCell>
 
-                  <TableCell align="center">{integration.id}</TableCell>
-                  <TableCell align="center">{integration.name}</TableCell>
-                  <TableCell align="center">
-                    <IconButton
-                      size="small"
-                      onClick={() => handleEditIntegration(integration)}
-                      className={classes.acoes}
-                    >
-                      <Edit/>
-                    </IconButton>
+                      <TableCell align="center">{integration.id}</TableCell>
+                      <TableCell align="center">{integration.name}</TableCell>
+                      <TableCell align="center">
+                        <IconButton
+                          size="small"
+                          onClick={() => handleEditIntegration(integration)}
+                          className={classes.acoes}
+                        >
+                          <Edit />
+                        </IconButton>
 
-                    <IconButton
-                      size="small"
-                      onClick={(e) => {
-                        setConfirmModalOpen(true);
-                        setDeletingUser(integration);
-                      }}
-                      className={classes.acoes}
-                      >
-                      <DeleteOutline />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-              {loading && <TableRowSkeleton columns={7} />}
+                        <IconButton
+                          size="small"
+                          onClick={(e) => {
+                            setConfirmModalOpen(true);
+                            setDeletingUser(integration);
+                          }}
+                          className={classes.acoes}
+                        >
+                          <DeleteOutline />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  {loading && <TableRowSkeleton columns={7} />}
+                </>
+              </TableBody>
             </>
-          </TableBody>
-              </>
-              ) : (
-                <TableBody>
-                  <TableRow>
-                    <TableCell colSpan="7" align="center">
-                      Nenhuma integração a ser carregada no momento
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-                )}
+          ) : (
+            <TableBody>
+              <TableRow>
+                <TableCell colSpan="7" align="center">
+                  Nenhuma integração a ser carregada no momento
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
         </Table>
       </Paper>
-    {/* </MainContainer> */}
+      {/* </MainContainer> */}
     </div>
   );
 };
