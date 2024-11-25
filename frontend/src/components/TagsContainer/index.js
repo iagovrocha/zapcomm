@@ -76,6 +76,17 @@ export function TagsContainer({ ticket }) {
         setSelecteds(optionsChanged);
         await syncTags({ ticketId: ticket.id, tags: optionsChanged });
     }
+    function hexToRgb(hex) {
+        // Remove o símbolo "#" se ele estiver presente
+        hex = hex.replace('#', '');
+      
+        // Converter os valores hexadecimais em valores RGB
+        const r = parseInt(hex.substring(0, 2), 16);
+        const g = parseInt(hex.substring(2, 4), 16);
+        const b = parseInt(hex.substring(4, 6), 16);
+      
+        return `${r}, ${g}, ${b}`;
+      };
 
     return (
         <Paper style={{ padding: 12 }}>
@@ -92,8 +103,8 @@ export function TagsContainer({ ticket }) {
                         <Chip
                             variant="outlined"
                             style={{
-                                background: option.color || '#eee',
-                                color: "#FFF",
+                                backgroundColor: `rgba(${hexToRgb(option.color)}, 0.2)`,
+                                color: option.color,
                                 marginRight: 1,
                                 fontWeight: 600,
                                 borderRadius: 3,
