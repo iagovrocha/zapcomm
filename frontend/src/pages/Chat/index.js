@@ -66,25 +66,25 @@ const useStyles = makeStyles((theme) => ({
   },
   serachInputWrapper: {
     border: "solid 1px #828282",
-		flex: 1,
-		display: "flex",
-		borderRadius: 40,
-		padding: 4,
-		marginRight: theme.spacing(1),
+    flex: 1,
+    display: "flex",
+    borderRadius: 40,
+    padding: 4,
+    marginRight: theme.spacing(1),
     width: '70%',
     height: '48px',
-	},
+  },
   searchIcon: {
-		color: "grey",
-		marginLeft: 6,
-		marginRight: 6,
-		alignSelf: "center",
-	},
+    color: "grey",
+    marginLeft: 6,
+    marginRight: 6,
+    alignSelf: "center",
+  },
   searchInput: {
-		flex: 1,
-		border: "none",
-		borderRadius: 30,
-	},
+    flex: 1,
+    border: "none",
+    borderRadius: 30,
+  },
   BotaoAdicionar: {
     height: "48px !important",
     borderRadius: "40px",
@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
     display: "inline-flex",
     justifyContent: "space-between",
     // paddingBottom: 10,
-  }, 
+  },
 }));
 
 export function ChatModal({ open, chat, type, handleClose, handleLoadNewChat }) {
@@ -331,7 +331,7 @@ function Chat(props) {
       setMessagesPage(1);
       setCurrentChat(chat);
       setTab(1);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const sendMessage = async (contentMessage) => {
@@ -435,23 +435,16 @@ function Chat(props) {
           <Grid className={classes.gridItemTab} md={14} item>
             <div className={classes.btnContainer}>
               {/* Campo de busca e botão Adicionar abaixo da mensagem */}
-            <div className={classes.serachInputWrapper}>
-            <SearchIcon className={classes.searchIcon} />
-            <InputBase
-              className={classes.searchInput}
-              placeholder={("Buscar chat")}
-              type="search"
-              
-                  // }} Mudança de TextField para InputBase + Estilização em css + MainHeader comentado para alinhar os botões e a barra de pesquisa
-                  />
-            </div>
-              <Button
-                onClick={() => setShowDialog(true)}
-                color="primary"
-                variant="contained"
-              >
-                Novo
-              </Button>
+              <div className={classes.serachInputWrapper}>
+                <SearchIcon className={classes.searchIcon} />
+                <InputBase
+                  className={classes.searchInput}
+                  placeholder={("Buscar chat")}
+                  type="search"
+
+                // }} Mudança de TextField para InputBase + Estilização em css + MainHeader comentado para alinhar os botões e a barra de pesquisa
+                />
+              </div>
             </div>
             <ChatList
               chats={chats}
@@ -483,27 +476,27 @@ function Chat(props) {
   return (
     <div className={classes.divBody}>
       <div className={classes.SubEBtn}>
-      <div>
-      <h1 style={{ margin: "0" }}><b>{("Chat Interno")}</b></h1>
-      <Typography
-       component="subtitle1"
-       variant="body1"
-       style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
-      >
-      {"Chat interno para colaboradores."}
-      </Typography>
-      </div>
-      <Button
-        onClick={() => {
-          setDialogType("new");
-          setShowDialog(true);
-        }}
-        className={classes.BotaoAdicionar}
-        color="primary"
-        variant="contained"
-      >
-        + Novo
-      </Button>
+        <div>
+          <h1 style={{ margin: "0" }}><b>{("Chat Interno")}</b></h1>
+          <Typography
+            component="subtitle1"
+            variant="body1"
+            style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+          >
+            {"Chat interno para colaboradores."}
+          </Typography>
+        </div>
+        <Button
+          onClick={() => {
+            setDialogType("new");
+            setShowDialog(true);
+          }}
+          className={classes.BotaoAdicionar}
+          color="primary"
+          variant="contained"
+        >
+          + {document.body.offsetWidth < 600 ? '' : 'Novo'}
+        </Button>
       </div>
       <ChatModal
         type={dialogType}
