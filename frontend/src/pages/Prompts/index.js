@@ -276,9 +276,23 @@ const Prompts = () => {
       />
 
       {/* <MainHeader> */}
-      <div style={{ display: "inline-flex", alignItems: 'center', width: "95%" }}>
-
-        <div className={classes.serachInputWrapper}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "100%",
+          flexWrap: "nowrap",
+        }}
+      >
+        <div
+          style={{
+            flex: "1 1 auto",
+            display: "flex",
+            alignItems: "center",
+            maxWidth: "80%",
+          }}
+          className={classes.serachInputWrapper}>
           <SearchIcon className={classes.searchIcon} />
           <InputBase
             className={classes.searchInput}
@@ -290,8 +304,18 @@ const Prompts = () => {
         </div>
 
         <div
-          style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+          style={{
+            width: "1px",
+            height: "43px",
+            background: "#BDBDBD",
+          }}
         ></div>
+
+        <div
+          style={{
+            flex: "0 0 auto",
+          }}
+        >
 
         <MainHeaderButtonsWrapper>
           <Button
@@ -303,6 +327,7 @@ const Prompts = () => {
             {i18n.t("prompts.buttons.add")}
           </Button>
         </MainHeaderButtonsWrapper>
+        </div>
       </div>
       {/* </MainHeader> */}
 

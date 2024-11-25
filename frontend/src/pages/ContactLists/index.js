@@ -293,8 +293,24 @@ const ContactLists = () => {
           <Grid xs={12} sm={4} item>
             <Grid spacing={2} container>
               <Grid xs={7} sm={6} item> */}
-      <div style={{ display: "inline-flex", alignItems: 'center', width: "90%", }}>
-        <div className={classes.serachInputWrapper}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "97%",
+          flexWrap: "nowrap",
+        }}
+      >
+        <div
+          style={{
+            flex: "1 1 auto",
+            display: "flex",
+            alignItems: "center",
+            maxWidth: "80%",
+          }}
+          className={classes.serachInputWrapper}
+        >
           <SearchIcon className={classes.searchIcon} />
           <InputBase
             className={classes.searchInput}
@@ -304,31 +320,34 @@ const ContactLists = () => {
             value={searchParam}
             onChange={handleSearch}
           />
-          {/* </Grid>
-              <Grid xs={5} sm={6} item> */}
         </div>
         <div
-                style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
-              ></div>
+          style={{
+            width: "1px",
+            height: "43px",
+            background: "#BDBDBD",
+          }}
+        ></div>
 
-            <MainHeaderButtonsWrapper style={{}}>
-
-        <Button
-          className={classes.Botoes}
-          fullWidth
-          variant="contained"
-          color="primary"
-          onClick={handleOpenContactListModal}
+        <div
+          style={{
+            flex: "0 0 auto",
+          }}
         >
-          {i18n.t("contactLists.buttons.add")}
-        </Button>
-        </MainHeaderButtonsWrapper>
+          <MainHeaderButtonsWrapper style={{}}>
+
+            <Button
+              className={classes.Botoes}
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={handleOpenContactListModal}
+            >
+              {i18n.t("contactLists.buttons.add")}
+            </Button>
+          </MainHeaderButtonsWrapper>
+        </div>
       </div>
-      {/* </Grid>
-            </Grid> */}
-      {/* </Grid>
-        </Grid> */}
-      {/* </MainHeader> */}
       <Paper
         // className={classes.mainPaper}
         // variant="outlined"
@@ -338,72 +357,72 @@ const ContactLists = () => {
           <TableHead>
             <TableRow>
               <TableCell align="center" className={classes.Tabela}>
-              <b>{i18n.t("contactLists.table.name")}</b>
+                <b>{i18n.t("contactLists.table.name")}</b>
               </TableCell>
               <TableCell align="center" className={classes.Tabela}>
                 <b>{i18n.t("contactLists.table.contacts")}</b>
               </TableCell>
               <TableCell align="center" className={classes.Tabela}>
-              <b> {i18n.t("contactLists.table.actions")}</b>
+                <b> {i18n.t("contactLists.table.actions")}</b>
               </TableCell>
             </TableRow>
           </TableHead>
           {contactLists.length > 0 ? (
-              <>
-          <TableBody>
             <>
-              {contactLists.map((contactList) => (
-                <TableRow key={contactList.id}>
-                  <TableCell align="center">{contactList.name}</TableCell>
-                  <TableCell align="center">
-                    {contactList.contactsCount || 0}
-                  </TableCell>
-                  <TableCell align="center">
-                    <a href={planilhaExemplo} download="planilha.xlsx">
-                      <IconButton className={classes.acoes} title="Baixar Planilha Exemplo">
-                        <DownloadIcon />
-                      </IconButton>
-                    </a>
-
-                    <IconButton
-                      className={classes.acoes}
-                      onClick={() => goToContacts(contactList.id)}
-                    >
-                      <PeopleIcon />
-                    </IconButton>
-
-                    <IconButton
-                      className={classes.acoes}
-                      onClick={() => handleEditContactList(contactList)}
-                    >
-                      <EditIcon />
-                    </IconButton>
-
-                    <IconButton
-                      className={classes.acoes}
-                      onClick={(e) => {
-                        setConfirmModalOpen(true);
-                        setDeletingContactList(contactList);
-                      }}
-                    >
-                      <DeleteOutlineIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-              {loading && <TableRowSkeleton columns={3} />}
-            </>
-          </TableBody>
-          </>
-            ) : (
               <TableBody>
-                <TableRow>
-                  <TableCell colSpan="3" align="center">
-                    Nenhuma lista a ser carregada no momento
-                  </TableCell>
-                </TableRow>
+                <>
+                  {contactLists.map((contactList) => (
+                    <TableRow key={contactList.id}>
+                      <TableCell align="center">{contactList.name}</TableCell>
+                      <TableCell align="center">
+                        {contactList.contactsCount || 0}
+                      </TableCell>
+                      <TableCell align="center">
+                        <a href={planilhaExemplo} download="planilha.xlsx">
+                          <IconButton className={classes.acoes} title="Baixar Planilha Exemplo">
+                            <DownloadIcon />
+                          </IconButton>
+                        </a>
+
+                        <IconButton
+                          className={classes.acoes}
+                          onClick={() => goToContacts(contactList.id)}
+                        >
+                          <PeopleIcon />
+                        </IconButton>
+
+                        <IconButton
+                          className={classes.acoes}
+                          onClick={() => handleEditContactList(contactList)}
+                        >
+                          <EditIcon />
+                        </IconButton>
+
+                        <IconButton
+                          className={classes.acoes}
+                          onClick={(e) => {
+                            setConfirmModalOpen(true);
+                            setDeletingContactList(contactList);
+                          }}
+                        >
+                          <DeleteOutlineIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  {loading && <TableRowSkeleton columns={3} />}
+                </>
               </TableBody>
-              )}
+            </>
+          ) : (
+            <TableBody>
+              <TableRow>
+                <TableCell colSpan="3" align="center">
+                  Nenhuma lista a ser carregada no momento
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
         </Table>
       </Paper>
       {/* </MainContainer> */}

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-start',
     marginBottom: '7px',
   },
-  searchInputWrapper: {
+  serachInputWrapper: {
     border: "solid 1px #828282",
     display: "flex",
     borderRadius: 40,
@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 30,
   },
   table: {
-    minWidth: 650,
     backgroundColor: "#FFFFFF",
     fontFamily: 'Inter Tight, sans-serif',
     color: 'black'
@@ -177,7 +176,25 @@ const Helps = () => {
           {'Assista aos tutoriais sobre como usar as ferramentas do Zapcomm'}
         </Typography>
       </div>
-      <div className={classes.searchInputWrapper}>
+
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "100%",
+          flexWrap: "nowrap",
+        }}
+      >
+      <div
+          style={{
+            flex: "1 1 auto",
+            display: "flex",
+            alignItems: "center",
+            maxWidth: "90%",
+          }}
+          className={classes.serachInputWrapper}
+        >
         <SearchIcon style={{ color: "grey", marginLeft: 6, marginRight: 6, alignSelf: 'center' }} />
         <InputBase
           className={classes.input}
@@ -185,6 +202,7 @@ const Helps = () => {
           value={search}
           onChange={handleSearchChange} // Atualiza a busca
         />
+      </div>
       </div>
 
       {renderHelps()} {/* Renderiza a tabela de tutoriais */}

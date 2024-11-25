@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
 
   Botoes: {
     borderRadius: "40px",
-    padding: "10px 32px",
+    padding: "10px 20px",
     justifyContent: "center",
     alignItems: "center",
     border: "1px solid var(--logo-bg, #001C27)"
@@ -285,8 +285,24 @@ const Quickemessages = () => {
         quickemessageId={selectedQuickemessage && selectedQuickemessage.id}
       />
       {/* <MainHeader> */}
-      <div style={{ display: "inline-flex", alignItems: 'center', width: "95%" }}>
-        <div className={classes.serachInputWrapper}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "100%",
+          flexWrap: "nowrap",
+        }}
+      >
+        <div
+          style={{
+            flex: "1 1 auto", 
+            display: "flex",
+            alignItems: "center",
+            maxWidth: "80%", 
+          }}
+          className={classes.serachInputWrapper}
+        >
           <SearchIcon className={classes.searchIcon} />
           <InputBase
             className={classes.searchInput}
@@ -294,24 +310,41 @@ const Quickemessages = () => {
             type="search"
             value={searchParam}
             onChange={handleSearch}
+            style={{
+              width: "100%", 
+            }}
           />
         </div>
 
         <div
-          style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+          style={{
+            width: "1px",
+            height: "43px",
+            background: "#BDBDBD",
+          }}
         ></div>
 
-        <MainHeaderButtonsWrapper style={{}}>
-          <Button
-            className={classes.Botoes}
-            variant="contained"
-            onClick={handleOpenQuickMessageDialog}
-            color="primary"
-          >
-            {i18n.t("quickMessages.buttons.add")}
-          </Button>
-        </MainHeaderButtonsWrapper>
+        <div
+          style={{
+            flex: "0 0 auto", 
+          }}
+        >
+          <MainHeaderButtonsWrapper>
+            <Button
+              className={classes.Botoes}
+              variant="contained"
+              onClick={handleOpenQuickMessageDialog}
+              color="primary"
+              style={{
+                whiteSpace: "nowrap",
+              }}
+            >
+              {i18n.t("quickMessages.buttons.add")}
+            </Button>
+          </MainHeaderButtonsWrapper>
+        </div>
       </div>
+
       {/* </MainHeader> */}
       <Paper
         // className={classes.mainPaper}

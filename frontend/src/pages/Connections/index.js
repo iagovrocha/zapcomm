@@ -64,14 +64,14 @@ const useStyles = makeStyles(theme => ({
 	},
 	serachInputWrapper: {
 		border: "solid 1px #828282",
-			flex: 1,
-			display: "flex",
-			borderRadius: 40,
-			padding: 4,
-			marginRight: theme.spacing(1),
-				width: '70%',
-				height: '48px',
-		},
+		flex: 1,
+		display: "flex",
+		borderRadius: 40,
+		padding: 4,
+		marginRight: theme.spacing(1),
+		width: '70%',
+		height: '48px',
+	},
 	searchIcon: {
 		color: "grey",
 		marginLeft: 6,
@@ -392,8 +392,23 @@ const Connections = () => {
 			/>
 			{/*<MainHeader>*/}
 
-			<div style={{ display: "inline-flex", alignItems: 'center', width: "95%" }}>
-				<div className={classes.serachInputWrapper}>
+			<div
+				style={{
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "space-between",
+					width: "100%",
+					flexWrap: "nowrap",
+				}}
+			>
+				<div
+					style={{
+						flex: "1 1 auto",
+						display: "flex",
+						alignItems: "center",
+						maxWidth: "80%",
+					}}
+					className={classes.serachInputWrapper}>
 					<SearchIcon className={classes.searchIcon} />
 					<InputBase
 						className={classes.searchInput}
@@ -404,26 +419,36 @@ const Connections = () => {
 					></InputBase>
 				</div>
 				<div
-					style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+					style={{
+						width: "1px",
+						height: "43px",
+						background: "#BDBDBD",
+					}}
+				></div>
+
+				<div
+					style={{
+						flex: "0 0 auto",
+					}}
 				>
+					<MainHeaderButtonsWrapper style={{}}>
+						<Can
+							role={user.profile}
+							perform="connections-page:addConnection"
+							yes={() => (
+								<Button
+									variant="contained"
+									color="primary"
+									//adicionei a classe pro botao ficar padronizado
+									className={classes.BotaoAdicionar}
+									onClick={handleOpenWhatsAppModal}
+								>
+									{i18n.t("connections.buttons.add")}
+								</Button>
+							)}
+						/>
+					</MainHeaderButtonsWrapper>
 				</div>
-				<MainHeaderButtonsWrapper style={{}}>
-					<Can
-						role={user.profile}
-						perform="connections-page:addConnection"
-						yes={() => (
-							<Button
-								variant="contained"
-								color="primary"
-								//adicionei a classe pro botao ficar padronizado
-								className={classes.BotaoAdicionar}
-								onClick={handleOpenWhatsAppModal}
-							>
-								{i18n.t("connections.buttons.add")}
-							</Button>
-						)}
-					/>
-				</MainHeaderButtonsWrapper>
 			</div>
 			{/*<MainHeaderButtonsWrapper>
 					

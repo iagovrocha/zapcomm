@@ -100,6 +100,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 40,
     padding: 4,
     marginRight: theme.spacing(1),
+    width: '70%',
+    height: '48px',
   },
 
   searchIcon: {
@@ -299,10 +301,24 @@ const Tags = () => {
         aria-labelledby="form-dialog-title"
         tagId={selectedTag && selectedTag.id}
       />
-      <div>
-        {/* Pesquisar */}
-        <div className={classes.AgrupamentoDoPesquisarENovo}>
-          <div className={classes.serachInputWrapper}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+            flexWrap: "nowrap",
+          }}
+        >
+          <div
+            style={{
+              flex: "1 1 auto",
+              display: "flex",
+              alignItems: "center",
+              maxWidth: "80%",
+            }}
+            className={classes.serachInputWrapper}
+          >
             <SearchIcon className={classes.searchIcon} />
             <InputBase
               className={classes.searchInput}
@@ -310,29 +326,34 @@ const Tags = () => {
               type="search"
               value={searchParam}
               onChange={handleSearch}
-            // InputProps={{
-            //   startAdornment: (
-            //     <InputAdornment position="start">
-            //       <SearchIcon style={{ color: "gray" }} />
-            //     </InputAdornment>
-            //   ),
-            // }}
             />
           </div>
+
           <div
-            style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+            style={{
+              width: "1px",
+              height: "43px",
+              background: "#BDBDBD",
+            }}
+          ></div>
+
+          <div
+            style={{
+              flex: "0 0 auto",
+            }}
           >
+            <MainHeaderButtonsWrapper>
+              <Button
+                className={classes.BotaoAdicionar}
+                variant="contained"
+                color="primary"
+                onClick={handleOpenTagModal}
+              >
+                {i18n.t("tags.buttons.add")}
+              </Button>
+            </MainHeaderButtonsWrapper>
           </div>
-          <Button
-            className={classes.BotaoAdicionar}
-            variant="contained"
-            color="primary"
-            onClick={handleOpenTagModal}
-          >
-            {i18n.t("tags.buttons.add")}
-          </Button>
         </div>
-      </div>
       <Paper
         // className={classes.mainPaper}
         // variant="outlined"
