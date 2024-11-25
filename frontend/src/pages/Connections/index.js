@@ -51,18 +51,16 @@ const useStyles = makeStyles(theme => ({
 	mainPaper: {
 		flex: 1,
 		padding: theme.spacing(1),
-		overflowY: "hidden",
-		marginTop: "7px",
-	},
-	table: {
-		minWidth: 650,
+		overflowY: "scroll",
+		...theme.scrollbarStyles,
 	},
 	customTableCell: {
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "center",
 	},
-	serachInputWrapper: {
+
+	searchInputWrapper: {
 		border: "solid 1px #828282",
 		flex: 1,
 		display: "flex",
@@ -105,6 +103,7 @@ const useStyles = makeStyles(theme => ({
 		border: "1px solid #dadde9",
 		maxWidth: 450,
 	},
+
 	tooltipPopper: {
 		textAlign: "center",
 	},
@@ -117,13 +116,7 @@ const useStyles = makeStyles(theme => ({
 		justifyContent: "center",
 		alignItems: "center",
 		border: "1px solid var(--logo-bg, #001C27)"
-	},
-	titleContainer: {
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'flex-start', // Alinha os itens à esquerda
-		marginBottom: '7px', // Espaçamento abaixo do contêiner
-	},
+	  },
 
 }));
 
@@ -192,13 +185,13 @@ const Connections = () => {
 	//funçao para procurar
 	const handleSearch = (event) => {
 		setSearchParam(event.target.value.toLowerCase());
-	};
+	  };
 
 	const filteredWhatsApps = whatsApps ? (searchParam
-		? whatsApps.filter(whatsApp =>
-			whatsApp.name.toLowerCase().includes(searchParam)
-		)
-		: whatsApps) : [];
+	? whatsApps.filter(whatsApp =>
+		whatsApp.name.toLowerCase().includes(searchParam)
+	)
+	: whatsApps) : [];
 
 	const handleOpenWhatsAppModal = () => {
 		setSelectedWhatsApp(null);
@@ -303,17 +296,17 @@ const Connections = () => {
 				{(whatsApp.status === "CONNECTED" ||
 					whatsApp.status === "PAIRING" ||
 					whatsApp.status === "TIMEOUT") && (
-						<Button
-							size="small"
-							variant="outlined"
-							color="secondary"
-							onClick={() => {
-								handleOpenConfirmationModal("disconnect", whatsApp.id);
-							}}
-						>
-							{i18n.t("connections.buttons.disconnect")}
-						</Button>
-					)}
+					<Button
+						size="small"
+						variant="outlined"
+						color="secondary"
+						onClick={() => {
+							handleOpenConfirmationModal("disconnect", whatsApp.id);
+						}}
+					>
+						{i18n.t("connections.buttons.disconnect")}
+					</Button>
+				)}
 				{whatsApp.status === "OPENING" && (
 					<Button size="small" variant="outlined" disabled color="default">
 						{i18n.t("connections.buttons.connecting")}
@@ -364,14 +357,14 @@ const Connections = () => {
 
 	return (
 		<div className={classes.divBody}>
-			<h1 style={{ margin: "0" }}><b>{i18n.t("connections.title")}</b></h1>
-			<Typography
+			  <h1 style={{ margin: "0" }}><b>{i18n.t("connections.title")}</b></h1>
+			  <Typography
 				component="subtitle1"
 				variant="body1"
 				style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
 			>
 				{"Adicione, edite e exclua seus bots e projetos."}
-			</Typography>
+			  </Typography>
 			<ConfirmationModal
 				title={confirmModalInfo.title}
 				open={confirmModalOpen}
@@ -390,6 +383,47 @@ const Connections = () => {
 				onClose={handleCloseWhatsAppModal}
 				whatsAppId={!qrModalOpen && selectedWhatsApp?.id}
 			/>
+			<MainHeader>
+				
+			<div className={classes.searchInputWrapper}>
+            	<SearchIcon className={classes.searchIcon} />
+
+				{/* Atributos do InputBase que servem para a busca de conexoes especificas  */}
+				<InputBase
+					className={classes.searchInput}
+					placeholder={i18n.t("contacts.searchPlaceholder")}
+					type="search"
+					value={searchParam}
+					onChange={handleSearch}
+				></InputBase>
+          </div>
+		  {/* Traço vertical que divide o espaço entre o input de busca e o botao de adicionar */}
+		  <div 
+          		style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+          	>
+          </div>
+				<MainHeaderButtonsWrapper>
+					<Can
+						role={user.profile}
+						perform="connections-page:addConnection"
+						
+						yes={() => (
+							
+							<Button
+								variant="contained"
+								color="primary"
+						
+								//Adicionada a classe "BotaoAdicionar" pro botão ficar fiel ao figma
+								className={classes.BotaoAdicionar}
+								onClick={handleOpenWhatsAppModal}
+							>
+								{i18n.t("connections.buttons.add")}
+							</Button>
+						)}
+					/>
+				</MainHeaderButtonsWrapper>
+			</MainHeader>
+			<Paper className={classes.mainPaper} variant="outlined">
 			{/*<MainHeader>*/}
 
 			<div
@@ -461,10 +495,10 @@ const Connections = () => {
 					<TableHead>
 						<TableRow>
 							<TableCell align="center">
-								<b>{i18n.t("connections.table.name")}</b>
+								{i18n.t("connections.table.name")}
 							</TableCell>
 							<TableCell align="center">
-								<b>{i18n.t("connections.table.status")}</b>
+								{i18n.t("connections.table.status")}
 							</TableCell>
 							<Can
 								role={user.profile}
