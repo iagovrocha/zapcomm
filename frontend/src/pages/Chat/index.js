@@ -185,7 +185,7 @@ export function ChatModal({ open, chat, type, handleClose, handleLoadNewChat }) 
         </Grid>
       </DialogContent>
       <DialogActions style={{ justifyContent: 'center' }}>
-        <Button onClick={handleSave} style={{ backgroundColor: "#34d3a3", color: "#0c2454" }}>
+        <Button onClick={handleSave} style={{ backgroundColor: "#34d3a3", color: "#0c2454", borderRadius: "20px", padding: "8px 30px" }}>
           Salvar
         </Button>
       </DialogActions>
