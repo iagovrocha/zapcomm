@@ -1,9 +1,8 @@
 import React, { useState, useCallback, useContext } from "react";
 import { toast } from "react-toastify";
 import { format, parseISO } from "date-fns";
-
+//Ícone da lupa importado 
 import SearchIcon from "@material-ui/icons/Search";
-
 import { makeStyles } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
 import {
@@ -29,13 +28,8 @@ import {
 	CropFree,
 	DeleteOutline,
 } from "@material-ui/icons";
-
-import MainContainer from "../../components/MainContainer";
 import MainHeader from "../../components/MainHeader";
 import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
-import Title from "../../components/Title";
-import TableRowSkeleton from "../../components/TableRowSkeleton";
-
 import api from "../../services/api";
 import WhatsAppModal from "../../components/WhatsAppModal";
 import ConfirmationModal from "../../components/ConfirmationModal";
@@ -43,10 +37,8 @@ import QrcodeModal from "../../components/QrcodeModal";
 import { i18n } from "../../translate/i18n";
 import { WhatsAppsContext } from "../../context/WhatsApp/WhatsAppsContext";
 import toastError from "../../errors/toastError";
-
 import { AuthContext } from "../../context/Auth/AuthContext";
 import { Can } from "../../components/Can";
-
 const useStyles = makeStyles(theme => ({
 	mainPaper: {
 		flex: 1,
@@ -62,34 +54,29 @@ const useStyles = makeStyles(theme => ({
 
 	searchInputWrapper: {
 		border: "solid 1px #828282",
+		outline: "none",
 		flex: 1,
 		display: "flex",
 		borderRadius: 40,
 		padding: 4,
 		marginRight: theme.spacing(1),
-		width: '70%',
-		height: '48px',
 	},
+	//Ícone de busca usado dentro do input
 	searchIcon: {
 		color: "grey",
 		marginLeft: 6,
 		marginRight: 6,
 		alignSelf: "center",
 	},
-	acoesButtons: {
-		color: "#0C2C54",
-		"&:hover": {
-			color: "#3c5676",
-		},
-		width: "35px",
-		height: "30px",
-	},
+	//Barra arredondada de busca do input
 	searchInput: {
 		flex: 1,
 		border: "none",
 		borderRadius: 30,
+		padding: 4,
 
 	},
+	// CSS do divBody
 	divBody: {
 		flex: 1,
 		padding: theme.spacing(1),
@@ -110,19 +97,19 @@ const useStyles = makeStyles(theme => ({
 	buttonProgress: {
 		color: green[500],
 	},
+	//Estilização da classe nova adicionada para o botao "Adicionar Whatsapp"
 	BotaoAdicionar: {
 		borderRadius: "40px",
 		padding: "10px 32px",
 		justifyContent: "center",
 		alignItems: "center",
 		border: "1px solid var(--logo-bg, #001C27)"
-	  },
+	},
 
 }));
 
 const CustomToolTip = ({ title, content, children }) => {
 	const classes = useStyles();
-
 	return (
 		<Tooltip
 			arrow
@@ -143,10 +130,8 @@ const CustomToolTip = ({ title, content, children }) => {
 		</Tooltip>
 	);
 };
-
 const Connections = () => {
 	const classes = useStyles();
-
 	const { user } = useContext(AuthContext);
 	const { whatsApps, loading } = useContext(WhatsAppsContext);
 	const [whatsAppModalOpen, setWhatsAppModalOpen] = useState(false);
@@ -154,7 +139,7 @@ const Connections = () => {
 	const [selectedWhatsApp, setSelectedWhatsApp] = useState(null);
 	const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 	const [searchParam, setSearchParam] = useState("");
-	//funcao para pesquizar parametros
+
 	const confirmationModalInitialState = {
 		action: "",
 		title: "",
@@ -165,7 +150,6 @@ const Connections = () => {
 	const [confirmModalInfo, setConfirmModalInfo] = useState(
 		confirmationModalInitialState
 	);
-
 	const handleStartWhatsAppSession = async whatsAppId => {
 		try {
 			await api.post(`/whatsappsession/${whatsAppId}`);
@@ -173,7 +157,6 @@ const Connections = () => {
 			toastError(err);
 		}
 	};
-
 	const handleRequestNewQrCode = async whatsAppId => {
 		try {
 			await api.put(`/whatsappsession/${whatsAppId}`);
@@ -182,42 +165,37 @@ const Connections = () => {
 		}
 	};
 
-	//funçao para procurar
 	const handleSearch = (event) => {
 		setSearchParam(event.target.value.toLowerCase());
-	  };
+	};
 
+	//Codigo usado para detectar a palavra a medida que é digitada
 	const filteredWhatsApps = whatsApps ? (searchParam
-	? whatsApps.filter(whatsApp =>
-		whatsApp.name.toLowerCase().includes(searchParam)
-	)
-	: whatsApps) : [];
+		? whatsApps.filter(whatsApp =>
+			whatsApp.name.toLowerCase().includes(searchParam)
+		)
+		: whatsApps) : [];
 
 	const handleOpenWhatsAppModal = () => {
 		setSelectedWhatsApp(null);
 		setWhatsAppModalOpen(true);
 	};
-
 	const handleCloseWhatsAppModal = useCallback(() => {
 		setWhatsAppModalOpen(false);
 		setSelectedWhatsApp(null);
 	}, [setSelectedWhatsApp, setWhatsAppModalOpen]);
-
 	const handleOpenQrModal = whatsApp => {
 		setSelectedWhatsApp(whatsApp);
 		setQrModalOpen(true);
 	};
-
 	const handleCloseQrModal = useCallback(() => {
 		setSelectedWhatsApp(null);
 		setQrModalOpen(false);
 	}, [setQrModalOpen, setSelectedWhatsApp]);
-
 	const handleEditWhatsApp = whatsApp => {
 		setSelectedWhatsApp(whatsApp);
 		setWhatsAppModalOpen(true);
 	};
-
 	const handleOpenConfirmationModal = (action, whatsAppId) => {
 		if (action === "disconnect") {
 			setConfirmModalInfo({
@@ -227,7 +205,6 @@ const Connections = () => {
 				whatsAppId: whatsAppId,
 			});
 		}
-
 		if (action === "delete") {
 			setConfirmModalInfo({
 				action: action,
@@ -238,7 +215,6 @@ const Connections = () => {
 		}
 		setConfirmModalOpen(true);
 	};
-
 	const handleSubmitConfirmationModal = async () => {
 		if (confirmModalInfo.action === "disconnect") {
 			try {
@@ -247,7 +223,6 @@ const Connections = () => {
 				toastError(err);
 			}
 		}
-
 		if (confirmModalInfo.action === "delete") {
 			try {
 				await api.delete(`/whatsapp/${confirmModalInfo.whatsAppId}`);
@@ -256,10 +231,8 @@ const Connections = () => {
 				toastError(err);
 			}
 		}
-
 		setConfirmModalInfo(confirmationModalInitialState);
 	};
-
 	const renderActionButtons = whatsApp => {
 		return (
 			<>
@@ -296,17 +269,17 @@ const Connections = () => {
 				{(whatsApp.status === "CONNECTED" ||
 					whatsApp.status === "PAIRING" ||
 					whatsApp.status === "TIMEOUT") && (
-					<Button
-						size="small"
-						variant="outlined"
-						color="secondary"
-						onClick={() => {
-							handleOpenConfirmationModal("disconnect", whatsApp.id);
-						}}
-					>
-						{i18n.t("connections.buttons.disconnect")}
-					</Button>
-				)}
+						<Button
+							size="small"
+							variant="outlined"
+							color="secondary"
+							onClick={() => {
+								handleOpenConfirmationModal("disconnect", whatsApp.id);
+							}}
+						>
+							{i18n.t("connections.buttons.disconnect")}
+						</Button>
+					)}
 				{whatsApp.status === "OPENING" && (
 					<Button size="small" variant="outlined" disabled color="default">
 						{i18n.t("connections.buttons.connecting")}
@@ -315,7 +288,6 @@ const Connections = () => {
 			</>
 		);
 	};
-
 	const renderStatusToolTips = whatsApp => {
 		return (
 			<div className={classes.customTableCell}>
@@ -354,17 +326,17 @@ const Connections = () => {
 			</div>
 		);
 	};
-
 	return (
+		// div usada para padronizar as paginas e substituir o MainContainer
 		<div className={classes.divBody}>
-			  <h1 style={{ margin: "0" }}><b>{i18n.t("connections.title")}</b></h1>
-			  <Typography
+			<h1 style={{ margin: "0" }}><b>{i18n.t("connections.title")}</b></h1>
+			<Typography
 				component="subtitle1"
 				variant="body1"
-				style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }} // Aplicando a nova fonte
+				style={{ fontFamily: 'Inter Regular, sans-serif', color: '#828282' }}
 			>
 				{"Adicione, edite e exclua seus bots e projetos."}
-			  </Typography>
+			</Typography>
 			<ConfirmationModal
 				title={confirmModalInfo.title}
 				open={confirmModalOpen}
@@ -384,35 +356,34 @@ const Connections = () => {
 				whatsAppId={!qrModalOpen && selectedWhatsApp?.id}
 			/>
 			<MainHeader>
-				
-			<div className={classes.searchInputWrapper}>
-            	<SearchIcon className={classes.searchIcon} />
 
-				{/* Atributos do InputBase que servem para a busca de conexoes especificas  */}
-				<InputBase
-					className={classes.searchInput}
-					placeholder={i18n.t("contacts.searchPlaceholder")}
-					type="search"
-					value={searchParam}
-					onChange={handleSearch}
-				></InputBase>
-          </div>
-		  {/* Traço vertical que divide o espaço entre o input de busca e o botao de adicionar */}
-		  <div 
-          		style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
-          	>
-          </div>
+				<div className={classes.searchInputWrapper}>
+					<SearchIcon className={classes.searchIcon} />
+					{/* Atributos do InputBase que servem para a busca de conexoes especificas  */}
+					<InputBase
+						className={classes.searchInput}
+						placeholder={i18n.t("contacts.searchPlaceholder")}
+						type="search"
+						value={searchParam}
+						onChange={handleSearch}
+					></InputBase>
+				</div>
+				{/* Traço vertical que divide o espaço entre o input de busca e o botao de adicionar */}
+				<div
+					style={{ width: "1px", height: "48px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+				>
+				</div>
 				<MainHeaderButtonsWrapper>
 					<Can
 						role={user.profile}
 						perform="connections-page:addConnection"
-						
+
 						yes={() => (
-							
+
 							<Button
 								variant="contained"
 								color="primary"
-						
+
 								//Adicionada a classe "BotaoAdicionar" pro botão ficar fiel ao figma
 								className={classes.BotaoAdicionar}
 								onClick={handleOpenWhatsAppModal}
@@ -424,73 +395,6 @@ const Connections = () => {
 				</MainHeaderButtonsWrapper>
 			</MainHeader>
 			<Paper className={classes.mainPaper} variant="outlined">
-			{/*<MainHeader>*/}
-
-			<div
-				style={{
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "space-between",
-					width: "100%",
-					flexWrap: "nowrap",
-				}}
-			>
-				<div
-					style={{
-						flex: "1 1 auto",
-						display: "flex",
-						alignItems: "center",
-						maxWidth: "80%",
-					}}
-					className={classes.serachInputWrapper}>
-					<SearchIcon className={classes.searchIcon} />
-					<InputBase
-						className={classes.searchInput}
-						placeholder={i18n.t("contacts.searchPlaceholder")}
-						type="search"
-						value={searchParam}
-						onChange={handleSearch}
-					></InputBase>
-				</div>
-				<div
-					style={{
-						width: "1px",
-						height: "43px",
-						background: "#BDBDBD",
-					}}
-				></div>
-
-				<div
-					style={{
-						flex: "0 0 auto",
-					}}
-				>
-					<MainHeaderButtonsWrapper style={{}}>
-						<Can
-							role={user.profile}
-							perform="connections-page:addConnection"
-							yes={() => (
-								<Button
-									variant="contained"
-									color="primary"
-									//adicionei a classe pro botao ficar padronizado
-									className={classes.BotaoAdicionar}
-									onClick={handleOpenWhatsAppModal}
-								>
-									{i18n.t("connections.buttons.add")}
-								</Button>
-							)}
-						/>
-					</MainHeaderButtonsWrapper>
-				</div>
-			</div>
-			{/*<MainHeaderButtonsWrapper>
-					
-				</MainHeaderButtonsWrapper>*/}
-			{/*</MainHeader>*/}
-			<Paper
-			// className={classes.mainPaper} 
-			>
 				<Table size="small">
 					<TableHead>
 						<TableRow>
@@ -531,6 +435,7 @@ const Connections = () => {
 							<TableRow><TableCell colSpan={5} align="center"><CircularProgress /></TableCell></TableRow>
 						) : (
 							<>
+								{/* filtra as conexoes existentes com base no nome da conexao digitada no input */}
 								{filteredWhatsApps.length > 0 ? (
 									filteredWhatsApps.map(whatsApp => (
 										<TableRow key={whatsApp.id}>
@@ -556,8 +461,8 @@ const Connections = () => {
 												perform="connections-page:editOrDeleteConnection"
 												yes={() => (
 													<TableCell align="center">
-														<IconButton size="small" onClick={() => handleEditWhatsApp(whatsApp)} className={classes.acoesButtons}><Edit /></IconButton>
-														<IconButton size="small" onClick={() => handleOpenConfirmationModal("delete", whatsApp.id)} className={classes.acoesButtons}><DeleteOutline /></IconButton>
+														<IconButton size="small" onClick={() => handleEditWhatsApp(whatsApp)}><Edit /></IconButton>
+														<IconButton size="small" onClick={() => handleOpenConfirmationModal("delete", whatsApp.id)}><DeleteOutline /></IconButton>
 													</TableCell>
 												)}
 											/>
@@ -565,6 +470,7 @@ const Connections = () => {
 									))
 								) : (
 									<TableRow>
+										{/* Caso nao tenha sido encontrada nenhuma conexao o texto "Nenhuma conexão encontrada" será mostrado*/}
 										<TableCell colSpan={6} align="center">
 											<Typography variant="body1">Nenhuma conexão encontrada</Typography>
 										</TableCell>
@@ -577,5 +483,4 @@ const Connections = () => {
 			</Paper>
 		</div>);
 };
-
 export default Connections;
