@@ -206,9 +206,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     overflow: "auto",
     flexDirection: "column",
-    height: "100%", 
+    height: "100%",
     justifyContent: "space-between",
-},
+  },
   divBody: {
     flex: '1',
     padding: theme.spacing(1),
@@ -739,18 +739,18 @@ const Dashboard = () => {
           </Grid>
 
           {/* TOTAL DE ATENDIMENTOS POR USUARIO */}
-          <Grid item xs={8}>
-              <Paper className={classes.fixedHeightPaper2}>
-                <ChartsDate />
-              </Paper>
-            </Grid>
-          
-            <Grid item xs={4}>
-              <Paper className={classes.fixedHeightPaper2}>
-                <ChatsUser />
-              </Paper>
-            </Grid>
+          {/* TOTAL DE ATENDIMENTOS POR USUARIO */}
+          <Grid item xs={12} sm={8} md={8}>
+            <Paper className={classes.fixedHeightPaper2}>
+              <ChartsDate />
+            </Paper>
+          </Grid>
 
+          <Grid item xs={12} sm={4} md={4} className={classes.gridGraficoUser}>
+            <Paper className={classes.fixedHeightPaper2}>
+              <ChatsUser />
+            </Paper>
+          </Grid>
         </Grid>
       </Container >
     </div >
