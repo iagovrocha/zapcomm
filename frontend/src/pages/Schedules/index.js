@@ -109,27 +109,27 @@ const useStyles = makeStyles((theme) => ({
   },
   serachInputWrapper: {
     border: "solid 1px #828282",
-		flex: 1,
-		display: "flex",
-		borderRadius: 40,
-		padding: 4,
-		marginRight: theme.spacing(1),
-    		width: '70%',
-    		height: '48px',
-	},
+    flex: 1,
+    display: "flex",
+    borderRadius: 40,
+    padding: 4,
+    marginRight: theme.spacing(1),
+    width: '70%',
+    height: '48px',
+  },
 
-	searchIcon: {
-		color: "grey",
-		marginLeft: 6,
-		marginRight: 6,
-		alignSelf: "center",
-	},
+  searchIcon: {
+    color: "grey",
+    marginLeft: 6,
+    marginRight: 6,
+    alignSelf: "center",
+  },
 
-	searchInput: {
-		flex: 1,
-		border: "none",
-		borderRadius: 30,
-	},
+  searchInput: {
+    flex: 1,
+    border: "none",
+    borderRadius: 30,
+  },
 
   Botoes: {
     borderRadius: "40px",
@@ -286,7 +286,7 @@ const Schedules = () => {
       >
         {"Gerencie seus chamados e tarefas diárias"}
       </Typography>
-    {/* <MainContainer> */}
+      {/* <MainContainer> */}
       <ConfirmationModal
         title={
           deletingSchedule &&
@@ -308,10 +308,27 @@ const Schedules = () => {
         cleanContact={cleanContact}
       />
       {/* <MainHeader> */}
-      <div style={{display: "inline-flex", alignItems: 'center', width:"95%"}}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          minWidth: "37%",
+          width: "97%",
+          flexWrap: "nowrap",
+        }}
+      >
 
-        <div className={classes.serachInputWrapper}>
-        <SearchIcon className={classes.searchIcon} />
+        <div
+          style={{
+            flex: "1 1 auto",
+            display: "flex",
+            alignItems: "center",
+            minWidth: "30%",
+            maxWidth: "80%",
+          }}
+          className={classes.serachInputWrapper}>
+          <SearchIcon className={classes.searchIcon} />
           <InputBase
             className={classes.searchInput}
             placeholder={i18n.t("contacts.searchPlaceholder")}
@@ -322,12 +339,12 @@ const Schedules = () => {
         </div>
 
         <div
-          style={{ width: "1px", height: "43px", background: "#BDBDBD", marginLeft: "50px", marginRight: "50px" }}
+          style={{ width: "1px", height: "43px", background: "#BDBDBD" }}
         ></div>
 
         <MainHeaderButtonsWrapper>
           <Button
-            className = {classes.Botoes}
+            className={classes.Botoes}
             variant="contained"
             color="primary"
             onClick={handleOpenScheduleModal}
@@ -341,9 +358,9 @@ const Schedules = () => {
         <Calendar
           messages={defaultMessages}
           formats={{
-          agendaDateFormat: "DD/MM ddd",
-          weekdayFormat: "dddd"
-      }}
+            agendaDateFormat: "DD/MM ddd",
+            weekdayFormat: "dddd"
+          }}
           localizer={localizer}
           events={schedules.map((schedule) => ({
             title: (
@@ -370,7 +387,7 @@ const Schedules = () => {
           style={{ height: 500 }}
         />
       </Paper>
-    {/* </MainContainer> */}
+      {/* </MainContainer> */}
     </div>
   );
 };
