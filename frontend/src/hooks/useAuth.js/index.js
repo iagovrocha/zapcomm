@@ -77,7 +77,7 @@ const useAuth = () => {
   useEffect(() => {
     const companyId = localStorage.getItem("companyId");
     if (companyId) {
-   
+
       const socket = socketManager.getSocket(companyId);
 
       socket.on(`company-${companyId}-user`, (data) => {
@@ -85,19 +85,19 @@ const useAuth = () => {
           setUser(data.user);
         }
       });
-    
-    
-    return () => {
-      socket.disconnect();
-    };
-  }
+
+
+      return () => {
+        socket.disconnect();
+      };
+    }
   }, [socketManager, user]);
 
   const handleLogin = async (userData) => {
     setLoading(true);
 
     try {
-      const { data } = await api.post("http://localhost:8080/auth/login", userData);
+      const { data } = await api.post("https://e6e2-2804-1b1-1080-748f-8303-9e0c-e432-373d.ngrok-free.app/auth/login", userData);
       const {
         user: { companyId, id, company },
       } = data;
