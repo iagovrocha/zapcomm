@@ -38,9 +38,11 @@ services:
 
     networks:
       - app-network
-
-    command: >
-      sh -c "
+      
+    command: > 
+    sh -c " 
+      npm run db:migrate &&
+      npm run db:seed &&
       npm run dev:server"
 
     
