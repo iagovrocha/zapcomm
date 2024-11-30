@@ -70,9 +70,9 @@ command: >
     npm run dev:server"
 ```
 
-Construa as imagens do docker e rode o projeto usando o comando:
 
 # Fazendo o building do Docker
+Construa as imagens do docker e rode o projeto usando o comando:
 ```
 docker-compose up --build
 ```
